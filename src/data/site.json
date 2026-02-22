@@ -6,17 +6,16 @@
   },
   "seo": {
     "title": "Webora Studio — Siti web, branding e contenuti digitali",
-    "description": "Siti web, branding e contenuti digitali per chi vuole crescere online in modo serio, coerente e professionale."
+    "description": "Siti web, branding e contenuti digitali per chi vuole dominare il proprio mercato. Strategia, design e sviluppo."
   },
   "theme": {
-    "bg": "#0b0b0d",
-    "panel": "#101014",
-    "text": "#f3f3f4",
-    "muted": "#b7b7bd",
+    "bg": "#0a0a0c",
+    "panel": "#111115",
+    "text": "#fdfdfd",
+    "muted": "#9ca3af",
     "accent": "#b35b5b",
     "accent2": "#e3a3a3"
   },
-
   "contacts": {
     "phoneE164": "393792900060",
     "phoneDisplay": "+39 3792900060",
@@ -24,23 +23,17 @@
     "instagram": "webora_code",
     "website": "https://webora.it"
   },
-
   "navigation": {
-    "cta": { "label": "WhatsApp", "type": "whatsapp" },
-    "drawerTitle": "Accesso rapido",
+    "cta": { "label": "Parlane con noi", "type": "link", "targetId": "contatti" },
+    "drawerTitle": "Esplora",
     "items": [
-      { "id": "servizi", "label": "Servizi" },
-      { "id": "preventivi", "label": "Preventivi" },
-      { "id": "assistenza", "label": "Assistenza" },
-      { "id": "lavora", "label": "Lavora con noi" },
-      { "id": "faq", "label": "FAQ" },
-      { "id": "recensioni", "label": "Recensioni" },
-      { "id": "contatti", "label": "Contatti" },
-      { "id": "branding", "label": "Branding & Contenuti" },
-      { "id": "lavori", "label": "Lavori" }
+      { "id": "servizi", "label": "Servizi & Branding" },
+      { "id": "lavori", "label": "I Nostri Lavori" },
+      { "id": "preventivi", "label": "Calcola Preventivo" },
+      { "id": "assistenza", "label": "FAQ & Assistenza" },
+      { "id": "contatti", "label": "Inizia Ora" }
     ]
   },
-
   "pricing": {
     "currency": "EUR",
     "packages": [
@@ -56,7 +49,7 @@
         "id": "shop",
         "title": "Sito shopping online",
         "subtitle": "Ideale per iniziare un e-commerce",
-        "price": 899.99,
+        "price": 900,
         "for": ["Chi vuole vendere online"],
         "highlights": ["Catalogo prodotti", "Carrello", "Checkout", "Struttura e-commerce"]
       },
@@ -64,16 +57,15 @@
         "id": "app_plus_site",
         "title": "App + sito web",
         "subtitle": "Ordini + pagamenti",
-        "price": 1199.99,
+        "price": 1200,
         "for": ["Business con ordini"],
         "highlights": ["App ordini", "Pagamenti", "Flusso su misura", "Soluzione completa"]
       }
     ]
   },
-
   "preventivo": {
     "title": "Prezzo chiaro, subito",
-    "subtitle": "Scegli attività, luogo e pacchetto. Ti mostriamo la cifra stabilita.",
+    "subtitle": "Scegli attività, luogo e pacchetto. Nessun costo nascosto. Scopri l'investimento.",
     "activities": [
       { "id": "bar", "label": "Bar / Caffetteria" },
       { "id": "ristorante", "label": "Ristorante / Pizzeria" },
@@ -88,137 +80,82 @@
       { "id": "catania", "label": "Catania", "multiplier": 1.0 },
       { "id": "acireale", "label": "Acireale", "multiplier": 1.0 }
     ],
-    "resultNote": "Prezzo base."
+    "resultNote": "Prezzo calcolato automaticamente."
   },
-
   "faq": {
     "items": [
-      { "q": "Chi siete?", "a": "Siamo Webora Studio: siti web, branding e contenuti digitali per crescere online in modo serio e professionale." },
-      { "q": "Quanto tempo ci vuole?", "a": "Dipende dal pacchetto e dai contenuti. Definiamo una timeline chiara in fase di ascolto." },
-      { "q": "Perché costa così?", "a": "Perché è lavoro su misura: progettazione, struttura, design, ottimizzazione e supporto." },
-      { "q": "Cos’è il vostro metodo?", "a": "Ascolto → Progettazione → Risultati concreti." },
-      { "q": "Quanta assistenza ho?", "a": "Ti seguiamo su WhatsApp Business e email. Rispondiamo appena possibile." }
+      { "q": "Chi siete?", "a": "Siamo Webora Studio: progettiamo identità digitali chirurgiche per chi vuole emergere." },
+      { "q": "Quanto tempo ci vuole?", "a": "Dipende dal pacchetto. Lavoriamo su timeline certe: zero ritardi, zero scuse." },
+      { "q": "Perché costa così?", "a": "Perché è un investimento. Un sito fatto male ti costa clienti ogni giorno. Noi creiamo asset." },
+      { "q": "Cos’è il vostro metodo?", "a": "Ascolto profondo → Progettazione millimetrica → Esecuzione perfetta." },
+      { "q": "Quanta assistenza ho?", "a": "Contatto diretto su WhatsApp Business. Niente ticket infiniti, parli con noi." }
     ]
   },
-
   "sections": [
     {
       "type": "hero",
       "id": "top",
       "kicker": "Webora Studio",
-      "headline": "Mostra chi sei.\nCresci online in modo serio, coerente e professionale.",
-      "body": "Ci occupiamo di siti web, branding e contenuti digitali per chi vuole crescere online in modo serio, coerente e professionale.\n\nLavoriamo con un metodo chiaro: ascolto, progettazione e risultati concreti.\n\nSe hai un’idea, un’attività o un progetto da far crescere, parlane con noi.",
-      "primaryCta": { "label": "Ottieni un preventivo", "targetId": "preventivi" },
+      "headline": "Smettila di\nessere invisibile.",
+      "body": "Progettiamo ecosistemi digitali per chi non si accontenta.\nSiti web, branding e contenuti che convertono l'attenzione in clienti.",
+      "primaryCta": { "label": "Calcola Preventivo", "targetId": "preventivi" },
       "secondaryCta": { "label": "Parlane con noi", "targetId": "contatti" }
+    },
+    {
+      "type": "features",
+      "id": "branding",
+      "kicker": "L'Identità",
+      "title": "Costruiamo un’identità incrollabile",
+      "body": "Non ti serve solo un sito. Ti serve un'aura di autorità. Rendiamo il tuo brand riconoscibile al primo sguardo, in ogni contesto.",
+      "items": [
+        { "title": "Branding", "subtitle": "Autorità Visiva", "bullets": ["Logo & varianti", "Palette & tipografia", "Linee guida rigide", "Template social"] },
+        { "title": "Contenuti", "subtitle": "Presenza Magnetica", "bullets": ["Post & carousel", "Copywriting strategico", "Video scripts", "Grafiche di lancio"] },
+        { "title": "Ottimizzazione", "subtitle": "Performance Assoluta", "bullets": ["Architettura UX", "CTA psicologiche", "SEO tecnico", "Caricamento fulmineo"] },
+        { "title": "Metodo", "subtitle": "Ingegneria pura", "bullets": ["Brief analitico", "Prototipazione", "Sviluppo custom", "Scalabilità"] }
+      ],
+      "cta": { "label": "Richiedi Consulenza", "targetId": "contatti" }
     },
     {
       "type": "services",
       "id": "servizi",
-      "kicker": "Servizi",
-      "title": "Cosa facciamo",
-      "body": "Pacchetti chiari, senza eccessi: scegli quello giusto per il tuo obiettivo."
+      "kicker": "Le Soluzioni",
+      "title": "Strumenti per dominare",
+      "body": "Nessun abbonamento nascosto. Pacchetti chiari, definiti, costruiti per generare risultati tangibili dal giorno zero."
     },
-    { "type": "preventivo", "id": "preventivi", "kicker": "Preventivi" },
+    { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza" },
+    {
+      "type": "case_studies",
+      "id": "lavori",
+      "kicker": "I Fatti",
+      "title": "Meno parole, più risultati.",
+      "body": "La teoria è per i dilettanti. Guarda cosa abbiamo costruito per chi ha deciso di smettere di giocare al ribasso.",
+      "items": [
+        { "title": "Sito Vetrina Premium", "industry": "Local Business", "outcome": "Struttura psicologica per l'acquisizione contatti.", "tags": ["UX Design", "Branding"], "link": "" },
+        { "title": "E-commerce Completo", "industry": "Retail", "outcome": "Flusso d'acquisto senza frizioni, checkout rapido.", "tags": ["E-commerce", "Stripe"], "link": "" }
+      ]
+    },
     {
       "type": "assistance",
       "id": "assistenza",
       "kicker": "Assistenza",
-      "title": "Non sai cosa scegliere?",
-      "body": "Chiedi all’esperto: ci contatti via email o WhatsApp Business e ti rispondiamo appena possibile.",
-      "placeholder": "Scrivi cosa ti serve..."
-    },
-    {
-      "type": "careers",
-      "id": "lavora",
-      "kicker": "Lavora con noi",
-      "title": "Vuoi collaborare?",
-      "body": "Invia la candidatura via email (portfolio + competenze + disponibilità).",
-      "emailSubject": "Candidatura Webora Studio"
+      "title": "Non sai da dove iniziare?",
+      "body": "Nessun problema. Parla con chi sviluppa, non con un call center. Tracciamo insieme la rotta per il tuo progetto.",
+      "placeholder": "Descrivi brevemente la tua idea..."
     },
     {
       "type": "faq",
       "id": "faq",
       "kicker": "FAQ",
-      "title": "Domande frequenti",
-      "freeQuestionTitle": "Domanda libera",
-      "freeQuestionPlaceholder": "Scrivi la tua domanda... (ti rispondiamo appena possibile su WhatsApp Business)"
-    },
-    {
-      "type": "reviews",
-      "id": "recensioni",
-      "kicker": "Recensioni",
-      "title": "Cosa dicono di noi",
-      "body": "Widget recensioni integrato via Trustindex.io."
+      "title": "Zero Zone D'Ombra",
+      "freeQuestionTitle": "Hai altre domande?",
+      "freeQuestionPlaceholder": "Scrivici qui e ti risponderemo in tempo reale..."
     },
     {
       "type": "contacts",
       "id": "contatti",
-      "kicker": "Contatti",
-      "title": "Parliamone",
-      "body": "Contattaci e confermiamo insieme il pacchetto giusto. Puoi anche pagare online con Stripe."
-    },
-    { "type": "footer", "id": "footer" },
-    {
-  "type": "features",
-  "id": "branding",
-  "kicker": "Branding & Contenuti",
-  "title": "Costruiamo un’identità coerente",
-  "body": "Non solo siti: rendiamo il tuo brand riconoscibile e i tuoi contenuti consistenti.",
-  "items": [
-    {
-      "title": "Branding",
-      "subtitle": "Identità visiva solida",
-      "bullets": ["Logo & varianti", "Palette & tipografia", "Linee guida", "Template social"]
-    },
-    {
-      "title": "Contenuti digitali",
-      "subtitle": "Presenza online concreta",
-      "bullets": ["Post & carousel", "Copy coerente", "Reels/TikTok script", "Grafiche promozionali"]
-    },
-    {
-      "title": "Ottimizzazione",
-      "subtitle": "Chiarezza e performance",
-      "bullets": ["Struttura pagine", "CTA strategiche", "SEO base", "Velocità e pulizia"]
-    },
-    {
-      "title": "Metodo",
-      "subtitle": "Ascolto → Progettazione → Risultati",
-      "bullets": ["Brief & obiettivi", "Proposta chiara", "Consegna concreta", "Supporto continuo"]
-    }
-  ],
-  "cta": { "label": "Parlane con noi", "targetId": "contatti" }
-},
-{
-  "type": "case_studies",
-  "id": "lavori",
-  "kicker": "Lavori",
-  "title": "Esempi & risultati",
-  "body": "Alcuni esempi di quello che realizziamo (sezione aggiornabile nel tempo).",
-  "items": [
-    {
-      "title": "Sito vetrina — attività locale",
-      "industry": "Food / Local business",
-      "outcome": "Struttura chiara + contatti rapidi + look premium",
-      "tags": ["Sito base", "Branding", "CTA"],
-      "link": ""
-    },
-    {
-      "title": "E-commerce — primo shop online",
-      "industry": "Retail",
-      "outcome": "Catalogo + checkout + percorso utente essenziale",
-      "tags": ["E-commerce", "UX", "Struttura"],
-      "link": ""
-    },
-    {
-      "title": "In arrivo",
-      "industry": "—",
-      "outcome": "Stiamo preparando nuovi lavori da mostrare.",
-      "tags": ["Coming soon"],
-      "link": ""
+      "kicker": "Il Momento È Adesso",
+      "title": "Iniziamo a fare sul serio.",
+      "body": "Compila i campi essenziali. Fissiamo una chiamata esplorativa gratuita. Capiamo se siamo i partner giusti per te."
     }
   ]
-}
-    
-  ]
-  
 }

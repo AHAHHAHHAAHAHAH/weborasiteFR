@@ -1,0 +1,17 @@
+---
+import { loadSiteConfig } from "../lib/siteConfig";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+
+const cfg = await loadSiteConfig();
+
+const faq = (cfg.sections || []).find((s) => s.id === "faq");
+const assistenza = (cfg.sections || []).find((s) => s.id === "assistenza");
+---
+
+<BaseLayout cfg={cfg} title={`${cfg.brand.name} — FAQ & Assistenza`}>
+  <div style="padding-top: 100px;">
+    {assistenza && <SectionRenderer cfg={cfg} section={assistenza} />}
+    {faq && <SectionRenderer cfg={cfg} section={faq} />}
+  </div>
+</BaseLayout>

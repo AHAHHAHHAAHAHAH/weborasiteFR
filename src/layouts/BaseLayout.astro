@@ -18,8 +18,8 @@ const pageTitle = title || cfg.seo.title;
     <title>{pageTitle}</title>
 
     <style define:vars={{
-      bg: "#101014",     /* Sfondo scuro premium, molto elegante */
-      panel: "#16161b",  
+      bg: "#101014",     /* Colore Premium Dark ripristinato */
+      panel: "#16161b",  /* Pannelli leggermente più chiari */
       text: t.text,
       muted: t.muted,
       accent: t.accent,
@@ -32,34 +32,42 @@ const pageTitle = title || cfg.seo.title;
         --muted: var(--muted);
         --accent: var(--accent);
         --accent2: var(--accent2);
-        --line: rgba(255, 255, 255, 0.04);
-        --shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
         --radius: 24px;
-        --max: 1200px;
+        --max: 1140px;
       }
     </style>
   </head>
 
   <body>
     <div class="bg-watermark" style={`background-image: url('${cfg.brand.logoPath}')`}></div>
+    <div class="mouse-glow" id="mouseGlow"></div>
 
     <Header cfg={cfg} />
     <DrawerMenu cfg={cfg} />
-    <main>
+    
+    <main style="position: relative; z-index: 10;">
       <slot />
     </main>
 
     <script>
-      // Parallasse leggero sul background e scroll reveal
       document.addEventListener('DOMContentLoaded', () => {
         const bg = document.querySelector('.bg-watermark') as HTMLElement;
+        const glow = document.getElementById('mouseGlow') as HTMLElement;
+        
         window.addEventListener('mousemove', (e) => {
-          if(!bg) return;
-          const x = (e.clientX / window.innerWidth - 0.5) * 20;
-          const y = (e.clientY / window.innerHeight - 0.5) * 20;
-          bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+          // Glow fluido che segue il mouse
+          if(glow) {
+            glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+          }
+          // Parallasse elegante del logo in background
+          if(bg) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 25;
+            const y = (e.clientY / window.innerHeight - 0.5) * 25;
+            bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+          }
         });
 
+        // Motore Intersection Observer per l'entrata degli elementi
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {

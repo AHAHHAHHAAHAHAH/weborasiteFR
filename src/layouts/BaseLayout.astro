@@ -18,8 +18,8 @@ const pageTitle = title || cfg.seo.title;
     <title>{pageTitle}</title>
 
     <style define:vars={{
-      bg: "#101014",     /* Colore Premium Dark ripristinato */
-      panel: "#16161b",  /* Pannelli leggermente più chiari */
+      bg: "#101014",     
+      panel: "#16161b",  
       text: t.text,
       muted: t.muted,
       accent: t.accent,
@@ -53,21 +53,24 @@ const pageTitle = title || cfg.seo.title;
       document.addEventListener('DOMContentLoaded', () => {
         const bg = document.querySelector('.bg-watermark') as HTMLElement;
         const glow = document.getElementById('mouseGlow') as HTMLElement;
+        const isMobile = window.innerWidth <= 768;
+
+        // SE È MOBILE, DISTRUGGHIAMO IL GLOW PER NON INTRALCIARE I CLICK
+        if (glow && isMobile) {
+          glow.style.display = 'none';
+        }
         
         window.addEventListener('mousemove', (e) => {
-          // Glow fluido che segue il mouse
-          if(glow) {
+          if(glow && !isMobile) {
             glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
           }
-          // Parallasse elegante del logo in background
-          if(bg) {
+          if(bg && !isMobile) {
             const x = (e.clientX / window.innerWidth - 0.5) * 25;
             const y = (e.clientY / window.innerHeight - 0.5) * 25;
             bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
           }
         });
 
-        // Motore Intersection Observer per l'entrata degli elementi
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -75,7 +78,7 @@ const pageTitle = title || cfg.seo.title;
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       });

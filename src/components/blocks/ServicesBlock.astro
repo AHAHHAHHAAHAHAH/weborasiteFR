@@ -15,23 +15,25 @@ const packages = cfg.pricing?.packages || [];
     <div class="grid cols-3">
       {packages.map((pkg: any, index: number) => (
         <div class={`card reveal delay-${index % 3}`} style="padding: 40px 32px; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.6rem;">{pkg.title}</h3>
+          <h3 style="font-size: clamp(1.4rem, 4vw, 1.6rem);">{pkg.title}</h3>
           <p style="font-size: 0.95rem; color: var(--accent2); margin-bottom: 24px;">{pkg.subtitle}</p>
           
-          <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 30px; line-height: 1;">
+          <div style="font-size: clamp(2rem, 6vw, 2.5rem); font-weight: 700; margin-bottom: 30px; line-height: 1;">
             €{pkg.price} <span style="font-size: 1rem; font-weight: 400; color: var(--muted);">/base</span>
           </div>
           
-          <ul style="padding: 0; margin: 0 0 40px 0; list-style: none; display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+          <ul style="padding: 0; margin: 0 0 40px 0; list-style: none; display: flex; flex-direction: column; gap: 14px; flex-grow: 1;">
             {pkg.highlights.map((hl: string) => (
               <li style="display: flex; align-items: flex-start; gap: 12px; color: var(--text); font-size: 1rem;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="margin-top: 3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="margin-top: 3px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 {hl}
               </li>
             ))}
           </ul>
           
-          <a href="/preventivi" class="btn" style="width: 100%;">Seleziona Pacchetto</a>
+          <a href="/preventivi" class="btn" style="width: 100%; position: relative; z-index: 30;">
+            Seleziona Pacchetto
+          </a>
         </div>
       ))}
     </div>

@@ -1,36 +1,48 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+
+// Estraggo gli ID assicurandomi che non ci siano cancelletti o errori dal JSON
+const pathPrimary = section.primaryCta.targetId.replace('#', '');
+const pathSecondary = section.secondaryCta.targetId.replace('#', '');
 ---
 
-<section id={section.id} style="padding: 12vh 0 8vh;">
-  <div class="wrap grid cols-2" style="align-items:center; gap: 60px;">
+<section id={section.id} style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; padding: 0 24px;">
+  
+  <div class="wrap reveal" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 900px; padding-top: 40px;">
     
-    <div class="reveal">
-      <span class="kicker">{section.kicker}</span>
-      <h1 style="white-space:pre-line;">{section.headline}</h1>
-      <p style="max-width: 55ch; font-size: 1.25rem; margin-bottom: 40px; white-space:pre-line;">{section.body}</p>
+    <span class="kicker" style="margin-bottom: 24px;">{section.kicker}</span>
+    
+    <h1 style="white-space:pre-line; background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.6) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      {section.headline}
+    </h1>
+    
+    <p style="font-size: 1.35rem; margin-bottom: 48px; max-width: 45ch; line-height: 1.5; color: rgba(255,255,255,0.7);">
+      Ci occupiamo di siti web, branding e contenuti digitali per chi vuole crescere online in modo serio.
+    </p>
 
-      <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a class="btn primary" href={`/${section.primaryCta.targetId}`}>{section.primaryCta.label}</a>
-        <a class="btn" href={`/${section.secondaryCta.targetId}`}>{section.secondaryCta.label}</a>
-      </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content: center;">
+      <a class="btn primary" style="padding: 18px 40px; font-size: 1.1rem;" href={`/${pathPrimary}`}>
+        {section.primaryCta.label}
+      </a>
+      <a class="btn" style="padding: 18px 40px; font-size: 1.1rem; backdrop-filter: blur(10px);" href={`/${pathSecondary}`}>
+        {section.secondaryCta.label}
+      </a>
     </div>
 
-    <div class="card reveal delay-1" style="padding:32px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: 300px;">
-      <div style="position: absolute; top: -80px; right: -80px; width: 220px; height: 220px; background: var(--accent); filter: blur(100px); opacity: 0.15; z-index: 0; border-radius: 50%;"></div>
-      <div style="position: absolute; bottom: -40px; left: -40px; width: 150px; height: 150px; background: var(--accent2); filter: blur(80px); opacity: 0.1; z-index: 0; border-radius: 50%;"></div>
-      
-      <div style="position: relative; z-index: 1;">
-        <span class="kicker" style="color: var(--muted); margin-bottom: 8px;">Anteprima Progetto</span>
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px;">
-          <strong style="font-size: 1.4rem; font-weight: 600;">{cfg.brand.name}</strong>
-          <img src={cfg.brand.logoPath} alt="Logo Webora" style="height:44px; width:auto;" />
-        </div>
-        <div class="divider"></div>
-        <p style="margin: 0; font-size: 1.05rem; line-height: 1.5;">Progettiamo identità digitali. <br/><span style="color: #fff;">Dati guidati, design ossessivo.</span></p>
-      </div>
-    </div>
-    
   </div>
+
+  <div class="reveal delay-2" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); opacity: 0.5;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: bounce 2s infinite;">
+      <path d="M12 5v14M19 12l-7 7-7-7"/>
+    </svg>
+  </div>
+  
+  <style>
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+  </style>
 </section>

@@ -2,106 +2,249 @@
 import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
-const wa = `https://wa.me/${cfg.contacts.phoneE164}`;
-const mail = `mailto:${cfg.contacts.email}`;
-const ig = cfg.contacts.instagram ? `https://instagram.com/${cfg.contacts.instagram}` : "";
-const web = cfg.contacts.website || "";
-
-const stripeBase = import.meta.env.PUBLIC_STRIPE_LINK_BASE || "";
-const stripeShop = import.meta.env.PUBLIC_STRIPE_LINK_SHOP || "";
-const stripeApp  = import.meta.env.PUBLIC_STRIPE_LINK_APP || "";
+const cont = cfg.contacts;
+const waLink = `https://wa.me/${cont.phoneE164}`;
+const mailLink = `mailto:${cont.email}`;
+const igLink = `https://instagram.com/${cont.instagram}`;
 ---
 
 <section id={section.id} class="section">
-  <div class="wrap grid cols-2">
-    <div>
-      <div class="kicker">{section.kicker}</div>
-      <h2>{section.title}</h2>
-      <p>{section.body}</p>
-
-      <div style="margin-top:14px; display:grid; gap:10px;">
-        <a class="btn primary" href={wa} target="_blank" rel="noreferrer">
-          WhatsApp Business: {cfg.contacts.phoneDisplay}
-        </a>
-        <a class="btn" href={mail}>Email: {cfg.contacts.email}</a>
-
-        {ig ? <a class="btn" href={ig} target="_blank" rel="noreferrer">Instagram: @{cfg.contacts.instagram}</a> : null}
-        {web ? <a class="btn" href={web} target="_blank" rel="noreferrer">Sito/Dominio: {web}</a> : null}
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="small" style="color:var(--muted);">Pagamenti online (Stripe)</div>
-      <p class="note" style="margin-top:8px;">
-        I link Stripe vengono letti da <code>.env</code> (Cloudflare Pages compatibile).
+  <div class="wrap grid cols-2" style="gap: 80px; align-items: center;">
+    
+    <div class="reveal">
+      <span class="kicker">{section.kicker}</span>
+      <h2 style="font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; letter-spacing: -0.02em;">
+        {section.title}
+      </h2>
+      <p style="font-size: 1.25rem; color: var(--muted); margin-bottom: 48px; max-width: 45ch; line-height: 1.6;">
+        {section.body}
       </p>
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <a class="btn primary"
-           href={stripeBase || "#"}
-           target="_blank" rel="noreferrer"
-           style={stripeBase ? "" : "opacity:.5; pointer-events:none;"}>
-          Paga Sito base
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <a href={waLink} target="_blank" rel="noopener noreferrer" class="contact-node">
+          <div class="icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <div>
+            <span class="node-label">Priorità B2B (WhatsApp)</span>
+            <strong class="node-value">{cont.phoneDisplay}</strong>
+          </div>
         </a>
 
-        <a class="btn"
-           href={stripeShop || "#"}
-           target="_blank" rel="noreferrer"
-           style={stripeShop ? "" : "opacity:.5; pointer-events:none;"}>
-          Paga E-commerce
-        </a>
-
-        <a class="btn"
-           href={stripeApp || "#"}
-           target="_blank" rel="noreferrer"
-           style={stripeApp ? "" : "opacity:.5; pointer-events:none;"}>
-          Paga App + Sito
+        <a href={igLink} target="_blank" rel="noopener noreferrer" class="contact-node">
+          <div class="icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </div>
+          <div>
+            <span class="node-label">Portfolio & Life</span>
+            <strong class="node-value">@{cont.instagram}</strong>
+          </div>
         </a>
       </div>
     </div>
 
-    <div class="card" style="padding:18px;">
-      <strong>Messaggio rapido</strong>
+    <div class="reveal delay-1">
+      <div class="card" style="padding: 48px 40px; border-radius: 24px;">
+        <h3 style="margin-bottom: 32px; font-size: 1.6rem; color: var(--text);">...Oppure raccontaci la tua idea via mail</h3>
+        
+        <form id="boutiqueForm" data-email={cont.email} class="contact-form">
+          <input type="hidden" name="_subject" value="🚀 Nuovo Lead dal sito Webora Studio!">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          
+          <div class="input-group">
+            <label for="name">Nome o Azienda</label>
+            <input type="text" id="name" name="name" required class="premium-input" placeholder="Es. Mario Rossi" />
+          </div>
 
-      <label for="msg">Scrivi qui</label>
-      <textarea id="msg" class="field" rows="7" placeholder={"Ciao " + cfg.brand.name + ", vorrei..."}></textarea>
+          <div class="input-group">
+            <label for="email">Email di contatto</label>
+            <input type="email" id="email" name="email" required class="premium-input" placeholder="nome@azienda.it" />
+          </div>
 
-      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-        <button class="btn primary" id="sendWa" type="button">Invia WhatsApp</button>
-        <a class="btn" id="sendMail" href={mail}>Invia Email</a>
+          <div class="input-group">
+            <label for="message">Il tuo progetto</label>
+            <textarea id="message" name="message" rows="4" required class="premium-input" placeholder="Spiegaci brevemente cosa hai in mente di realizzare..."></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn primary" style="width: 100%; margin-top: 16px; padding: 20px; font-size: 1.1rem; border-radius: 16px;">
+            Invia Richiesta
+          </button>
+        </form>
       </div>
-
-      <div class="note" style="margin-top:12px;">Ti rispondiamo appena possibile.</div>
-
-      <script type="module" define:vars={{ CFG: cfg }}>
-        const msg = document.getElementById("msg");
-        const waBtn = document.getElementById("sendWa");
-        const mailA = document.getElementById("sendMail");
-
-        if (!msg || !waBtn || !mailA) {
-          console.warn("Contacts elements missing");
-        } else {
-          const wa = "https://wa.me/" + CFG.contacts.phoneE164;
-          const enc = (s) => encodeURIComponent(s || "");
-
-          function syncMail() {
-            const text = (msg.value || "").trim();
-            const subject = "Contatto " + CFG.brand.name;
-            mailA.href = "mailto:" + CFG.contacts.email +
-              "?subject=" + enc(subject) +
-              "&body=" + enc(text);
-          }
-
-          msg.addEventListener("input", syncMail);
-
-          waBtn.addEventListener("click", () => {
-            const text = (msg.value || "").trim() || ("Ciao " + CFG.brand.name + "!");
-            window.open(wa + "?text=" + enc(text), "_blank");
-          });
-
-          syncMail();
-        }
-      </script>
     </div>
+
   </div>
 </section>
+
+<style>
+  /* Stili Interattivi per i Nodi di Contatto */
+  .contact-node {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .contact-node:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.15);
+    transform: translateX(8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  
+  .icon-box {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: rgba(179, 91, 91, 0.1);
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+  .contact-node:hover .icon-box {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .node-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .node-value {
+    display: block;
+    font-size: 1.15rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  /* Stili Form Boutique */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .input-group label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  
+  .premium-input {
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    resize: none;
+  }
+  .premium-input::placeholder {
+    color: rgba(255,255,255,0.15);
+  }
+  .premium-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15);
+    background: rgba(0,0,0,0.5);
+  }
+
+  /* Animazione di caricamento sul bottone */
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .loader {
+    border: 2px solid rgba(255,255,255,0.2); 
+    border-top-color: #fff; 
+    border-radius: 50%;
+    width: 20px; height: 20px; 
+    animation: spin 1s linear infinite; 
+    display: inline-block;
+  }
+  
+  @media (max-width: 768px) {
+    .wrap.grid.cols-2 {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+    .card {
+      padding: 32px 24px !important;
+    }
+  }
+</style>
+
+<script>
+  // FORMSUBMIT INVISIBILE (AJAX)
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('boutiqueForm') as HTMLFormElement;
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (form && submitBtn) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        
+        const targetEmail = form.getAttribute('data-email');
+        const url = `https://formsubmit.co/ajax/${targetEmail}`;
+        const formData = new FormData(form);
+        const originalText = submitBtn.innerHTML;
+
+        // Feedback: In caricamento...
+        submitBtn.innerHTML = '<span class="loader"></span>';
+        submitBtn.style.pointerEvents = "none";
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            // Successo: Cambia colore e testo
+            submitBtn.innerHTML = "Richiesta Inviata!";
+            submitBtn.style.background = "#2ecc71"; // Verde successo
+            submitBtn.style.color = "#000";
+            form.reset();
+          } else {
+            throw new Error("Errore API");
+          }
+        } catch (error) {
+          // Errore
+          submitBtn.innerHTML = "Errore di invio";
+          submitBtn.style.background = "#e74c3c"; // Rosso errore
+        }
+
+        // Ritorna alla normalità dopo 4 secondi
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.style.background = "";
+          submitBtn.style.color = "";
+          submitBtn.style.pointerEvents = "auto";
+        }, 4000);
+
+      });
+    }
+  });
+</script>

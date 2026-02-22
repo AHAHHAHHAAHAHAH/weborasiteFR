@@ -2,7 +2,6 @@
 import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
-// Pulizia stringhe: Garantisce url assoluti puri
 const pathPrimary = section.primaryCta.targetId.replace('#', '').replace('/', '');
 const pathSecondary = section.secondaryCta.targetId.replace('#', '').replace('/', '');
 ---
@@ -21,11 +20,11 @@ const pathSecondary = section.secondaryCta.targetId.replace('#', '').replace('/'
       {section.body}
     </p>
 
-    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content: center;">
-      <a class="btn primary" href={`/${pathPrimary}`} style="padding: 20px 48px; font-size: 1.15rem;">
+    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content: center; align-items: center; width: 100%;">
+      <a class="btn primary" href={`/${pathPrimary}`} style="padding: 18px 46px; font-size: 1.15rem;">
         {section.primaryCta.label}
       </a>
-      <a class="btn" href={`/${pathSecondary}`} style="padding: 20px 48px; font-size: 1.15rem; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);">
+      <a class="btn" href={`/${pathSecondary}`} style="padding: 18px 46px; font-size: 1.15rem;">
         {section.secondaryCta.label}
       </a>
     </div>

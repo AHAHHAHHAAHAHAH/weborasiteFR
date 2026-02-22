@@ -1,36 +1,45 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+
+// Creazione del percorso blindato per il tasto "Richiedi Consulenza"
+const ctaPath = section.cta?.targetId ? section.cta.targetId.replace('#', '').replace('/', '') : '';
 ---
 
 <section id={section.id} class="section">
   <div class="wrap">
-    <div class="kicker">{section.kicker}</div>
-    <h2>{section.title}</h2>
-    <p>{section.body}</p>
+    
+    <div class="reveal" style="text-align: center; max-width: 800px; margin: 0 auto 60px;">
+      <span class="kicker">{section.kicker}</span>
+      <h2>{section.title}</h2>
+      <p style="font-size: 1.25rem; color: var(--muted); line-height: 1.6;">{section.body}</p>
+    </div>
 
-    <div class="grid cols-2" style="margin-top:18px;">
-      {section.items?.map((it) => (
-        <article class="card" style="padding:18px;">
-          <div class="small" style="color:var(--muted);">{it.subtitle}</div>
-          <h3 style="margin:10px 0 10px; font-size:1.2rem;">{it.title}</h3>
-
-          <ul style="margin:0; padding-left:18px; color:var(--muted); line-height:1.65;">
-            {it.bullets?.map((b) => <li>{b}</li>)}
+    <div class="grid cols-4">
+      {section.items.map((item: any, index: number) => (
+        <div class={`card reveal delay-${index % 4}`} style="padding: 32px 24px; display: flex; flex-direction: column;">
+          <h3 style="color: var(--text); font-size: 1.35rem;">{item.title}</h3>
+          <p style="font-size: 0.95rem; color: var(--accent2); margin-bottom: 24px; font-weight: 600;">{item.subtitle}</p>
+          
+          <ul style="padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; flex-grow: 1;">
+            {item.bullets.map((bullet: string) => (
+              <li style="display: flex; align-items: flex-start; gap: 10px; color: var(--muted); font-size: 1rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 3px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span style="line-height: 1.4;">{bullet}</span>
+              </li>
+            ))}
           </ul>
-        </article>
+        </div>
       ))}
     </div>
 
-    {section.cta?.targetId ? (
-      <div style="margin-top:18px;">
-        <a class="btn primary" href={`#${section.cta.targetId}`}>{section.cta.label}</a>
+    {section.cta && (
+      <div class="reveal delay-2" style="text-align: center; margin-top: 60px;">
+        <a href={`/${ctaPath}`} class="btn primary" style="padding: 18px 48px; font-size: 1.1rem; position: relative; z-index: 30;">
+          {section.cta.label}
+        </a>
       </div>
-    ) : null}
-
-    <div style="margin-top:14px; display:flex; align-items:center; gap:10px; opacity:.9;">
-      <img src={cfg.brand.logoPath} alt="" style="height:18px; width:auto;" />
-      <span class="note">Coerenza visiva e contenuti: stessa direzione, stesso stile.</span>
-    </div>
+    )}
+    
   </div>
 </section>

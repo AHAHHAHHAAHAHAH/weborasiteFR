@@ -104,16 +104,16 @@
     {
       "type": "features",
       "id": "branding",
-      "kicker": "L'Identità",
-      "title": "Costruiamo un’identità incrollabile",
-      "body": "Non ti serve solo un sito. Ti serve un'aura di autorità. Rendiamo il tuo brand riconoscibile al primo sguardo, in ogni contesto.",
+      "kicker": "Sviluppo & Gestionali",
+      "title": "La tua visione, la nostra ingegneria.",
+      "body": "Sviluppiamo siti web e applicazioni gestionali su misura, partendo da un prezzo base trasparente. Garantiamo scalabilità assoluta e una professionalità rigorosa per trasformare le tue idee in una realtà digitale concreta.",
       "items": [
-        { "title": "Branding", "subtitle": "Autorità Visiva", "bullets": ["Logo & varianti", "Palette & tipografia", "Linee guida rigide", "Template social"] },
-        { "title": "Contenuti", "subtitle": "Presenza Magnetica", "bullets": ["Post & carousel", "Copywriting strategico", "Video scripts", "Grafiche di lancio"] },
-        { "title": "Ottimizzazione", "subtitle": "Performance Assoluta", "bullets": ["Architettura UX", "CTA psicologiche", "SEO tecnico", "Caricamento fulmineo"] },
-        { "title": "Metodo", "subtitle": "Ingegneria pura", "bullets": ["Brief analitico", "Prototipazione", "Sviluppo custom", "Scalabilità"] }
+        { "title": "Siti Web Premium", "subtitle": "Identità e Conversione", "bullets": ["Design su misura", "Mobile perfetto", "Ottimizzazione SEO", "Velocità estrema"] },
+        { "title": "App Gestionali", "subtitle": "Controllo Totale", "bullets": ["Flussi personalizzati", "Dashboard intuitive", "Dati in tempo reale", "Massima sicurezza"] },
+        { "title": "Scalabilità", "subtitle": "Cresce con te", "bullets": ["Infrastruttura solida", "Integrazioni future", "Performance estreme", "Zero limiti tecnici"] },
+        { "title": "Professionalità", "subtitle": "Serietà Assoluta", "bullets": ["Prezzi base chiari", "Rispetto scadenze", "Sviluppo trasparente", "Supporto dedicato"] }
       ],
-      "cta": { "label": "Richiedi Consulenza", "targetId": "contatti" }
+      "cta": { "label": "Richiedi una consulenza", "targetId": "contatti" }
     },
     {
       "type": "services",

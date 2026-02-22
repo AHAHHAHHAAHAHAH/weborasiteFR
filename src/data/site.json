@@ -36,30 +36,31 @@
   },
   "pricing": {
     "currency": "EUR",
+    "disclaimer": "Nessun ostaggio. Il prodotto finito è tuo per sempre.\nL'abbonamento serve a mantenerlo vivo: copre i costi dei server, gli aggiornamenti di sicurezza, licenze esterne e la nostra assistenza diretta. Puoi disdire quando vuoi (manterrai il software, ma perderai manutenzione e supporto).",
     "packages": [
       {
-        "id": "base",
-        "title": "Sito web base",
-        "subtitle": "Perfetto per piccole attività",
-        "price": 299.99,
-        "for": ["Bar", "Ristoranti", "Parrucchieri", "Macellerie", "Piccole attività"],
-        "highlights": ["Design professionale", "Mobile-first", "Pagina contatti", "Struttura chiara"]
+        "id": "sito-web",
+        "title": "Sito Web Premium",
+        "subtitle": "La tua vetrina ad alta conversione.",
+        "basePrice": 250,
+        "monthlyPrices": { "1": 24.99, "6": 17.99, "12": 12.99 },
+        "highlights": ["Design su misura", "Ottimizzazione SEO", "Server ad alte prestazioni", "Assistenza e modifiche"]
       },
       {
-        "id": "shop",
-        "title": "Sito shopping online",
-        "subtitle": "Ideale per iniziare un e-commerce",
-        "price": 900,
-        "for": ["Chi vuole vendere online"],
-        "highlights": ["Catalogo prodotti", "Carrello", "Checkout", "Struttura e-commerce"]
+        "id": "gestionale",
+        "title": "App Gestionale",
+        "subtitle": "Il motore della tua azienda.",
+        "basePrice": 1200,
+        "monthlyPrices": { "1": 49.99, "6": 34.99, "12": 24.99 },
+        "highlights": ["Flussi su misura", "Dati in tempo reale", "Automazione processi", "Database sicuro e scalabile"]
       },
       {
-        "id": "app_plus_site",
-        "title": "App + sito web",
-        "subtitle": "Ordini + pagamenti",
-        "price": 1200,
-        "for": ["Business con ordini"],
-        "highlights": ["App ordini", "Pagamenti", "Flusso su misura", "Soluzione completa"]
+        "id": "ecosistema",
+        "title": "Sito + Gestionale",
+        "subtitle": "Il dominio digitale totale.",
+        "basePrice": 1400,
+        "monthlyPrices": { "1": 64.99, "6": 49.99, "12": 37.99 },
+        "highlights": ["Tutto incluso", "Integrazione perfetta", "Priorità di assistenza", "Risparmio massimizzato"]
       }
     ]
   },
@@ -118,9 +119,9 @@
     {
       "type": "services",
       "id": "servizi",
-      "kicker": "Le Soluzioni",
-      "title": "Strumenti per dominare",
-      "body": "Nessun abbonamento nascosto. Pacchetti chiari, definiti, costruiti per generare risultati tangibili dal giorno zero."
+      "kicker": "I Piani",
+      "title": "Investimenti chiari. Zero sorprese.",
+      "body": "Non vendiamo fumo. Paghi il setup iniziale per costruire l'infrastruttura, e un piano per mantenerla sempre perfetta e aggiornata."
     },
     { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza" },
     {

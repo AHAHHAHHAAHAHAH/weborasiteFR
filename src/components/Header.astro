@@ -3,46 +3,203 @@ import type { SiteConfig } from "../lib/siteConfig";
 const { cfg } = Astro.props as { cfg: SiteConfig };
 
 const cta = cfg.navigation.cta;
-// Costruiamo il link assoluto eliminando cancelletti e slash indesiderati
+// Costruiamo il link assoluto
 const ctaHref = cta.type === "whatsapp" ? `https://wa.me/${cfg.contacts.phoneE164}` : `/${cta.targetId.replace('#','').replace('/','')}`;
 ---
 
-<header style="position:fixed; top:24px; left:24px; right:24px; z-index:50; display:flex; justify-content:space-between; align-items:flex-start; pointer-events:none;">
+<header class="site-header">
   
-  <a href="/" style="pointer-events:auto; display:flex; align-items:center; gap:16px; transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.opacity='0.8'" onmouseout="this.style.transform='scale(1)'; this.style.opacity='1'">
-    <img src={cfg.brand.logoPath} alt={cfg.brand.name} style="height:36px; width:auto; display:block;" />
-    <div style="display:flex; flex-direction:column; line-height: 1.1;">
-      <strong style="font-size:1.1rem; font-weight: 700; letter-spacing:0.02em; color: var(--text);">{cfg.brand.name}</strong>
-      <span style="font-size: 0.75rem; color: var(--accent2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">Studio</span>
+  <a href="/" class="header-logo">
+    <img src={cfg.brand.logoPath} alt={cfg.brand.name} class="logo-img" />
+    <div class="logo-text">
+      <strong>{cfg.brand.name}</strong>
+      <span>Studio</span>
     </div>
   </a>
 
-  <div style="display:flex; align-items:center; gap:16px; pointer-events:auto;">
-    <a class="btn" style="padding: 12px 28px; font-size: 0.95rem; font-weight: 600; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08);" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined}>
+  <div class="header-actions">
+    <a class="btn header-cta" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined}>
       {cta.label}
     </a>
     
-    <button class="btn" id="openDrawer" aria-label="Menu" style="padding: 14px; border-radius: 50%; width: 54px; height: 54px; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08);">
-      <span style="display:flex; flex-direction:column; gap:6px; width:22px; align-items:flex-end;">
-        <span style="display:block; width:100%; height:2px; background:var(--text); border-radius:2px; transition: width 0.2s;"></span>
-        <span style="display:block; width:70%; height:2px; background:var(--text); border-radius:2px; transition: width 0.2s;"></span>
+    <button class="btn header-menu-btn" id="openDrawer" aria-label="Menu">
+      <span class="hamburger">
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
       </span>
     </button>
   </div>
 
-  <script>
-    document.getElementById("openDrawer")?.addEventListener("click", () => {
-      window.dispatchEvent(new CustomEvent("webora:drawer:open"));
-    });
-    // Piccola interazione hover sul bottone hamburger
-    const btn = document.getElementById("openDrawer");
-    btn?.addEventListener("mouseenter", () => {
-      const lines = btn.querySelectorAll("span > span") as NodeListOf<HTMLElement>;
-      if(lines[1]) lines[1].style.width = "100%";
-    });
-    btn?.addEventListener("mouseleave", () => {
-      const lines = btn.querySelectorAll("span > span") as NodeListOf<HTMLElement>;
-      if(lines[1]) lines[1].style.width = "70%";
-    });
-  </script>
 </header>
+
+<style>
+  /* ==========================================
+     MONDO DESKTOP (Il Lusso Fluttuante)
+     ========================================== */
+  .site-header {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    right: 24px;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none; /* Fa passare i click attraverso lo spazio vuoto */
+  }
+
+  .header-logo {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .header-logo:hover {
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+
+  .logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .logo-text strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+  .logo-text span {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    pointer-events: auto;
+  }
+
+  .header-cta {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .header-menu-btn {
+    padding: 14px;
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 22px;
+    align-items: flex-end;
+  }
+  .hamburger .line {
+    display: block;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: width 0.2s ease;
+  }
+  .hamburger .line-1 { width: 100%; }
+  .hamburger .line-2 { width: 70%; }
+
+  .header-menu-btn:hover .line-2 {
+    width: 100%;
+  }
+
+  /* ==========================================
+     MONDO MOBILE (Minimalismo e Focus)
+     ========================================== */
+  @media (max-width: 768px) {
+    .site-header {
+      /* Absolute invece di Fixed: resta in alto ma scrolla via, liberando lo schermo! */
+      position: absolute; 
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      align-items: center;
+    }
+
+    .header-logo {
+      gap: 10px;
+    }
+    
+    .logo-img {
+      height: 26px; /* Logo rimpicciolito */
+    }
+    
+    .logo-text strong {
+      font-size: 1rem;
+    }
+    
+    .logo-text span {
+      display: none; /* Nascondiamo la scritta "Studio" per fare pulizia visiva */
+    }
+
+    .header-actions {
+      gap: 10px;
+    }
+
+    .header-cta {
+      padding: 10px 16px;
+      font-size: 0.85rem;
+    }
+
+    .header-menu-btn {
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+    }
+
+    .hamburger {
+      width: 18px;
+      gap: 4px;
+    }
+  }
+
+  /* ==========================================
+     MONDO SMARTPHONE PICCOLI (< 400px)
+     ========================================== */
+  @media (max-width: 400px) {
+    .header-cta {
+      display: none; /* Su schermi piccolissimi nascondiamo la CTA dell'header. C'è già la Hero. */
+    }
+  }
+</style>
+
+<script>
+  // Logica apertura Drawer
+  document.getElementById("openDrawer")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("webora:drawer:open"));
+  });
+</script>

@@ -1,0 +1,30 @@
+---
+import { loadSiteConfig } from "../lib/siteConfig";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+
+const cfg = await loadSiteConfig();
+
+export async function getStaticPaths() {
+  const cfg = await loadSiteConfig();
+  const items = (cfg.navigation?.items || []).filter((i) => i.id && i.id !== "home");
+
+  return items.map((i) => ({
+    params: { section: i.id },
+    props: { sectionId: i.id },
+  }));
+}
+
+const { sectionId } = Astro.props;
+const section = (cfg.sections || []).find((s) => s.id === sectionId);
+
+if (!section) {
+  throw new Error(`Section not found for id: ${sectionId}`);
+}
+
+const pageTitle = `${cfg.brand.name} — ${section.title ?? sectionId}`;
+---
+
+<BaseLayout cfg={cfg} title={pageTitle}>
+  <SectionRenderer cfg={cfg} section={section} />
+</BaseLayout>

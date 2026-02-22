@@ -1,0 +1,31 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id={section.id} style="padding: 78px 0 64px;">
+  <div class="wrap grid cols-2" style="align-items:center;">
+    <div>
+      <div class="kicker">{section.kicker}</div>
+      <h1 style="margin:10px 0 14px; font-size: clamp(2.2rem, 4.2vw, 3.4rem); line-height:1.05; white-space:pre-line;">
+        {section.headline}
+      </h1>
+      <p style="max-width: 60ch; white-space:pre-line;">{section.body}</p>
+
+      <div style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;">
+        <a class="btn primary" href={`#${section.primaryCta.targetId}`}>{section.primaryCta.label}</a>
+        <a class="btn" href={`#${section.secondaryCta.targetId}`}>{section.secondaryCta.label}</a>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <div class="kicker">Preview</div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+        <strong>{cfg.brand.name}</strong>
+        <img src={cfg.brand.logoPath} alt="" style="height:34px; width:auto;" />
+      </div>
+      <div class="divider"></div>
+      <p class="note">Minimal • Elegante • Professionale (tema e colori dal JSON).</p>
+    </div>
+  </div>
+</section>

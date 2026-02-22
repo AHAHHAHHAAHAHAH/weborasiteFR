@@ -1,0 +1,107 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+
+const wa = `https://wa.me/${cfg.contacts.phoneE164}`;
+const mail = `mailto:${cfg.contacts.email}`;
+const ig = cfg.contacts.instagram ? `https://instagram.com/${cfg.contacts.instagram}` : "";
+const web = cfg.contacts.website || "";
+
+const stripeBase = import.meta.env.PUBLIC_STRIPE_LINK_BASE || "";
+const stripeShop = import.meta.env.PUBLIC_STRIPE_LINK_SHOP || "";
+const stripeApp  = import.meta.env.PUBLIC_STRIPE_LINK_APP || "";
+---
+
+<section id={section.id} class="section">
+  <div class="wrap grid cols-2">
+    <div>
+      <div class="kicker">{section.kicker}</div>
+      <h2>{section.title}</h2>
+      <p>{section.body}</p>
+
+      <div style="margin-top:14px; display:grid; gap:10px;">
+        <a class="btn primary" href={wa} target="_blank" rel="noreferrer">
+          WhatsApp Business: {cfg.contacts.phoneDisplay}
+        </a>
+        <a class="btn" href={mail}>Email: {cfg.contacts.email}</a>
+
+        {ig ? <a class="btn" href={ig} target="_blank" rel="noreferrer">Instagram: @{cfg.contacts.instagram}</a> : null}
+        {web ? <a class="btn" href={web} target="_blank" rel="noreferrer">Sito/Dominio: {web}</a> : null}
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="small" style="color:var(--muted);">Pagamenti online (Stripe)</div>
+      <p class="note" style="margin-top:8px;">
+        I link Stripe vengono letti da <code>.env</code> (Cloudflare Pages compatibile).
+      </p>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn primary"
+           href={stripeBase || "#"}
+           target="_blank" rel="noreferrer"
+           style={stripeBase ? "" : "opacity:.5; pointer-events:none;"}>
+          Paga Sito base
+        </a>
+
+        <a class="btn"
+           href={stripeShop || "#"}
+           target="_blank" rel="noreferrer"
+           style={stripeShop ? "" : "opacity:.5; pointer-events:none;"}>
+          Paga E-commerce
+        </a>
+
+        <a class="btn"
+           href={stripeApp || "#"}
+           target="_blank" rel="noreferrer"
+           style={stripeApp ? "" : "opacity:.5; pointer-events:none;"}>
+          Paga App + Sito
+        </a>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <strong>Messaggio rapido</strong>
+
+      <label for="msg">Scrivi qui</label>
+      <textarea id="msg" class="field" rows="7" placeholder={"Ciao " + cfg.brand.name + ", vorrei..."}></textarea>
+
+      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn primary" id="sendWa" type="button">Invia WhatsApp</button>
+        <a class="btn" id="sendMail" href={mail}>Invia Email</a>
+      </div>
+
+      <div class="note" style="margin-top:12px;">Ti rispondiamo appena possibile.</div>
+
+      <script type="module" define:vars={{ CFG: cfg }}>
+        const msg = document.getElementById("msg");
+        const waBtn = document.getElementById("sendWa");
+        const mailA = document.getElementById("sendMail");
+
+        if (!msg || !waBtn || !mailA) {
+          console.warn("Contacts elements missing");
+        } else {
+          const wa = "https://wa.me/" + CFG.contacts.phoneE164;
+          const enc = (s) => encodeURIComponent(s || "");
+
+          function syncMail() {
+            const text = (msg.value || "").trim();
+            const subject = "Contatto " + CFG.brand.name;
+            mailA.href = "mailto:" + CFG.contacts.email +
+              "?subject=" + enc(subject) +
+              "&body=" + enc(text);
+          }
+
+          msg.addEventListener("input", syncMail);
+
+          waBtn.addEventListener("click", () => {
+            const text = (msg.value || "").trim() || ("Ciao " + CFG.brand.name + "!");
+            window.open(wa + "?text=" + enc(text), "_blank");
+          });
+
+          syncMail();
+        }
+      </script>
+    </div>
+  </div>
+</section>

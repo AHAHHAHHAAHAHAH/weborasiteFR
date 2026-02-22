@@ -1,0 +1,39 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id={section.id} class="section">
+  <div class="wrap">
+    <div class="kicker">{section.kicker}</div>
+    <h2>{section.title}</h2>
+    <p>{section.body}</p>
+
+    <div class="grid cols-3" style="margin-top:18px;">
+      {cfg.pricing.packages.map(p => (
+        <article class="card" style="padding:18px;">
+          <div class="small" style="color:var(--muted);">{p.subtitle}</div>
+          <h3 style="margin:10px 0 8px; font-size:1.2rem;">{p.title}</h3>
+
+          <div style="margin:10px 0 14px;">
+            <span style="font-size:1.35rem; font-weight:900;">€ {Number(p.price).toFixed(2).replace(".", ",")}</span>
+          </div>
+
+          <div class="small" style="color:var(--muted);">Ideale per:</div>
+          <ul style="margin:8px 0 10px; padding-left:18px; color:var(--muted); line-height:1.6;">
+            {p.for.map(x => <li>{x}</li>)}
+          </ul>
+
+          <div class="small" style="color:var(--muted);">Include:</div>
+          <ul style="margin:8px 0 0; padding-left:18px; color:var(--muted); line-height:1.6;">
+            {p.highlights.map(x => <li>{x}</li>)}
+          </ul>
+
+          <div style="margin-top:14px;">
+            <a class="btn primary" href="#preventivi">Scegli</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

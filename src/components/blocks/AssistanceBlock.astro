@@ -1,0 +1,64 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+
+const wa = `https://wa.me/${cfg.contacts.phoneE164}`;
+const mailBase = `mailto:${cfg.contacts.email}`;
+---
+
+<section id={section.id} class="section">
+  <div class="wrap grid cols-2">
+    <div>
+      <div class="kicker">{section.kicker}</div>
+      <h2>{section.title}</h2>
+      <p>{section.body}</p>
+
+      <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+        <a class="btn primary" href={wa} target="_blank" rel="noreferrer">WhatsApp Business</a>
+        <a class="btn" href={mailBase}>Email</a>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <label for="helpMsg">Messaggio</label>
+      <textarea id="helpMsg" class="field" rows="6" placeholder={section.placeholder}></textarea>
+
+      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn primary" id="sendHelpWa" type="button">Invia su WhatsApp</button>
+        <a class="btn" id="sendHelpMail" href={mailBase}>Invia via Email</a>
+      </div>
+
+      <div class="note" style="margin-top:12px;">Ti rispondiamo appena possibile.</div>
+
+      <script type="module" define:vars={{ CFG: cfg }}>
+        const msg = document.getElementById("helpMsg");
+        const waBtn = document.getElementById("sendHelpWa");
+        const mailA = document.getElementById("sendHelpMail");
+
+        if (!msg || !waBtn || !mailA) {
+          console.warn("Assistance elements missing");
+        } else {
+          const wa = "https://wa.me/" + CFG.contacts.phoneE164;
+          const enc = (s) => encodeURIComponent(s || "");
+
+          function syncMail() {
+            const text = (msg.value || "").trim();
+            const subject = "Richiesta assistenza";
+            mailA.href = "mailto:" + CFG.contacts.email +
+              "?subject=" + enc(subject) +
+              "&body=" + enc(text);
+          }
+
+          msg.addEventListener("input", syncMail);
+
+          waBtn.addEventListener("click", () => {
+            const text = (msg.value || "").trim() || ("Ciao " + CFG.brand.name + "! Vorrei un consiglio.");
+            window.open(wa + "?text=" + enc(text), "_blank");
+          });
+
+          syncMail();
+        }
+      </script>
+    </div>
+  </div>
+</section>

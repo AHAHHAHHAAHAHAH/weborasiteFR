@@ -1,0 +1,111 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id="preventivi" class="section">
+  <div class="wrap grid cols-2">
+    <div>
+      <div class="kicker">Preventivi</div>
+      <h2>{cfg.preventivo.title}</h2>
+      <p>{cfg.preventivo.subtitle}</p>
+
+      <div class="card" style="padding:18px; margin-top:16px;">
+        <label for="activity">Attività</label>
+        <select id="activity" class="field">
+          {cfg.preventivo.activities.map(a => <option value={a.id}>{a.label}</option>)}
+        </select>
+
+        <label for="place">Luogo</label>
+        <select id="place" class="field">
+          {cfg.preventivo.places.map(l => <option value={l.id} data-mult={l.multiplier}>{l.label}</option>)}
+        </select>
+
+        <label for="pack">Pacchetto</label>
+        <select id="pack" class="field">
+          {cfg.pricing.packages.map(p => <option value={p.id} data-price={p.price}>{p.title}</option>)}
+        </select>
+
+        <div class="divider"></div>
+
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <div>
+            <div class="small" style="color:var(--muted);">Totale</div>
+            <div id="price" style="font-size:1.8rem; font-weight:950;">€ —</div>
+            <div class="note">{cfg.preventivo.resultNote}</div>
+          </div>
+
+          <button class="btn primary" id="sendPreventivo">Invia su WhatsApp Business</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <div class="kicker">Metodo</div>
+      <h3 style="margin:10px 0;">Ascolto → Progettazione → Risultati</h3>
+      <p class="note">Ti mandiamo un riepilogo completo su WhatsApp Business.</p>
+    </div>
+  </div>
+
+  <script type="module" define:vars={{ CFG: cfg }}>
+  const pack = document.getElementById("pack");
+  const place = document.getElementById("place");
+  const activity = document.getElementById("activity");
+  const out = document.getElementById("price");
+  const btn = document.getElementById("sendPreventivo");
+
+  if (!pack || !place || !activity || !out || !btn) {
+    console.warn("Preventivo elements missing");
+  } else {
+    const waBase = "https://wa.me/" + CFG.contacts.phoneE164;
+
+    function eur(n) {
+      return "€ " + Number(n).toFixed(2).replace(".", ",");
+    }
+    function enc(s) {
+      return encodeURIComponent(s || "");
+    }
+
+    function calc() {
+      const popt = pack.selectedOptions[0];
+      const lopt = place.selectedOptions[0];
+
+      const base = Number(popt?.dataset?.price || 0);
+      const mult = Number(lopt?.dataset?.mult || 1);
+      const total = base * mult;
+
+      out.textContent = eur(total);
+      return { total };
+    }
+
+    function summary() {
+      const aText = activity.selectedOptions[0]?.textContent || "";
+      const lText = place.selectedOptions[0]?.textContent || "";
+      const pText = pack.selectedOptions[0]?.textContent || "";
+      const { total } = calc();
+
+      return (
+        `Ciao ${CFG.brand.name}! Preventivo:\n` +
+        `- Attività: ${aText}\n` +
+        `- Luogo: ${lText}\n` +
+        `- Pacchetto: ${pText}\n` +
+        `Totale: ${eur(total)}\n\n` +
+        `Contatti:\n${CFG.contacts.phoneDisplay}\n${CFG.contacts.email}\n` +
+        (CFG.contacts.instagram ? `IG: @${CFG.contacts.instagram}\n` : "")
+      );
+    }
+
+    ["change", "input"].forEach((ev) => {
+      pack.addEventListener(ev, calc);
+      place.addEventListener(ev, calc);
+      activity.addEventListener(ev, calc);
+    });
+
+    btn.addEventListener("click", () => {
+      window.open(waBase + "?text=" + enc(summary()), "_blank");
+    });
+
+    calc();
+  }
+</script>
+</section>

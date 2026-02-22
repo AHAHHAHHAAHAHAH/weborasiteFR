@@ -1,0 +1,17 @@
+---
+import { loadSiteConfig } from "../lib/siteConfig";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+
+const cfg = await loadSiteConfig();
+
+const hero = (cfg.sections || []).find((s) => s.type === "hero");
+const features = (cfg.sections || []).find((s) => s.id === "branding" || s.type === "features");
+const services = (cfg.sections || []).find((s) => s.id === "servizi" || s.type === "services");
+---
+
+<BaseLayout cfg={cfg} title={cfg.brand.name}>
+  {hero && <SectionRenderer cfg={cfg} section={hero} />}
+  {features && <SectionRenderer cfg={cfg} section={features} />}
+  {services && <SectionRenderer cfg={cfg} section={services} />}
+</BaseLayout>

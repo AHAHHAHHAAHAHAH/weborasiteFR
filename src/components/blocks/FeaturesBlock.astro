@@ -1,0 +1,36 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id={section.id} class="section">
+  <div class="wrap">
+    <div class="kicker">{section.kicker}</div>
+    <h2>{section.title}</h2>
+    <p>{section.body}</p>
+
+    <div class="grid cols-2" style="margin-top:18px;">
+      {section.items?.map((it) => (
+        <article class="card" style="padding:18px;">
+          <div class="small" style="color:var(--muted);">{it.subtitle}</div>
+          <h3 style="margin:10px 0 10px; font-size:1.2rem;">{it.title}</h3>
+
+          <ul style="margin:0; padding-left:18px; color:var(--muted); line-height:1.65;">
+            {it.bullets?.map((b) => <li>{b}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    {section.cta?.targetId ? (
+      <div style="margin-top:18px;">
+        <a class="btn primary" href={`#${section.cta.targetId}`}>{section.cta.label}</a>
+      </div>
+    ) : null}
+
+    <div style="margin-top:14px; display:flex; align-items:center; gap:10px; opacity:.9;">
+      <img src={cfg.brand.logoPath} alt="" style="height:18px; width:auto;" />
+      <span class="note">Coerenza visiva e contenuti: stessa direzione, stesso stile.</span>
+    </div>
+  </div>
+</section>

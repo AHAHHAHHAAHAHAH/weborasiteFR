@@ -1,0 +1,38 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id={section.id} class="section">
+  <div class="wrap">
+    <div class="kicker">{section.kicker}</div>
+    <h2>{section.title}</h2>
+    <p>{section.body}</p>
+
+    <div class="grid cols-3" style="margin-top:18px;">
+      {section.items?.map((it) => (
+        <article class="card" style="padding:18px; display:flex; flex-direction:column; gap:10px;">
+          <div class="small" style="color:var(--muted);">{it.industry}</div>
+          <h3 style="margin:0; font-size:1.15rem; line-height:1.15;">{it.title}</h3>
+          <p class="small" style="color:var(--muted); margin-top:4px;">{it.outcome}</p>
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            {it.tags?.map((t) => (
+              <span style="font-size:.78rem; padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); background: rgba(255,255,255,.03);">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {it.link ? (
+            <div style="margin-top:auto;">
+              <a class="btn" href={it.link} target="_blank" rel="noreferrer">Apri</a>
+            </div>
+          ) : (
+            <div style="margin-top:auto;" class="note">Link non disponibile</div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

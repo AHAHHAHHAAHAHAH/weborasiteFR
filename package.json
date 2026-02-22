@@ -1,0 +1,17 @@
+{
+  "name": "webora-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+    
+  },
+  "devDependencies": {
+    "@astrojs/cloudflare": "^12.6.12"
+  }
+}

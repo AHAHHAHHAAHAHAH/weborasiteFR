@@ -1,0 +1,14 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<footer id="footer" style="border-top:1px solid var(--line); padding:26px 0; background: rgba(255,255,255,.02);">
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src={cfg.brand.logoPath} alt={cfg.brand.name} style="height:22px; width:auto;" />
+      <span class="small" style="color:var(--muted);">© {new Date().getFullYear()} {cfg.brand.name}</span>
+    </div>
+    <div class="small" style="color:var(--muted);">Astro • Cloudflare Pages • Stripe • Trustindex</div>
+  </div>
+</footer>

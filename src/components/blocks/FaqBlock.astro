@@ -1,0 +1,53 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+<section id={section.id} class="section">
+  <div class="wrap">
+    <div class="kicker">{section.kicker}</div>
+    <h2>{section.title}</h2>
+
+    <div class="grid cols-2" style="margin-top:16px;">
+      {cfg.faq.items.map((item) => (
+        <details class="card" style="padding:16px;">
+          <summary style="cursor:pointer; font-weight:900;">{item.q}</summary>
+          <p style="margin-top:10px;">{item.a}</p>
+        </details>
+      ))}
+    </div>
+
+    <div class="card" style="padding:18px; margin-top:18px;">
+      <strong>{section.freeQuestionTitle}</strong>
+
+      <label for="freeQ" style="margin-top:10px;">{section.freeQuestionTitle}</label>
+      <input id="freeQ" class="field" placeholder={section.freeQuestionPlaceholder} />
+
+      <div style="margin-top:12px;">
+        <button class="btn primary" id="sendFreeQ" type="button">Invia su WhatsApp Business</button>
+      </div>
+
+      <div class="note" style="margin-top:10px;">Ti rispondiamo appena possibile.</div>
+
+      <script type="module" define:vars={{ CFG: cfg }}>
+        const input = document.getElementById("freeQ");
+        const btn = document.getElementById("sendFreeQ");
+
+        if (!input || !btn) {
+          console.warn("FAQ free question elements missing");
+        } else {
+          const wa = "https://wa.me/" + CFG.contacts.phoneE164;
+          const enc = (s) => encodeURIComponent(s || "");
+
+          btn.addEventListener("click", () => {
+            const q = (input.value || "").trim();
+            const msg = q
+              ? ("Ciao " + CFG.brand.name + "! Domanda: " + q)
+              : ("Ciao " + CFG.brand.name + "! Ho una domanda.");
+            window.open(wa + "?text=" + enc(msg), "_blank");
+          });
+        }
+      </script>
+    </div>
+  </div>
+</section>

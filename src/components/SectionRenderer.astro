@@ -1,0 +1,28 @@
+---
+import type { SiteConfig } from "../lib/siteConfig";
+import HeroBlock from "./blocks/HeroBlock.astro";
+import ServicesBlock from "./blocks/ServicesBlock.astro";
+import PreventivoBlock from "./blocks/PreventivoBlock.astro";
+import AssistanceBlock from "./blocks/AssistanceBlock.astro";
+import CareersBlock from "./blocks/CareersBlock.astro";
+import FaqBlock from "./blocks/FaqBlock.astro";
+import ReviewsBlock from "./blocks/ReviewsBlock.astro";
+import ContactsBlock from "./blocks/ContactsBlock.astro";
+import FooterBlock from "./blocks/FooterBlock.astro";
+import FeaturesBlock from "./blocks/FeaturesBlock.astro";
+import CaseStudiesBlock from "./blocks/CaseStudiesBlock.astro";
+
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+---
+
+{section.type === "hero" && <HeroBlock cfg={cfg} section={section} />}
+{section.type === "services" && <ServicesBlock cfg={cfg} section={section} />}
+{section.type === "preventivo" && <PreventivoBlock cfg={cfg} section={section} />}
+{section.type === "assistance" && <AssistanceBlock cfg={cfg} section={section} />}
+{section.type === "careers" && <CareersBlock cfg={cfg} section={section} />}
+{section.type === "faq" && <FaqBlock cfg={cfg} section={section} />}
+{section.type === "reviews" && <ReviewsBlock cfg={cfg} section={section} />}
+{section.type === "contacts" && <ContactsBlock cfg={cfg} section={section} />}
+{section.type === "footer" && <FooterBlock cfg={cfg} section={section} />}
+{section.type === "features" && <FeaturesBlock cfg={cfg} section={section} />}
+{section.type === "case_studies" && <CaseStudiesBlock cfg={cfg} section={section} />}

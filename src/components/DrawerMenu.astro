@@ -1,0 +1,68 @@
+---
+import type { SiteConfig } from "../lib/siteConfig";
+const { cfg } = Astro.props as { cfg: SiteConfig };
+---
+
+<div id="drawerBackdrop" style="position:fixed; inset:0; background: rgba(0,0,0,.62); opacity:0; pointer-events:none; transition:opacity .15s ease; z-index:60;"></div>
+
+<aside id="drawerPanel" class="card" style="
+  position:fixed; top:14px; right:14px; width:min(360px, calc(100vw - 28px));
+  transform: translateY(-8px) translateX(10px);
+  opacity:0; pointer-events:none;
+  transition: transform .18s ease, opacity .18s ease;
+  z-index:61; overflow:hidden;">
+  <div style="padding:16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); background: rgba(255,255,255,.03);">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src={cfg.brand.logoPath} alt="" style="height:22px; width:auto;" />
+      <strong>{cfg.navigation.drawerTitle}</strong>
+    </div>
+    <button class="btn" id="closeDrawer" aria-label="Chiudi">✕</button>
+  </div>
+
+  <nav style="padding:12px 10px;">
+    {cfg.navigation.items.map(i => (
+      <a class="btn" style="width:100%; justify-content:flex-start; margin:6px 0; padding:12px;"
+         href={`#${i.id}`}
+         onclick="window.dispatchEvent(new CustomEvent('webora:drawer:close'))">
+        {i.label}
+      </a>
+      <a class="btn" href={i.id === "home" ? "/" : `/${i.id}`} style="width:100%; justify-content:flex-start; margin:6px 0; padding:12px;">
+  {i.label}
+</a>
+    ))}
+  </nav>
+</aside>
+
+<script type="module">
+  const b = document.getElementById("drawerBackdrop");
+  const p = document.getElementById("drawerPanel");
+  const x = document.getElementById("closeDrawer");
+
+  if (!b || !p || !x) {
+    console.warn("Drawer elements missing");
+  } else {
+    function open() {
+      b.style.opacity = "1";
+      b.style.pointerEvents = "auto";
+      p.style.opacity = "1";
+      p.style.pointerEvents = "auto";
+      p.style.transform = "translateY(0) translateX(0)";
+    }
+
+    function close() {
+      b.style.opacity = "0";
+      b.style.pointerEvents = "none";
+      p.style.opacity = "0";
+      p.style.pointerEvents = "none";
+      p.style.transform = "translateY(-8px) translateX(10px)";
+    }
+
+    window.addEventListener("webora:drawer:open", open);
+    window.addEventListener("webora:drawer:close", close);
+    b.addEventListener("click", close);
+    x.addEventListener("click", close);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
+</script>

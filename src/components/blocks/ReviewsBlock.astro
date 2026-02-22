@@ -1,0 +1,24 @@
+---
+import type { SiteConfig } from "../../lib/siteConfig";
+const { section } = Astro.props as { cfg: SiteConfig; section: any };
+
+const trustEmbed = import.meta.env.PUBLIC_TRUSTINDEX_EMBED || "";
+---
+
+<section id={section.id} class="section">
+  <div class="wrap">
+    <div class="kicker">{section.kicker}</div>
+    <h2>{section.title}</h2>
+    <p>{section.body}</p>
+
+    <div class="card" style="padding:18px; margin-top:16px;">
+      {trustEmbed ? (
+        <div set:html={trustEmbed}></div>
+      ) : (
+        <div class="note">
+          Inserisci <code>PUBLIC_TRUSTINDEX_EMBED</code> nel file <code>.env</code> per mostrare il widget Trustindex.
+        </div>
+      )}
+    </div>
+  </div>
+</section>

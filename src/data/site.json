@@ -56,7 +56,7 @@
         "id": "shop",
         "title": "Sito shopping online",
         "subtitle": "Ideale per iniziare un e-commerce",
-        "price": 900,
+        "price": 899.99,
         "for": ["Chi vuole vendere online"],
         "highlights": ["Catalogo prodotti", "Carrello", "Checkout", "Struttura e-commerce"]
       },
@@ -64,7 +64,7 @@
         "id": "app_plus_site",
         "title": "App + sito web",
         "subtitle": "Ordini + pagamenti",
-        "price": 1200,
+        "price": 1199.99,
         "for": ["Business con ordini"],
         "highlights": ["App ordini", "Pagamenti", "Flusso su misura", "Soluzione completa"]
       }
@@ -88,7 +88,7 @@
       { "id": "catania", "label": "Catania", "multiplier": 1.0 },
       { "id": "acireale", "label": "Acireale", "multiplier": 1.0 }
     ],
-    "resultNote": "Prezzo calcolato automaticamente (base × moltiplicatore luogo)."
+    "resultNote": "Prezzo base."
   },
 
   "faq": {

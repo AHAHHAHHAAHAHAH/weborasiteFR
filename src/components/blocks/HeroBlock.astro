@@ -3,29 +3,32 @@ import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 ---
 
-<section id={section.id} style="padding: 78px 0 64px;">
-  <div class="wrap grid cols-2" style="align-items:center;">
+<section id={section.id} style="padding: 120px 0 80px; border-top:none;">
+  <div class="wrap grid cols-2" style="align-items:center; gap: 40px;">
     <div>
       <div class="kicker">{section.kicker}</div>
-      <h1 style="margin:10px 0 14px; font-size: clamp(2.2rem, 4.2vw, 3.4rem); line-height:1.05; white-space:pre-line;">
+      <h1 style="margin:16px 0 20px; font-size: clamp(2.6rem, 5vw, 4rem); line-height:1.05; font-weight: 700; white-space:pre-line;">
         {section.headline}
       </h1>
-      <p style="max-width: 60ch; white-space:pre-line;">{section.body}</p>
+      <p style="max-width: 60ch; font-size: 1.15rem; line-height: 1.7; margin-bottom: 32px; white-space:pre-line;">{section.body}</p>
 
-      <div style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;">
-        <a class="btn primary" href={`#${section.primaryCta.targetId}`}>{section.primaryCta.label}</a>
-        <a class="btn" href={`#${section.secondaryCta.targetId}`}>{section.secondaryCta.label}</a>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a class="btn primary" href={`/${section.primaryCta.targetId}`}>{section.primaryCta.label}</a>
+        <a class="btn" href={`/${section.secondaryCta.targetId}`}>{section.secondaryCta.label}</a>
       </div>
     </div>
 
-    <div class="card" style="padding:18px;">
-      <div class="kicker">Preview</div>
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
-        <strong>{cfg.brand.name}</strong>
-        <img src={cfg.brand.logoPath} alt="" style="height:34px; width:auto;" />
+    <div class="card" style="padding:28px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: var(--accent); filter: blur(90px); opacity: 0.25; z-index: 0;"></div>
+      <div style="position: relative; z-index: 1;">
+        <div class="kicker" style="color: var(--muted);">Preview</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+          <strong style="font-size: 1.25rem;">{cfg.brand.name}</strong>
+          <img src={cfg.brand.logoPath} alt="Logo Webora" style="height:38px; width:auto;" />
+        </div>
+        <div class="divider"></div>
+        <p class="note" style="margin: 0;">Minimal • Elegante • Professionale (tema e colori dal JSON).</p>
       </div>
-      <div class="divider"></div>
-      <p class="note">Minimal • Elegante • Professionale (tema e colori dal JSON).</p>
     </div>
   </div>
 </section>

@@ -1,8 +1,12 @@
 ---
 import type { SiteConfig } from "../lib/siteConfig";
-const { cfg } = Astro.props as { cfg: SiteConfig };
-const t = cfg.theme;
+import Header from "../components/Header.astro";
+import DrawerMenu from "../components/DrawerMenu.astro";
 import "../styles/global.css";
+
+const { cfg, title } = Astro.props as { cfg: SiteConfig; title?: string };
+const t = cfg.theme;
+const pageTitle = title || cfg.seo.title;
 ---
 
 <!doctype html>
@@ -11,82 +15,36 @@ import "../styles/global.css";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content={cfg.seo.description} />
-    <title>{cfg.seo.title}</title>
+    <title>{pageTitle}</title>
 
-    <style>
-      :root{
-        --bg:{t.bg};
-        --panel:{t.panel};
-        --text:{t.text};
-        --muted:{t.muted};
-        --accent:{t.accent};
-        --accent2:{t.accent2};
-        --line:rgba(255,255,255,.10);
-        --shadow: 0 18px 55px rgba(0,0,0,.55);
-        --radius: 18px;
-        --max: 1100px;
+    <style define:vars={{
+      bg: t.bg,
+      panel: t.panel,
+      text: t.text,
+      muted: t.muted,
+      accent: t.accent,
+      accent2: t.accent2
+    }}>
+      :root {
+        --bg: var(--bg);
+        --panel: var(--panel);
+        --text: var(--text);
+        --muted: var(--muted);
+        --accent: var(--accent);
+        --accent2: var(--accent2);
+        --line: rgba(255, 255, 255, 0.08);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+        --radius: 20px;
+        --max: 1120px;
       }
-      *{ box-sizing:border-box; }
-      body{
-        margin:0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-        background:
-          radial-gradient(900px 450px at 70% 10%, rgba(179,91,91,.20), transparent 55%),
-          radial-gradient(700px 400px at 10% 20%, rgba(227,163,163,.12), transparent 55%),
-          var(--bg);
-        color: var(--text);
-      }
-      a{ color:inherit; text-decoration:none; }
-      .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
-      .section{ padding: 72px 0; border-top:1px solid var(--line); }
-      .kicker{ color: var(--muted); letter-spacing:.18em; text-transform:uppercase; font-size:.78rem; }
-      h2{ margin:10px 0 14px; font-size: clamp(1.6rem, 2.4vw, 2.2rem); }
-      p{ margin:0; color: var(--muted); line-height:1.6; }
-      .card{
-        background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-        border:1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-      }
-      .btn{
-        display:inline-flex; align-items:center; justify-content:center;
-        gap:10px;
-        padding:12px 16px;
-        border-radius:999px;
-        border:1px solid var(--line);
-        background: rgba(255,255,255,.04);
-        color: var(--text);
-        cursor:pointer;
-        transition: transform .12s ease, background .12s ease;
-        user-select:none;
-      }
-      .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); }
-      .btn.primary{
-        border-color: rgba(179,91,91,.55);
-        background: linear-gradient(90deg, rgba(179,91,91,.85), rgba(227,163,163,.45));
-      }
-      .grid{ display:grid; gap:16px; }
-      @media (min-width: 900px){
-        .cols-2{ grid-template-columns: 1fr 1fr; }
-        .cols-3{ grid-template-columns: 1fr 1fr 1fr; }
-      }
-      .field{
-        width:100%;
-        padding:12px;
-        border-radius:12px;
-        border:1px solid var(--line);
-        background: rgba(255,255,255,.03);
-        color: var(--text);
-        outline:none;
-      }
-      label{ display:block; margin:10px 0 8px; color: var(--muted); }
-      .divider{ height:1px; background: var(--line); margin: 16px 0; }
-      .small{ font-size:.92rem; }
-      .note{ font-size:.9rem; color: rgba(243,243,244,.62); }
     </style>
   </head>
 
   <body>
-    <slot />
+    <Header cfg={cfg} />
+    <DrawerMenu cfg={cfg} />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>

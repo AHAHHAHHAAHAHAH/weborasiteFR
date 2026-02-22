@@ -18,8 +18,8 @@ const pageTitle = title || cfg.seo.title;
     <title>{pageTitle}</title>
 
     <style define:vars={{
-      bg: t.bg,
-      panel: t.panel,
+      bg: "#131318",     /* Leggermente più chiaro e neutro rispetto al nero profondo */
+      panel: "#1c1c24",  /* Pannelli più definiti */
       text: t.text,
       muted: t.muted,
       accent: t.accent,
@@ -32,10 +32,10 @@ const pageTitle = title || cfg.seo.title;
         --muted: var(--muted);
         --accent: var(--accent);
         --accent2: var(--accent2);
-        --line: rgba(255, 255, 255, 0.08);
-        --shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-        --radius: 20px;
-        --max: 1120px;
+        --line: rgba(255, 255, 255, 0.06);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+        --radius: 24px;
+        --max: 1160px; /* Leggermente più largo per respirare meglio */
       }
     </style>
   </head>
@@ -46,5 +46,21 @@ const pageTitle = title || cfg.seo.title;
     <main>
       <slot />
     </main>
+
+    <script>
+      // Animazioni fluide allo scroll (Psicologia: l'utente si sente guidato)
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target); // Anima solo la prima volta
+            }
+          });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

@@ -7,21 +7,21 @@ const cta = cfg.navigation.cta;
 const ctaHref = cta.type === "whatsapp" ? wa : `/contatti`;
 ---
 
-<header style="position:sticky; top:0; z-index:50; backdrop-filter: blur(16px); border-bottom:1px solid var(--line); background: rgba(11,11,13,.75); transition: all 0.3s ease;">
-  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; padding:16px 0;">
-    <a href="/" style="display:flex; align-items:center; gap:14px; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-      <img src={cfg.brand.logoPath} alt={cfg.brand.name} style="height:34px; width:auto; display:block;" />
+<header style="position:sticky; top:0; z-index:50; backdrop-filter: blur(24px); border-bottom:1px solid rgba(255,255,255,0.03); background: rgba(19,19,24,0.65); transition: all 0.4s ease;">
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; padding:18px 0;">
+    <a href="/" style="display:flex; align-items:center; gap:16px; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+      <img src={cfg.brand.logoPath} alt={cfg.brand.name} style="height:36px; width:auto; display:block;" />
       <div style="display:flex; flex-direction:column; line-height:1.2;">
-        <strong style="font-size:1.05rem; letter-spacing:0.03em;">{cfg.brand.name}</strong>
-        <span style="font-size:0.8rem; color:var(--muted);">{cfg.brand.tagline}</span>
+        <strong style="font-size:1.1rem; letter-spacing:0.02em;">{cfg.brand.name}</strong>
+        <span style="font-size:0.85rem; color:var(--muted);">{cfg.brand.tagline}</span>
       </div>
     </a>
 
-    <div style="display:flex; align-items:center; gap:12px;">
-      <a class="btn primary" style="padding: 10px 20px; font-size: 0.95rem;" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined} rel="noreferrer">{cta.label}</a>
-      <button class="btn" id="openDrawer" aria-label="Apri menu" style="padding: 12px; border-radius: 12px;">
-        <span style="display:inline-block; width:20px; height:14px; position:relative;">
-          <span style="position:absolute; left:0; right:0; top:0; height:2px; background:var(--text); border-radius:99px; transition:all 0.2s;"></span>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a class="btn primary" style="padding: 10px 24px; font-size: 0.95rem;" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined} rel="noreferrer">{cta.label}</a>
+      <button class="btn" id="openDrawer" aria-label="Apri menu" style="padding: 14px; border-radius: 14px; border:none; background: rgba(255,255,255,0.05);">
+        <span style="display:inline-block; width:22px; height:14px; position:relative;">
+          <span style="position:absolute; left:0; right:0; top:0; height:2px; background:var(--text); border-radius:99px;"></span>
           <span style="position:absolute; left:0; right:0; top:6px; height:2px; background:var(--text); border-radius:99px; opacity:.85;"></span>
           <span style="position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--text); border-radius:99px; opacity:.65;"></span>
         </span>

@@ -55,7 +55,6 @@ const pageTitle = title || cfg.seo.title;
         const glow = document.getElementById('mouseGlow') as HTMLElement;
         const isMobile = window.innerWidth <= 768;
 
-        // SE È MOBILE, DISTRUGGHIAMO IL GLOW PER NON INTRALCIARE I CLICK
         if (glow && isMobile) {
           glow.style.display = 'none';
         }
@@ -71,6 +70,14 @@ const pageTitle = title || cfg.seo.title;
           }
         });
 
+        // Motore Intersection Observer potenziato per Mobile
+        const observerOptions = {
+          threshold: 0.1,
+          // Su mobile carichiamo gli elementi 150px PRIMA che entrino nella visuale, annullando il ritardo.
+          // Su desktop manteniamo l'effetto teatrale a -50px.
+          rootMargin: isMobile ? "0px 0px 150px 0px" : "0px 0px -50px 0px"
+        };
+
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -78,7 +85,7 @@ const pageTitle = title || cfg.seo.title;
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        }, observerOptions);
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       });

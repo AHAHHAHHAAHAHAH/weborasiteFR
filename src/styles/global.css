@@ -172,3 +172,20 @@ p { color: var(--muted); margin: 0 0 24px; font-size: clamp(1rem, 3vw, 1.15rem);
     background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%) !important;
   }
 }
+/* ==========================================
+   FIX PERFORMANCE E RITARDI SU MOBILE
+   Uccidiamo i delay verticali per togliere il "finto lag"
+   ========================================== */
+@media (max-width: 768px) {
+  .reveal {
+    transform: translateY(20px); /* Corsa più breve, meno sforzo per il processore grafico */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out !important; /* Velocità raddoppiata */
+  }
+  
+  /* Su mobile gli elementi sono uno sotto l'altro. I delay creano solo ritardo percepito. Li azzeriamo. */
+  .reveal.delay-1, 
+  .reveal.delay-2, 
+  .reveal.delay-3 {
+    transition-delay: 0s !important;
+  }
+}

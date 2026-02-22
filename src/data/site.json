@@ -124,15 +124,28 @@
       "body": "Non vendiamo fumo. Paghi il setup iniziale per costruire l'infrastruttura, e un piano per mantenerla sempre perfetta e aggiornata."
     },
     { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza" },
-    {
+   {
       "type": "case_studies",
       "id": "lavori",
-      "kicker": "I Fatti",
-      "title": "Meno parole, più risultati.",
-      "body": "La teoria è per i dilettanti. Guarda cosa abbiamo costruito per chi ha deciso di smettere di giocare al ribasso.",
+      "kicker": "Casi Studio",
+      "title": "Meno parole, più ingegneria.",
+      "body": "Non ti mostriamo un catalogo di siti fotocopia. Ti mostriamo infrastrutture digitali complesse, costruite per risolvere problemi reali e automatizzare il business.",
       "items": [
-        { "title": "Sito Vetrina Premium", "industry": "Local Business", "outcome": "Struttura psicologica per l'acquisizione contatti.", "tags": ["UX Design", "Branding"], "link": "" },
-        { "title": "E-commerce Completo", "industry": "Retail", "outcome": "Flusso d'acquisto senza frizioni, checkout rapido.", "tags": ["E-commerce", "Stripe"], "link": "" }
+        { 
+          "title": "SrslyApp — Automazione Gestionale", 
+          "industry": "Settore Servizi / Lavanderie", 
+          "outcome": "Digitalizzazione totale dei flussi di lavoro fisico-digitali. Un'app nativa che azzera gli errori umani: dal tracciamento degli ordini in tempo reale alla gestione del database clienti.", 
+          "tags": ["Flutter", "Firebase", "Real-Time DB", "iOS/Android"], 
+          "link": "",
+          "video": ""
+        },
+        { 
+          "title": "Architettura Vetrina Premium", 
+          "industry": "Corporate / Local Business", 
+          "outcome": "Un ecosistema web inattaccabile. Zero tempi di caricamento, integrazione widget recensioni verificato e funnel di contatto blindato. Costruito per dominare i motori di ricerca.", 
+          "tags": ["Astro", "Cloudflare Edge", "JSON-Driven", "Trustindex"], 
+          "link": "" 
+        }
       ]
     },
     {

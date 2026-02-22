@@ -1,38 +1,239 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
-const { section } = Astro.props as { cfg: SiteConfig; section: any };
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 ---
 
 <section id={section.id} class="section">
   <div class="wrap">
-    <div class="kicker">{section.kicker}</div>
-    <h2>{section.title}</h2>
-    <p>{section.body}</p>
+    
+    <div class="reveal" style="max-width: 700px; margin-bottom: 60px;">
+      <span class="kicker">{section.kicker}</span>
+      <h2>{section.title}</h2>
+      <p style="font-size: 1.25rem; color: var(--muted); line-height: 1.6;">{section.body}</p>
+    </div>
 
-    <div class="grid cols-3" style="margin-top:18px;">
-      {section.items?.map((it) => (
-        <article class="card" style="padding:18px; display:flex; flex-direction:column; gap:10px;">
-          <div class="small" style="color:var(--muted);">{it.industry}</div>
-          <h3 style="margin:0; font-size:1.15rem; line-height:1.15;">{it.title}</h3>
-          <p class="small" style="color:var(--muted); margin-top:4px;">{it.outcome}</p>
-
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-            {it.tags?.map((t) => (
-              <span style="font-size:.78rem; padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); background: rgba(255,255,255,.03);">
-                {t}
+    <div class="grid cols-2" style="gap: 40px;">
+      {section.items.map((item: any, index: number) => (
+        <div class={`card reveal delay-${index % 2}`} style="padding: 40px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+          
+          <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--accent); filter: blur(80px); opacity: 0.15; z-index: 0; pointer-events: none;"></div>
+          
+          <div style="position: relative; z-index: 1; flex-grow: 1;">
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+              <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600;">
+                {item.industry}
               </span>
-            ))}
+              
+              {item.link ? (
+                /* 1. PROGETTO PUBBLICO (Sito Web) */
+                <a href={item.link} target="_blank" rel="noopener noreferrer" class="case-action-btn">
+                  Visita Progetto
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              ) : item.video ? (
+                /* 2. PROGETTO CON VIDEO DEMO (App) */
+                <button class="case-action-btn open-video-btn" data-video={item.video}>
+                  Guarda Demo
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
+              ) : (
+                /* 3. PROGETTO PRIVATO (Senza Link né Video) */
+                <div class="private-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  Accesso Riservato B2B
+                </div>
+              )}
+            </div>
+
+            <h3 style="font-size: clamp(1.6rem, 4vw, 2rem); color: var(--text); margin-bottom: 16px; line-height: 1.2;">
+              {item.title}
+            </h3>
+            
+            <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.6; margin-bottom: 32px;">
+              {item.outcome}
+            </p>
           </div>
 
-          {it.link ? (
-            <div style="margin-top:auto;">
-              <a class="btn" href={it.link} target="_blank" rel="noreferrer">Apri</a>
+          <div style="position: relative; z-index: 1;">
+            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Tecnologie Impiegate</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              {item.tags.map((tag: string) => (
+                <span style="padding: 6px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.85rem; color: var(--text); font-family: ui-monospace, monospace;">
+                  {tag}
+                </span>
+              ))}
             </div>
-          ) : (
-            <div style="margin-top:auto;" class="note">Link non disponibile</div>
-          )}
-        </article>
+          </div>
+          
+        </div>
       ))}
     </div>
+
+    <div id="videoModal" class="video-modal" aria-hidden="true">
+      <div class="video-backdrop" id="closeVideoBg"></div>
+      <div class="video-container">
+        <button id="closeVideoBtn" class="video-close" aria-label="Chiudi video">✕</button>
+        <video id="modalVideoPlayer" controls playsinline preload="none" class="video-player">
+          Il tuo browser non supporta i video HTML5.
+        </video>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<style>
+  /* Pulsanti e Badge (Visita Progetto / Guarda Demo) */
+  .case-action-btn {
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 0.85rem; 
+    color: var(--text); 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 0;
+  }
+  .case-action-btn:hover {
+    color: var(--accent2);
+  }
+
+  .private-badge {
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 0.8rem; 
+    color: var(--accent); 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    font-weight: 700; 
+    background: rgba(179, 91, 91, 0.1); 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    border: 1px solid rgba(179, 91, 91, 0.2);
+  }
+
+  /* Modale Video */
+  .video-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .video-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-backdrop {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .video-container {
+    position: relative;
+    z-index: 1001;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #000;
+  }
+
+  .video-modal.is-open .video-container {
+    transform: translateY(0) scale(1);
+  }
+
+  .video-player {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 80vh;
+  }
+
+  .video-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 1002;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+  }
+  .video-close:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.05);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('videoModal');
+    const player = document.getElementById('modalVideoPlayer') as HTMLVideoElement;
+    const closeBtn = document.getElementById('closeVideoBtn');
+    const closeBg = document.getElementById('closeVideoBg');
+    const openBtns = document.querySelectorAll('.open-video-btn');
+
+    if (!modal || !player) return;
+
+    // Apri modale e carica video
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const videoSrc = btn.getAttribute('data-video');
+        if (videoSrc) {
+          player.src = videoSrc;
+          modal.classList.add('is-open');
+          player.play().catch(e => console.log("Autoplay bloccato dal browser"));
+        }
+      });
+    });
+
+    // Chiudi modale e stoppa video
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      setTimeout(() => {
+        player.pause();
+        player.src = ''; // Svuota la sorgente per non consumare banda nascosta
+      }, 400); // Aspetta la fine dell'animazione CSS
+    };
+
+    closeBtn?.addEventListener('click', closeModal);
+    closeBg?.addEventListener('click', closeModal);
+    
+    // Chiudi con tasto ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+  });
+</script>

@@ -10,7 +10,7 @@ const assistenza = (cfg.sections || []).find((s) => s.id === "assistenza");
 ---
 
 <BaseLayout cfg={cfg} title={`${cfg.brand.name} — FAQ & Assistenza`}>
-  <div style="padding-top: 100px;">
+  <div style="padding-top: 80px; display: flex; flex-direction: column; gap: 0;">
     {assistenza && <SectionRenderer cfg={cfg} section={assistenza} />}
     {faq && <SectionRenderer cfg={cfg} section={faq} />}
   </div>

@@ -154,3 +154,21 @@ p { color: var(--muted); margin: 0 0 24px; font-size: clamp(1rem, 3vw, 1.15rem);
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 .reveal.delay-1 { transition-delay: 0.1s; }
 .reveal.delay-2 { transition-delay: 0.2s; }
+
+/* ==========================================
+   FIX "IL BACIO" (BLENDING SU MOBILE)
+   Nessun taglio, sfumatura continua.
+   ========================================== */
+@media (max-width: 768px) {
+  .section {
+    background: transparent !important;
+    border: none !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Ammorbidisce i bordi delle card su mobile per farle fondere meglio */
+  .card {
+    border: 1px solid rgba(255,255,255,0.02) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%) !important;
+  }
+}

@@ -4,7 +4,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 const packages = cfg.pricing?.packages || [];
 ---
 
-<section id={section.id} class="section" style="background: rgba(255,255,255,0.01);">
+<section id={section.id} class="section">
   <div class="wrap">
     <div class="reveal" style="max-width: 600px; margin-bottom: 50px;">
       <span class="kicker">{section.kicker}</span>

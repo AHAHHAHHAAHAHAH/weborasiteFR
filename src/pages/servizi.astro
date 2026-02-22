@@ -7,13 +7,11 @@ const cfg = await loadSiteConfig();
 
 const branding = (cfg.sections || []).find((s) => s.id === "branding");
 const servizi = (cfg.sections || []).find((s) => s.id === "servizi");
-const contatti = (cfg.sections || []).find((s) => s.id === "contatti");
 ---
 
 <BaseLayout cfg={cfg} title={`${cfg.brand.name} — Servizi & Branding`}>
-  <div style="padding-top: 100px;">
+  <div style="padding-top: 80px; display: flex; flex-direction: column; gap: 0;">
     {branding && <SectionRenderer cfg={cfg} section={branding} />}
     {servizi && <SectionRenderer cfg={cfg} section={servizi} />}
-    {contatti && <SectionRenderer cfg={cfg} section={contatti} />}
   </div>
 </BaseLayout>

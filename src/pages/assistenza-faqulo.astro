@@ -1,37 +1,134 @@
 ---
 import { loadSiteConfig } from "../lib/siteConfig";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionRenderer from "../components/SectionRenderer.astro";
 
 const cfg = await loadSiteConfig();
-
-const assistenza = (cfg.sections || []).find((s) => s.id === "assistenza");
-const faq = (cfg.sections || []).find((s) => s.id === "faq");
+const faqData = (cfg.sections || []).find((s: any) => s.id === "faq");
 ---
 
-<BaseLayout cfg={cfg} title={`${cfg.brand.name} — Assistenza & FAQulo`}>
-  <div style="padding-top: 80px; display: flex; flex-direction: column; gap: 0;">
-    {assistenza && <SectionRenderer cfg={cfg} section={assistenza} />}
-    {faq && <SectionRenderer cfg={cfg} section={faq} />}
+<BaseLayout cfg={cfg} title={`${cfg.brand?.name || 'Studio'} — FAQulo`}>
+  <div style="padding-top: 100px; padding-bottom: 80px; display: flex; flex-direction: column; gap: 0;">
     
-    <div class="tunnel-gateway reveal">
-      <p class="gateway-subtitle">Lo step finale</p>
+    {faqData && (
+      <section class="section">
+        <div class="wrap" style="max-width: 800px; margin: 0 auto;">
+          
+          <div class="reveal" style="text-align: center; margin-bottom: 60px;">
+            <span class="kicker">{faqData.kicker}</span>
+            <h1 style="font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; color: var(--text);">
+              {faqData.title}
+            </h1>
+            <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.6; max-width: 60ch; margin: 0 auto;">
+              {faqData.body}
+            </p>
+          </div>
+
+          <div class="faq-accordion reveal delay-1">
+            {faqData.items.map((item: any, i: number) => (
+              <details class="faq-item" name="faq-group">
+                <summary class="faq-question">
+                  {item.q}
+                  <div class="faq-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" class="vertical"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+
+        </div>
+      </section>
+    )}
+    
+    <div class="tunnel-gateway reveal delay-2" style="margin-top: 40px;">
+      <p class="gateway-subtitle">Tutto chiaro? Passiamo ai fatti.</p>
       <a href="/preventivi-box" class="gateway-link">
-        <span class="gateway-title">Preventivi & Contatti</span>
+        <span class="gateway-title">Area Preventivi & Contatti</span>
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="gateway-arrow">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </a>
     </div>
+
   </div>
 </BaseLayout>
 
 <style>
-  .tunnel-gateway { padding: 60px 24px 120px; text-align: center; position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+  /* Stili dell'Accordion FAQ */
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .faq-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .faq-item:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.1);
+  }
+  
+  /* Nasconde la freccia di default del browser */
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary { list-style: none; }
+
+  .faq-question {
+    padding: 24px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    user-select: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Animazione dell'icona (da Più a Meno) */
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--accent2);
+  }
+
+  .faq-answer {
+    padding: 0 30px 24px 30px;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    animation: slideDown 0.3s ease-out forwards;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Stili Gateway Finale */
+  .tunnel-gateway { padding: 40px 24px 80px; text-align: center; position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; }
   .gateway-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 16px; font-weight: 600; }
   .gateway-link { display: flex; flex-direction: column; align-items: center; gap: 16px; color: var(--text); transition: all 0.3s ease; }
   .gateway-link:hover { color: var(--accent2); transform: translateY(4px); }
-  .gateway-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; }
+  .gateway-title { font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
   .gateway-arrow { color: var(--accent); animation: bounceDown 2s infinite cubic-bezier(0.2, 0.8, 0.2, 1); }
   @keyframes bounceDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+  
+  @media (max-width: 768px) {
+    .faq-question { padding: 20px; font-size: 1.05rem; }
+    .faq-answer { padding: 0 20px 20px 20px; }
+  }
 </style>

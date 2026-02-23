@@ -23,13 +23,13 @@
     "instagram": "webora_code",
     "website": "https://webora.it"
   },
-  "navigation": {
-    "cta": { "label": "Area Preventivi", "type": "link", "targetId": "preventivi-box" },
+"navigation": {
+    "cta": { "label": "Ti serve una mano?", "type": "link", "targetId": "preventivi-box#contatti" },
     "drawerTitle": "Il Percorso",
     "items": [
       { "id": "prezzi-lavori", "label": "Prezzi & Lavori" },
       { "id": "assistenza-faqulo", "label": "Assistenza & FAQulo" },
-      { "id": "preventivi-box", "label": "Preventivi & Box Contatti" }
+      { "id": "preventivi-box", "label": "Preventivi & Contatti" }
     ]
   },
   "pricing": {
@@ -114,71 +114,67 @@
       { "q": "Quanta assistenza ho?", "a": "Contatto diretto su WhatsApp Business. Niente ticket infiniti, parli con noi." }
     ]
   },
-  "sections": [
+ "sections": [
     {
       "type": "hero",
       "id": "top",
-      "kicker": "Webora Studio",
-      "headline": "Smettila di\nessere invisibile.",
-      "body": "Progettiamo ecosistemi digitali per chi non si accontenta.\nSiti web, branding e contenuti che convertono l'attenzione in clienti.",
-      "primaryCta": { "label": "Calcola Preventivo", "targetId": "preventivi-box" },
-      "secondaryCta": { "label": "Parlane con noi", "targetId": "preventivi-box" }
+      "kicker": "Agenzia di Sviluppo",
+      "headline": "Siti e App Gestionali\nche portano profitto.",
+      "body": "Niente fuffa, niente 'sitarelli' lenti o promesse impossibili. Costruiamo vetrine web per farti trovare dai clienti e app su misura per automatizzare il lavoro dei tuoi dipendenti. Tutto con trasparenza totale sui prezzi.",
+      "primaryCta": { "label": "Scopri come lavoriamo", "targetId": "branding" }
     },
     {
       "type": "features",
       "id": "branding",
-      "kicker": "Sviluppo & Gestionali",
-      "title": "La tua visione, la nostra ingegneria.",
-      "body": "Sviluppiamo siti web e applicazioni gestionali su misura, partendo da un prezzo base trasparente. Garantiamo scalabilità assoluta e una professionalità rigorosa per trasformare le tue idee in una realtà digitale concreta.",
+      "kicker": "Il Problema e La Soluzione",
+      "title": "Smettila di perdere clienti\n(e tempo prezioso).",
+      "body": "Hai esattamente 3 secondi per convincere un cliente a fidarsi di te online, e i tuoi dipendenti perdono ore ogni giorno tra comande di carta e fogli Excel. Noi risolviamo entrambi i problemi scrivendo codice su misura per la tua attività.",
       "items": [
-        { "title": "Siti Web Premium", "subtitle": "Identità e Conversione", "bullets": ["Design su misura", "Mobile perfetto", "Ottimizzazione SEO", "Velocità estrema"] },
-        { "title": "App Gestionali", "subtitle": "Controllo Totale", "bullets": ["Flussi personalizzati", "Dashboard intuitive", "Dati in tempo reale", "Massima sicurezza"] },
-        { "title": "Scalabilità", "subtitle": "Cresce con te", "bullets": ["Infrastruttura solida", "Integrazioni future", "Performance estreme", "Zero limiti tecnici"] },
-        { "title": "Professionalità", "subtitle": "Serietà Assoluta", "bullets": ["Prezzi base chiari", "Rispetto scadenze", "Sviluppo trasparente", "Supporto dedicato"] }
-      ],
-      "cta": { "label": "Vai ai Preventivi", "targetId": "preventivi-box" }
+        { "title": "Siti Web Vetrina", "subtitle": "Macchine da Contatti", "bullets": ["Il cliente ti trova", "Capisce cosa fai in 3 secondi", "Si fida della tua immagine", "Ti contatta senza ostacoli"] },
+        { "title": "App Gestionali", "subtitle": "Il Controllo Totale", "bullets": ["Elimini gli errori umani", "Tutto lo staff è sincronizzato", "Risparmi ore di lavoro noioso", "Nessun dato perso"] },
+        { "title": "Velocità Estrema", "subtitle": "Non facciamo scappare nessuno", "bullets": ["Caricamento istantaneo", "Zero attese frustranti", "Google ci premia", "Clienti più felici"] },
+        { "title": "Patti Chiari", "subtitle": "Niente Sorprese", "bullets": ["Prezzi visibili subito", "Tempi di consegna certi", "Parli con i veri sviluppatori", "Supporto diretto su WhatsApp"] }
+      ]
     },
     {
       "type": "services",
       "id": "servizi",
-      "kicker": "I Piani",
-      "title": "Investimenti chiari. Zero sorprese.",
-      "body": "Non vendiamo fumo. Paghi il setup iniziale per costruire l'infrastruttura, e un piano per mantenerla sempre perfetta e aggiornata."
+      "kicker": "L'Investimento",
+      "title": "Quanto ti costa NON avere\nquesti strumenti?",
+      "body": "Un sito che non converte ti fa perdere decine di clienti al mese. Un lavoro disorganizzato ti brucia migliaia di euro l'anno. I nostri sono investimenti progettati per ripagarsi da soli in pochissimo tempo."
     },
     {
       "type": "case_studies",
       "id": "lavori",
-      "kicker": "Casi Studio",
-      "title": "Meno parole, più ingegneria.",
-      "body": "Non ti mostriamo un catalogo di siti fotocopia. Ti mostriamo infrastrutture digitali complesse, costruite per risolvere problemi reali.",
+      "kicker": "Risultati Reali",
+      "title": "Meno chiacchiere,\npiù fatti.",
+      "body": "Non ti mostriamo grafiche finte fatte per farci belli. Ti mostriamo ecosistemi digitali che lavorano sul campo tutti i giorni per aziende vere.",
       "items": [
-        { "title": "SrslyApp — Automazione Gestionale", "industry": "Settore Servizi / Lavanderie", "outcome": "Digitalizzazione totale dei flussi di lavoro fisico-digitali. Un'app nativa che azzera gli errori umani.", "tags": ["Flutter", "Firebase", "Real-Time DB", "iOS/Android"], "link": "", "video": "" },
-        { "title": "Architettura Vetrina Premium", "industry": "Corporate / Local Business", "outcome": "Un ecosistema web inattaccabile. Zero tempi di caricamento e funnel di contatto blindato.", "tags": ["Astro", "Cloudflare Edge", "JSON-Driven", "Trustindex"], "link": "https://webora.it", "video": "" }
+        { "title": "SrslyApp — Automazione Lavanderia", "industry": "App Gestionale B2B", "outcome": "Abbiamo digitalizzato l'intera lavanderia. Zero carta, gestione dei capi istantanea su tablet, staff sincronizzato in tempo reale. Il caos è diventato ordine.", "tags": ["Flutter", "Real-Time DB", "iOS/Android"], "link": "", "video": "" },
+        { "title": "Webora Vetrina — Lead Generation", "industry": "Sito Web Alta Conversione", "outcome": "Un'infrastruttura web progettata esclusivamente per raccogliere contatti qualificati. Tempi di caricamento azzerati, fiducia istantanea, funnel diretto verso WhatsApp e Mail.", "tags": ["Astro", "Cloudflare", "Ottimizzazione Psicologica"], "link": "https://webora.it", "video": "" }
       ]
     },
-    {
-      "type": "assistance",
-      "id": "assistenza",
-      "kicker": "Assistenza",
-      "title": "Non sai da dove iniziare?",
-      "body": "Nessun problema. Parla con chi sviluppa, non con un call center. Tracciamo insieme la rotta per il tuo progetto.",
-      "placeholder": "Descrivi brevemente la tua idea..."
-    },
-    {
+   {
       "type": "faq",
       "id": "faq",
-      "kicker": "FAQulo",
-      "title": "Le domande che ci fate sempre.",
-      "freeQuestionTitle": "Hai altre domande?",
-      "freeQuestionPlaceholder": "Scrivici qui e ti risponderemo in tempo reale..."
+      "kicker": "Le Regole del Gioco",
+      "title": "Costruire su misura richiede sintonia.",
+      "body": "Non vendiamo pacchetti chiusi a scatola, ma costruiamo soluzioni attorno alle tue esigenze. Ecco come lavoriamo e cosa aspettarti dal nostro team.",
+      "items": [
+        { "q": "Perché affidarsi a voi invece che a soluzioni pronte?", "a": "Le soluzioni pronte vanno bene per iniziare, ma prima o poi limitano la crescita. Noi costruiamo infrastrutture (Siti e App) su misura, pensate esclusivamente per far acquisire clienti alla tua azienda o per far lavorare meglio il tuo team." },
+        { "q": "Quanto tempo ci vuole per avere il progetto finito?", "a": "Ogni progetto ha tempistiche chiare, che variano dai 10 ai 30 giorni lavorativi a seconda della complessità. Rispettiamo rigorosamente le scadenze, e ti chiederemo la stessa precisione nel fornirci i materiali necessari (foto, testi, loghi)." },
+        { "q": "Perché c'è un mantenimento mensile?", "a": "Perché il mondo digitale evolve ogni giorno. Un sito abbandonato diventa lento e vulnerabile. Il mantenimento copre i costi dei server ad alte prestazioni, la sicurezza, gli aggiornamenti costanti e, soprattutto, la nostra assistenza diretta per qualsiasi necessità." },
+        { "q": "Fate sconti sui preventivi?", "a": "Il nostro preventivo non è 'gonfiato' per poi farti lo sconto. Calcoliamo matematicamente il prezzo in base alle ore di ingegneria reali necessarie per consegnare un lavoro eccellente. Ti diamo da subito il prezzo giusto e definitivo." },
+        { "q": "E se non ho le idee chiare su cosa mi serve?", "a": "È perfettamente normale ed è qui che entriamo in gioco. Fissiamo una chiacchierata esplorativa senza limiti di tempo. Ci prendiamo lo spazio necessario per ascoltarti, capire i tuoi obiettivi e trovare l'armonia giusta per lavorare insieme." }
+      ]
     },
     { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza Assoluta" },
     {
       "type": "contacts",
       "id": "contatti",
-      "kicker": "Il Momento È Adesso",
-      "title": "Iniziamo a fare sul serio.",
-      "body": "Usa i nostri canali diretti o compila il modulo. Fissiamo una chiamata esplorativa gratuita per capire se siamo i partner giusti per te."
+      "kicker": "Passiamo all'azione",
+      "title": "Iniziamo a conoscerci.",
+      "body": "Nessuna pressione e nessuna decisione affrettata. Scrivici o contattaci: fisseremo una chiamata esplorativa per capire a fondo la tua attività e valutare insieme, con tutta la calma necessaria, se siamo il partner giusto per te."
     }
   ]
 }

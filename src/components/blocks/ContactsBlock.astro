@@ -44,7 +44,7 @@ const igLink = `https://instagram.com/${cont.instagram}`;
     </div>
 
     <div class="reveal delay-1">
-      <div class="card" style="padding: 48px 40px; border-radius: 24px;">
+      <div id="support-glow-box" class="card" style="padding: 48px 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.5s ease;">
         <h3 style="margin-bottom: 32px; font-size: 1.6rem; color: var(--text);">...Oppure raccontaci la tua idea via mail</h3>
         
         <form id="boutiqueForm" data-email={cont.email} class="contact-form">
@@ -78,124 +78,86 @@ const igLink = `https://instagram.com/${cont.instagram}`;
 </section>
 
 <style>
-  /* Stili Interattivi per i Nodi di Contatto */
   .contact-node {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 16px 20px;
-    background: rgba(255,255,255,0.015);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 20px;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex; align-items: center; gap: 20px; padding: 16px 20px;
+    background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .contact-node:hover {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.15);
-    transform: translateX(8px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15);
+    transform: translateX(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   }
   
   .icon-box {
-    width: 54px;
-    height: 54px;
-    flex-shrink: 0;
-    border-radius: 14px;
-    background: rgba(179, 91, 91, 0.1);
-    color: var(--accent2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 54px; height: 54px; flex-shrink: 0; border-radius: 14px;
+    background: rgba(179, 91, 91, 0.1); color: var(--accent2);
+    display: flex; align-items: center; justify-content: center;
     transition: background 0.3s ease;
   }
-  .contact-node:hover .icon-box {
-    background: var(--accent);
-    color: var(--bg);
-  }
+  .contact-node:hover .icon-box { background: var(--accent); color: var(--bg); }
 
-  .node-label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 4px;
-    font-weight: 600;
-  }
-  .node-value {
-    display: block;
-    font-size: 1.15rem;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
+  .node-label { display: block; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 600; }
+  .node-value { display: block; font-size: 1.15rem; color: var(--text); letter-spacing: 0.02em; }
 
-  /* Stili Form Boutique */
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .input-group label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    font-weight: 600;
-    margin-left: 4px;
-  }
+  .contact-form { display: flex; flex-direction: column; gap: 24px; }
+  .input-group { display: flex; flex-direction: column; gap: 10px; }
+  .input-group label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; margin-left: 4px; }
   
   .premium-input {
-    width: 100%;
-    padding: 18px 20px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    color: #fff;
-    font-family: inherit;
-    font-size: 1.05rem;
-    transition: all 0.3s ease;
-    resize: none;
+    width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px; color: #fff; font-family: inherit; font-size: 1.05rem; transition: all 0.3s ease; resize: none;
   }
-  .premium-input::placeholder {
-    color: rgba(255,255,255,0.15);
-  }
-  .premium-input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15);
-    background: rgba(0,0,0,0.5);
-  }
-
-  /* Animazione di caricamento sul bottone */
+  .premium-input::placeholder { color: rgba(255,255,255,0.15); }
+  .premium-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15); background: rgba(0,0,0,0.5); }
+  
   @keyframes spin { 100% { transform: rotate(360deg); } }
   .loader {
-    border: 2px solid rgba(255,255,255,0.2); 
-    border-top-color: #fff; 
-    border-radius: 50%;
-    width: 20px; height: 20px; 
-    animation: spin 1s linear infinite; 
-    display: inline-block;
+    border: 2px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%;
+    width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block;
   }
-  
+
+  /* LA MAGIA DELL'ASSISTENZA: Pulsazione Azzurra di "Fiducia" */
+  .assist-glow-active {
+    animation: trustPulse 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes trustPulse {
+    0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); border-color: rgba(255,255,255,0.05); }
+    15% { box-shadow: 0 0 40px 10px rgba(14, 165, 233, 0.25); border-color: rgba(14, 165, 233, 0.8); }
+    50% { box-shadow: 0 0 20px 5px rgba(14, 165, 233, 0.15); border-color: rgba(14, 165, 233, 0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); border-color: rgba(255,255,255,0.05); }
+  }
+
   @media (max-width: 768px) {
-    .wrap.grid.cols-2 {
-      grid-template-columns: 1fr;
-      gap: 50px;
-    }
-    .card {
-      padding: 32px 24px !important;
-    }
+    .wrap.grid.cols-2 { grid-template-columns: 1fr; gap: 50px; }
+    .card { padding: 32px 24px !important; }
   }
 </style>
 
 <script>
-  // FORMSUBMIT INVISIBILE (AJAX)
+  // Logica FormSubmit + Rilevamento Click "Ti serve una mano?"
   document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. RILEVAMENTO "TI SERVE UNA MANO?" ---
+    const checkHashAndGlow = () => {
+      // Se l'URL finisce con #contatti, attiviamo la luce
+      if (window.location.hash === '#contatti') {
+        const box = document.getElementById('support-glow-box');
+        if (box) {
+          // Rimuove e rimette la classe per farla ripartire se ci clicca più volte
+          box.classList.remove('assist-glow-active');
+          void box.offsetWidth; // Forza il browser a ricalcolare
+          box.classList.add('assist-glow-active');
+        }
+      }
+    };
+
+    // Controlla all'apertura della pagina
+    checkHashAndGlow();
+    // Controlla se cambia l'URL mentre è già sulla pagina
+    window.addEventListener('hashchange', checkHashAndGlow);
+
+
+    // --- 2. LOGICA FORMSUBMIT ---
     const form = document.getElementById('boutiqueForm') as HTMLFormElement;
     const submitBtn = document.getElementById('submitBtn');
 
@@ -208,42 +170,26 @@ const igLink = `https://instagram.com/${cont.instagram}`;
         const formData = new FormData(form);
         const originalText = submitBtn.innerHTML;
 
-        // Feedback: In caricamento...
         submitBtn.innerHTML = '<span class="loader"></span>';
         submitBtn.style.pointerEvents = "none";
 
         try {
           const response = await fetch(url, {
-            method: "POST",
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+            method: "POST", body: formData, headers: { 'Accept': 'application/json' }
           });
-
           if (response.ok) {
-            // Successo: Cambia colore e testo
             submitBtn.innerHTML = "Richiesta Inviata!";
-            submitBtn.style.background = "#2ecc71"; // Verde successo
-            submitBtn.style.color = "#000";
+            submitBtn.style.background = "#2ecc71"; submitBtn.style.color = "#000";
             form.reset();
-          } else {
-            throw new Error("Errore API");
-          }
+          } else { throw new Error("Errore API"); }
         } catch (error) {
-          // Errore
-          submitBtn.innerHTML = "Errore di invio";
-          submitBtn.style.background = "#e74c3c"; // Rosso errore
+          submitBtn.innerHTML = "Errore di invio"; submitBtn.style.background = "#e74c3c";
         }
 
-        // Ritorna alla normalità dopo 4 secondi
         setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.style.background = "";
-          submitBtn.style.color = "";
-          submitBtn.style.pointerEvents = "auto";
+          submitBtn.innerHTML = originalText; submitBtn.style.background = "";
+          submitBtn.style.color = ""; submitBtn.style.pointerEvents = "auto";
         }, 4000);
-
       });
     }
   });

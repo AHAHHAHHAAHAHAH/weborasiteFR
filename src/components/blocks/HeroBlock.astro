@@ -1,46 +1,102 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
-
-const pathPrimary = section.primaryCta.targetId.replace('#', '').replace('/', '');
-const pathSecondary = section.secondaryCta.targetId.replace('#', '').replace('/', '');
 ---
 
-<section id={section.id} style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; padding: 0 24px;">
-  
-  <div class="wrap reveal" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 900px; padding-top: 80px;">
+<section id={section.id} class="section hero-section">
+  <div class="wrap reveal">
     
-    <span class="kicker" style="margin-bottom: 32px;">{section.kicker}</span>
+    <span class="kicker">{section.kicker}</span>
     
-    <h1 style="white-space:pre-line; background: linear-gradient(180deg, #ffffff 20%, rgba(255,255,255,0.4) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5));">
+    <h1 class="headline">
       {section.headline}
     </h1>
     
-    <p style="margin-bottom: 56px; max-width: 55ch; font-size: 1.3rem; color: var(--muted); white-space:pre-line;">
+    <p class="body-text">
       {section.body}
     </p>
 
-    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content: center; align-items: center; width: 100%;">
-      <a class="btn primary" href={`/${pathPrimary}`} style="padding: 18px 46px; font-size: 1.15rem;">
-        {section.primaryCta.label}
-      </a>
-      <a class="btn" href={`/${pathSecondary}`} style="padding: 18px 46px; font-size: 1.15rem;">
-        {section.secondaryCta.label}
-      </a>
+    <div class="actions">
+      {/* 1. BOTTONE PRIMARIO CON FRECCIA VERSO IL BASSO */}
+      {section.primaryCta && (
+        <a href={`#${section.primaryCta.targetId}`} class="btn primary hero-btn">
+          {section.primaryCta.label}
+          <svg class="scroll-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        </a>
+      )}
+      
+      {/* 2. BOTTONE SECONDARIO (Ora è "sicuro": se non c'è nel JSON, Astro lo ignora senza crashare) */}
+      {section.secondaryCta && (
+        <a href={`#${section.secondaryCta.targetId}`} class="btn secondary hero-btn">
+          {section.secondaryCta.label}
+        </a>
+      )}
     </div>
 
   </div>
-
-  <div class="reveal delay-2" style="position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); opacity: 0.4;">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: float 3s ease-in-out infinite;">
-      <path d="M12 4v16M19 13l-7 7-7-7"/>
-    </svg>
-  </div>
-  
-  <style>
-    @keyframes float {
-      0%, 100% { transform: translateY(0); opacity: 0.3; }
-      50% { transform: translateY(15px); opacity: 0.8; }
-    }
-  </style>
 </section>
+
+<style>
+  .hero-section {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-top: 120px;
+  }
+  
+  .headline {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    white-space: pre-line;
+    color: var(--text);
+  }
+  
+  .body-text {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 65ch;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 36px;
+    font-size: 1.1rem;
+    border-radius: 99px;
+    font-weight: 600;
+  }
+
+  .btn.secondary {
+    background: rgba(255,255,255,0.03);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn.secondary:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* Animazione psicologica per invitare allo scroll */
+  .scroll-arrow {
+    transition: transform 0.3s ease;
+  }
+  .hero-btn:hover .scroll-arrow {
+    transform: translateY(4px);
+  }
+</style>

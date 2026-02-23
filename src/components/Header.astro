@@ -3,8 +3,12 @@ import type { SiteConfig } from "../lib/siteConfig";
 const { cfg } = Astro.props as { cfg: SiteConfig };
 
 const cta = cfg.navigation.cta;
-// Costruiamo il link assoluto
-const ctaHref = cta.type === "whatsapp" ? `https://wa.me/${cfg.contacts.phoneE164}` : `/${cta.targetId.replace('#','').replace('/','')}`;
+
+// Costruiamo il link assoluto salvando il cancelletto!
+// Rimuoviamo solo eventuali slash iniziali messi per errore nel JSON
+const ctaHref = cta.type === "whatsapp" 
+  ? `https://wa.me/${cfg.contacts.phoneE164}` 
+  : `/${cta.targetId.replace(/^\/+/, '')}`;
 ---
 
 <header class="site-header">

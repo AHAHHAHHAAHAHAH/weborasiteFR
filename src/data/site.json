@@ -25,11 +25,12 @@
   },
 "navigation": {
     "cta": { "label": "Ti serve una mano?", "type": "link", "targetId": "preventivi-box#contatti" },
-    "drawerTitle": "Il Percorso",
+    "drawerTitle": "La Tua Mappa Mentale",
     "items": [
-      { "id": "prezzi-lavori", "label": "Prezzi & Lavori" },
-      { "id": "assistenza-faqulo", "label": "Assistenza & FAQulo" },
-      { "id": "preventivi-box", "label": "Preventivi & Contatti" }
+      { "id": "", "label": "La Base" },
+      { "id": "prezzi-lavori", "label": "Risultati & Investimento" },
+      { "id": "assistenza-faqulo", "label": "FAQ" },
+      { "id": "preventivi-box", "label": "Inizia il Progetto" }
     ]
   },
   "pricing": {
@@ -151,7 +152,7 @@
       "body": "Non ti mostriamo grafiche finte fatte per farci belli. Ti mostriamo ecosistemi digitali che lavorano sul campo tutti i giorni per aziende vere.",
       "items": [
         { "title": "SrslyApp — Automazione Lavanderia", "industry": "App Gestionale B2B", "outcome": "Abbiamo digitalizzato l'intera lavanderia. Zero carta, gestione dei capi istantanea su tablet, staff sincronizzato in tempo reale. Il caos è diventato ordine.", "tags": ["Flutter", "Real-Time DB", "iOS/Android"], "link": "", "video": "" },
-        { "title": "Webora Vetrina — Lead Generation", "industry": "Sito Web Alta Conversione", "outcome": "Un'infrastruttura web progettata esclusivamente per raccogliere contatti qualificati. Tempi di caricamento azzerati, fiducia istantanea, funnel diretto verso WhatsApp e Mail.", "tags": ["Astro", "Cloudflare", "Ottimizzazione Psicologica"], "link": "https://webora.it", "video": "" }
+        { "title": "Webora Vetrina — Lead Generation", "industry": "Sito Web Alta Conversione", "outcome": "Un'infrastruttura web progettata esclusivamente per raccogliere contatti qualificati. Tempi di caricamento azzerati, fiducia istantanea, funnel diretto verso WhatsApp e Mail.", "tags": ["Astro", "Cloudflare", "Ottimizzazione Psicologica"], "link": "https://webora-01a.pages.dev/", "video": "" }
       ]
     },
    {

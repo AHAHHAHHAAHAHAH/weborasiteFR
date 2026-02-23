@@ -10,12 +10,13 @@ const packagesJson = JSON.stringify(packages);
 <section id={section.id} class="section">
   <div class="wrap">
     
-    <div class="reveal" style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
+    <div class="reveal" style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
       <span class="kicker">{section.kicker}</span>
       <h2>{section.title}</h2>
       <p style="font-size: 1.2rem; color: var(--muted); line-height: 1.6;">{section.body}</p>
       
       <div class="billing-toggle-wrapper">
+        <button class="billing-btn" data-plan="0">Nessuno</button>
         <button class="billing-btn" data-plan="1">1 Mese</button>
         <button class="billing-btn" data-plan="6">6 Mesi <span class="badge">Salva</span></button>
         <button class="billing-btn active" data-plan="12">12 Mesi <span class="badge premium">Pro</span></button>
@@ -24,14 +25,16 @@ const packagesJson = JSON.stringify(packages);
 
     <div class="grid cols-3">
       {packages.map((pkg: any, index: number) => (
-        <div class={`card reveal delay-${index % 3}`} style="padding: 40px 32px; display: flex; flex-direction: column;">
+        <div class={`card reveal delay-${index % 3}`} style="padding: 40px 32px; display: flex; flex-direction: column; position: relative; overflow: hidden;" data-card-id={pkg.id}>
+          
           <h3 style="font-size: clamp(1.4rem, 4vw, 1.6rem); color: var(--text);">{pkg.title}</h3>
           <p style="font-size: 0.95rem; color: var(--accent2); margin-bottom: 30px;">{pkg.subtitle}</p>
           
           <div style="margin-bottom: 20px;">
             <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 4px;">Setup Iniziale</div>
-            <div style="font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--text);">
-              €{pkg.basePrice}
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 0.9rem; color: var(--muted); font-weight: 400;">A partire da</span>
+              <span style="font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--text);">€{pkg.basePrice}</span>
             </div>
           </div>
           
@@ -42,13 +45,17 @@ const packagesJson = JSON.stringify(packages);
             <div style="display: flex; align-items: baseline; gap: 6px;">
               <span style="font-size: 1.5rem; color: var(--text); font-weight: 600;">+ €</span>
               <span class="dynamic-price" data-pkg={pkg.id} style="font-size: 2.8rem; font-weight: 800; line-height: 1; color: var(--accent2);">
-                {pkg.monthlyPrices['12']}
+                {Number(pkg.monthlyPrices['12']).toFixed(2).replace('.', ',')}
               </span>
               <span style="font-size: 1rem; color: var(--muted);">/mese</span>
             </div>
+            
+            <div class="support-badge">
+              🛡️ 30 Giorni di Collaudo e Garanzia Inclusi
+            </div>
           </div>
           
-          <ul style="padding: 0; margin: 0 0 40px 0; list-style: none; display: flex; flex-direction: column; gap: 14px; flex-grow: 1;">
+          <ul style="padding: 0; margin: 0 0 24px 0; list-style: none; display: flex; flex-direction: column; gap: 14px; flex-grow: 1;">
             {pkg.highlights.map((hl: string) => (
               <li style="display: flex; align-items: flex-start; gap: 12px; color: var(--muted); font-size: 1rem;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="margin-top: 3px; flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -57,9 +64,44 @@ const packagesJson = JSON.stringify(packages);
             ))}
           </ul>
           
-          <a href={`/preventivi-box?pkg=${pkg.id}#preventivi`} class="btn" style="width: 100%; position: relative; z-index: 30;">
+          <button type="button" class="referral-trigger" onclick={`toggleRefOverlay('${pkg.id}')`}>
+            🤝 Porta un amico e risparmia il 30%
+          </button>
+          
+          <a href={`/preventivi-box?pkg=${pkg.id}#preventivi`} class="btn primary" style="width: 100%; position: relative; z-index: 10;">
             Richiedi Info
           </a>
+
+          <div class="ref-overlay" id={`overlay-${pkg.id}`}>
+            <button type="button" class="close-ref" onclick={`toggleRefOverlay('${pkg.id}')`}>✕</button>
+            <div class="ref-badge">CO-INVESTIMENTO</div>
+            <h4 style="font-size: 1.5rem; color: #fff; margin-bottom: 20px;">Dettaglio Promo</h4>
+            
+            <div class="ref-split-detailed">
+              <div class="ref-row">
+                <span>Prezzo Singolo Setup</span>
+                <span style="text-decoration: line-through; color: var(--muted); font-size: 1.1rem;">€{pkg.basePrice}</span>
+              </div>
+              <div class="ref-divider"></div>
+              <div class="ref-row highlighted">
+                <span>Quota Scontata a testa</span>
+                <strong>€{Math.round(pkg.basePrice * 0.7)}</strong>
+              </div>
+              <div class="ref-row saving">
+                <span>Il tuo risparmio netto</span>
+                <strong>€{Math.round(pkg.basePrice * 0.3)}</strong>
+              </div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 24px; text-align: center; line-height: 1.4;">
+              Il mantenimento resta invariato. Valido se entrambi avviate il progetto.
+            </p>
+
+            <a href={`/preventivi-box?pkg=${pkg.id}&promo=amico#preventivi`} class="btn" style="width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #fff;">
+              Attiva Sconto X2
+            </a>
+          </div>
+
         </div>
       ))}
     </div>
@@ -79,51 +121,80 @@ const packagesJson = JSON.stringify(packages);
 </section>
 
 <style>
+  /* TOGGLE RESPONSIVO PER 4 BOTTONI */
   .billing-toggle-wrapper {
-    display: inline-flex;
-    flex-direction: row; /* Forza l'orizzontale */
-    align-items: center;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 99px;
-    padding: 6px;
-    gap: 4px;
-    margin-top: 30px;
-    flex-wrap: nowrap; /* Vieta l'andata a capo */
+    display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px; padding: 6px; gap: 4px; margin-top: 30px;
   }
   .billing-btn {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 10px 24px;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    white-space: nowrap; /* Impedisce al testo di spezzarsi */
+    background: transparent; border: none; color: var(--muted); font-size: 0.95rem;
+    font-weight: 600; padding: 10px 20px; border-radius: 99px; cursor: pointer;
+    transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap;
   }
-  .billing-btn.active {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+  .billing-btn.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .billing-btn:hover:not(.active) { color: #fff; }
 
-  .badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
+  .badge { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
   .badge.premium { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); font-weight: 700; }
 
+  /* IL BADGE PSICOLOGICO (Dinamico) */
+  .support-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700;
+    color: #0ea5e9; background: rgba(14, 165, 233, 0.1); padding: 6px 12px; border-radius: 8px;
+    border: 1px solid rgba(14, 165, 233, 0.2); margin-top: 10px; transition: all 0.3s ease;
+  }
+  .support-badge.warning {
+    color: #ff4a4a; background: rgba(255, 74, 74, 0.1); border-color: rgba(255, 74, 74, 0.2);
+  }
+
+  /* REFERRAL TRIGGER & OVERLAY */
+  .referral-trigger {
+    width: 100%; background: transparent; border: 1px dashed rgba(255,255,255,0.2);
+    color: var(--muted); padding: 12px; border-radius: 12px; font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; margin-bottom: 20px; transition: all 0.3s ease; position: relative; z-index: 10;
+  }
+  .referral-trigger:hover { border-color: var(--accent); color: #fff; background: rgba(255,255,255,0.03); }
+
+  .ref-overlay {
+    position: absolute; inset: 0; z-index: 20;
+    background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,0.98) 100%);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ref-overlay.is-active { transform: translateY(0); }
+  
+  .close-ref { position: absolute; top: 16px; right: 16px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: opacity 0.3s; }
+  .close-ref:hover { opacity: 1; }
+
+  .ref-badge { background: var(--text); color: var(--bg); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 99px; margin-bottom: 16px; }
+  
+  .ref-split-detailed { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+  .ref-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .ref-row:last-child { margin-bottom: 0; }
+  .ref-row span { font-size: 0.85rem; color: var(--muted); }
+  .ref-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 12px 0; }
+  .ref-row.highlighted span { color: #fff; font-weight: 600; }
+  .ref-row.highlighted strong { font-size: 1.6rem; color: #fff; }
+  .ref-row.saving { background: rgba(179, 91, 91, 0.1); margin: 16px -20px -20px -20px; padding: 16px 20px; border-radius: 0 0 16px 16px; border-top: 1px solid var(--accent); }
+  .ref-row.saving span { color: var(--accent2); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+  .ref-row.saving strong { color: #ff4a4a; font-size: 1.6rem; font-weight: 800; }
+
   @media (max-width: 768px) {
-    .billing-toggle-wrapper { display: flex; width: 100%; justify-content: space-between; }
-    .billing-btn { padding: 10px 12px; font-size: 0.85rem; flex: 1; }
+    .billing-toggle-wrapper { border-radius: 16px; }
+    .billing-btn { flex: 1 1 40%; justify-content: center; padding: 10px; font-size: 0.85rem; }
     .badge { display: none; }
+    .ref-overlay { padding: 24px; }
   }
 </style>
+
+<script is:inline>
+  function toggleRefOverlay(id) {
+    const overlay = document.getElementById(`overlay-${id}`);
+    if (overlay) overlay.classList.toggle('is-active');
+  }
+</script>
 
 <script define:vars={{ packagesJson }}>
   document.addEventListener('DOMContentLoaded', () => {
@@ -144,15 +215,26 @@ const packagesJson = JSON.stringify(packages);
           
           if(pkgData && pkgData.monthlyPrices) {
             const newPrice = pkgData.monthlyPrices[plan];
-            
+            const badge = display.closest('.card').querySelector('.support-badge');
+
             display.style.opacity = '0';
             display.style.transform = 'translateY(-5px)';
             
             setTimeout(() => {
-              display.textContent = newPrice;
+              // FORZATURA DEI CENTESIMI SEMPRE A .90 
+              display.textContent = Number(newPrice).toFixed(2).replace('.', ',');
+              
+              /* LOGICA PSICOLOGICA DI RISCHIO */
+              if (Number(newPrice) === 0) {
+                badge.classList.add('warning');
+                badge.innerHTML = '⚠️ Zero supporto e aggiornamenti dopo i 30gg';
+              } else {
+                badge.classList.remove('warning');
+                badge.innerHTML = '🛡️ 30 Giorni di Collaudo e Garanzia Inclusi';
+              }
+
               display.style.opacity = '1';
               display.style.transform = 'translateY(0)';
-              display.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
             }, 150);
           }
         });

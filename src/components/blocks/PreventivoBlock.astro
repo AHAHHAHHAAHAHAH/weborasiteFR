@@ -23,7 +23,7 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
       
       <div class="reveal card" style="padding: 40px;">
         <form id="calcForm" style="display: flex; flex-direction: column; gap: 32px;">
-          
+        
           <div class="input-group">
             <label>1. Obiettivo del Progetto</label>
             <select id="calcType" class="premium-select">
@@ -64,10 +64,22 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
 
         <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 40px; position: relative; overflow: hidden;">
           
-          <div style="margin-bottom: 30px;">
-            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Stima Setup (Costo Una Tantum)</div>
+          <div class="ref-toggle-box">
+            <div style="display: flex; flex-direction: column;">
+              <strong style="font-size: 0.95rem; color: #fff; margin-bottom: 2px;">🤝 Promo Co-Investimento</strong>
+              <span style="font-size: 0.75rem; color: var(--muted);">-30% sul Setup per te e per un amico</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="calcReferral">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Stima Setup (Una Tantum)</div>
             <div style="display: flex; align-items: baseline; gap: 8px;">
-              <span style="font-size: 2rem; color: var(--text); font-weight: 600;">€</span>
+              <span style="font-size: 0.95rem; color: var(--muted);">A partire da</span>
+              <span style="font-size: 2rem; color: var(--text); font-weight: 600; margin-left: 4px;">€</span>
               <span id="displaySetup" style="font-size: 4rem; font-weight: 800; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; transition: all 0.3s ease;">0</span>
             </div>
           </div>
@@ -83,7 +95,12 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
               <span style="font-size: 1rem; color: var(--muted);">/mese</span>
             </div>
 
+            <div id="preventivoSupportBadge" class="support-badge" style="margin-bottom: 24px;">
+              🛡️ 30 Giorni di Collaudo e Garanzia Inclusi
+            </div>
+
             <div class="billing-toggle-wrapper">
+              <button class="billing-btn" data-plan="0">Nessuno</button>
               <button class="billing-btn" data-plan="1">1 Mese</button>
               <button class="billing-btn" data-plan="6">6 Mesi <span class="badge">Salva</span></button>
               <button class="billing-btn active" data-plan="12">12 Mesi <span class="badge premium">Pro</span></button>
@@ -105,6 +122,7 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
   .input-group label {
     font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600; margin-bottom: 12px; display: block;
   }
+  
   .premium-select {
     width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px; color: #fff; font-family: inherit; font-size: 1.05rem; cursor: pointer;
@@ -114,43 +132,50 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
   .premium-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15); }
   .premium-select option { background: var(--panel); color: #fff; }
 
-  /* STILI TOGGLE COMPATTO IDENTICO A PREZZI */
+  .ref-toggle-box {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15);
+    padding: 16px 20px; border-radius: 16px; margin-bottom: 30px; transition: all 0.3s ease;
+  }
+  .ref-toggle-box:focus-within, .ref-toggle-box:hover { border-color: var(--accent2); background: rgba(255,255,255,0.05); }
+
+  .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; }
+  .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
+  input:checked + .slider { background-color: #ff4a4a; }
+  input:checked + .slider:before { transform: translateX(20px); }
+  .slider.round { border-radius: 34px; }
+  .slider.round:before { border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+  /* TOGGLE E BADGE GARANZIA DINAMICO */
   .billing-toggle-wrapper {
-    display: inline-flex;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 99px;
-    padding: 6px;
-    gap: 4px;
+    display: inline-flex; flex-wrap: wrap; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px; padding: 6px; gap: 4px;
   }
   .billing-btn {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 10px 24px;
-    border-radius: 99px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    background: transparent; border: none; color: var(--muted); font-size: 0.95rem;
+    font-weight: 600; padding: 10px 20px; border-radius: 99px; cursor: pointer;
+    transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .billing-btn.active {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+  .billing-btn.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .billing-btn:hover:not(.active) { color: #fff; }
   
   .badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
   .badge.premium { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); font-weight: 700; }
 
+  .support-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700;
+    color: #0ea5e9; background: rgba(14, 165, 233, 0.1); padding: 6px 12px; border-radius: 8px;
+    border: 1px solid rgba(14, 165, 233, 0.2); transition: all 0.3s ease;
+  }
+  .support-badge.warning {
+    color: #ff4a4a; background: rgba(255, 74, 74, 0.1); border-color: rgba(255, 74, 74, 0.2);
+  }
+
   @media (max-width: 768px) {
-    .billing-toggle-wrapper { display: flex; width: 100%; justify-content: space-between; }
-    .billing-btn { padding: 10px 12px; font-size: 0.85rem; flex: 1; }
+    .billing-toggle-wrapper { width: 100%; border-radius: 16px; justify-content: center; }
+    .billing-btn { flex: 1 1 40%; padding: 10px; font-size: 0.85rem; }
     .badge { display: none; }
   }
 </style>
@@ -162,13 +187,15 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
     const typeEl = document.getElementById('calcType');
     const sizeEl = document.getElementById('calcSize');
     const speedEl = document.getElementById('calcSpeed');
+    const refToggle = document.getElementById('calcReferral');
     
     const displaySetup = document.getElementById('displaySetup');
     const displayMonthly = document.getElementById('displayMonthly');
+    const badgeEl = document.getElementById('preventivoSupportBadge');
     const applyBtn = document.getElementById('applyToFormBtn');
     
     const billingBtns = document.querySelectorAll('.billing-btn');
-    let currentPlan = "12"; // Default a 12 mesi
+    let currentPlan = "12";
 
     billingBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -194,9 +221,18 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
       const speedData = (opts.speed[currentType] || []).find(s => s.id === speedEl.value);
 
       if(!typeData || !sizeData || !speedData) return;
-
+      
       const rawSetup = (typeData.basePrice + sizeData.addon) * speedData.multiplier;
-      const finalSetup = Math.round(rawSetup);
+      let finalSetup = Math.round(rawSetup);
+      
+      if (refToggle.checked) {
+        finalSetup = Math.round(finalSetup * 0.7);
+        displaySetup.style.color = "#ff4a4a"; 
+        displaySetup.style.textShadow = "0 0 15px rgba(255,74,74,0.3)";
+      } else {
+        displaySetup.style.color = "var(--text)";
+        displaySetup.style.textShadow = "none";
+      }
       
       const finalMonthly = typeData.monthlyPrices[currentPlan];
 
@@ -205,7 +241,17 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
       
       setTimeout(() => {
         displaySetup.textContent = finalSetup.toLocaleString('it-IT');
-        displayMonthly.textContent = finalMonthly.toString().replace('.', ',');
+        displayMonthly.textContent = Number(finalMonthly).toFixed(2).replace('.', ',');
+        
+        /* LOGICA PSICOLOGICA DI RISCHIO SUL PREVENTIVATORE */
+        if (finalMonthly === 0) {
+          badgeEl.classList.add('warning');
+          badgeEl.innerHTML = '⚠️ Zero supporto e aggiornamenti dopo i 30gg';
+        } else {
+          badgeEl.classList.remove('warning');
+          badgeEl.innerHTML = '🛡️ 30 Giorni di Collaudo e Garanzia Inclusi';
+        }
+        
         displaySetup.style.opacity = '1';
         displaySetup.style.transform = 'scale(1)';
       }, 150);
@@ -213,8 +259,14 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
 
     const urlParams = new URLSearchParams(window.location.search);
     const preselectedPkg = urlParams.get('pkg');
+    const promoActive = urlParams.get('promo');
+    
     if (preselectedPkg && Array.from(typeEl.options).some(opt => opt.value === preselectedPkg)) {
       typeEl.value = preselectedPkg;
+    }
+    
+    if (promoActive === 'amico') {
+      refToggle.checked = true;
     }
 
     updateDropdowns(typeEl.value);
@@ -223,6 +275,7 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
     typeEl.addEventListener('change', (e) => { updateDropdowns(e.target.value); calculate(); });
     sizeEl.addEventListener('change', calculate);
     speedEl.addEventListener('change', calculate);
+    refToggle.addEventListener('change', calculate);
 
     if(applyBtn) {
       applyBtn.addEventListener('click', () => {
@@ -231,8 +284,10 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
         const speedName = speedEl.options[speedEl.selectedIndex].text;
         const setupPrice = displaySetup.textContent;
         const monthlyPrice = displayMonthly.textContent;
+        const hasRef = refToggle.checked ? "SÌ (-30% applicato)" : "NO";
+        const noSub = currentPlan === "0" ? "(Rifiutato dal cliente, nessuna garanzia)" : "";
 
-        const messageText = `Ciao Webora Studio,\n\nHo utilizzato il vostro calcolatore e vorrei procedere con questa infrastruttura:\n\n- Natura: ${typeName}\n- Complessità: ${sizeName}\n- Timeline: ${speedName}\n- Piano Abbonamento: ${currentPlan} Mesi\n\nStima Setup (Una Tantum): €${setupPrice} (a partire da)\nMantenimento Fisso: €${monthlyPrice}/mese\n\nVorrei fissare una chiamata esplorativa gratuita.`;
+        const messageText = `Ciao Webora Studio,\n\nHo utilizzato il vostro calcolatore e vorrei procedere con questa infrastruttura:\n\n- Natura: ${typeName}\n- Complessità: ${sizeName}\n- Timeline: ${speedName}\n- Piano Abbonamento: ${currentPlan} Mesi ${noSub}\n- Promo Amico (Co-Investimento): ${hasRef}\n\nStima Setup (Una Tantum): €${setupPrice} (a partire da)\nMantenimento Fisso: €${monthlyPrice}/mese\n\nVorrei fissare una chiamata esplorativa gratuita.`;
 
         const messageBox = document.getElementById('message');
         if(messageBox) {

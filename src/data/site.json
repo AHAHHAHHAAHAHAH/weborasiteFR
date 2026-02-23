@@ -23,7 +23,7 @@
     "instagram": "webora_code",
     "website": "https://webora.it"
   },
-"navigation": {
+  "navigation": {
     "cta": { "label": "Ti serve una mano?", "type": "link", "targetId": "preventivi-box#contatti" },
     "drawerTitle": "La Tua Mappa Mentale",
     "items": [
@@ -41,24 +41,24 @@
         "id": "sito-web",
         "title": "Sito Web Premium",
         "subtitle": "La tua vetrina ad alta conversione.",
-        "basePrice": 250,
-        "monthlyPrices": { "1": 24.99, "6": 17.99, "12": 12.99 },
+        "basePrice": 240,
+        "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 },
         "highlights": ["Design su misura", "Ottimizzazione SEO", "Server ad alte prestazioni", "Assistenza e modifiche"]
       },
       {
         "id": "gestionale",
         "title": "App Gestionale",
         "subtitle": "Il motore della tua azienda.",
-        "basePrice": 1200,
-        "monthlyPrices": { "1": 49.99, "6": 34.99, "12": 24.99 },
+        "basePrice": 890,
+        "monthlyPrices": { "0": 0, "1": 49.90, "6": 39.90, "12": 29.90 },
         "highlights": ["Flussi su misura", "Dati in tempo reale", "Automazione processi", "Database sicuro e scalabile"]
       },
       {
         "id": "ecosistema",
         "title": "Sito + Gestionale",
         "subtitle": "Il dominio digitale totale.",
-        "basePrice": 1400,
-        "monthlyPrices": { "1": 64.99, "6": 49.99, "12": 37.99 },
+        "basePrice": 990,
+        "monthlyPrices": { "0": 0, "1": 59.90, "6": 49.90, "12": 39.90 },
         "highlights": ["Tutto incluso", "Integrazione perfetta", "Priorità di assistenza", "Risparmio massimizzato"]
       }
     ]
@@ -68,39 +68,38 @@
     "subtitle": "Trasparenza totale. Configura il tuo strumento digitale e ottieni una stima immediata senza sorprese.",
     "options": {
       "projectType": [
-        { "id": "sito-web", "label": "Sito Web Vetrina (Acquisizione Clienti)", "basePrice": 250, "monthlyPrices": { "1": 24.99, "6": 17.99, "12": 12.99 } },
-        { "id": "gestionale", "label": "App Gestionale (Ottimizzazione Lavoro Interno)", "basePrice": 1200, "monthlyPrices": { "1": 49.99, "6": 34.99, "12": 24.99 } },
-        { "id": "ecosistema", "label": "Ecosistema Completo (Sito + App Gestionale)", "basePrice": 1400, "monthlyPrices": { "1": 64.99, "6": 49.99, "12": 37.99 } }
+        { "id": "sito-web", "label": "Sito Web Vetrina (Acquisizione Clienti)", "basePrice": 240, "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 } },
+        { "id": "gestionale", "label": "App Gestionale (Ottimizzazione Lavoro Interno)", "basePrice": 890, "monthlyPrices": { "0": 0, "1": 49.90, "6": 39.90, "12": 29.90 } },
+        { "id": "ecosistema", "label": "Ecosistema Completo (Sito + App Gestionale)", "basePrice": 990, "monthlyPrices": { "0": 0, "1": 59.90, "6": 49.90, "12": 39.90 } }
       ],
       "size": {
         "sito-web": [
           { "id": "landing", "label": "Pagina Singola ad Alta Conversione (Per vendere o raccogliere contatti)", "addon": 0 },
-          { "id": "corporate", "label": "Sito Aziendale Completo (Per presentare azienda e servizi in dettaglio)", "addon": 150 },
-          { "id": "authority", "label": "Ecosistema Web Dinamico (Con area blog, recensioni live e pagine espandibili)", "addon": 300 }
+          { "id": "corporate", "label": "Sito Aziendale Completo (Per presentare azienda e servizi in dettaglio)", "addon": 100 },
+          { "id": "authority", "label": "Ecosistema Web Dinamico (Con area blog, recensioni live e pagine espandibili)", "addon": 160 }
         ],
         "gestionale": [
           { "id": "base", "label": "Punto di Controllo Centrale (Unico schermo per gestire l'attività)", "addon": 0 },
-          { "id": "team", "label": "Lavoro di Squadra Sincronizzato (Tutti i dipendenti collegati in tempo reale)", "addon": 250 },
-          { "id": "pro", "label": "Automazione Totale (Gestione ruoli separati + stampa comande e pre-conti)", "addon": 500 }
+          { "id": "pro", "label": "Automazione Totale (Gestione ruoli separati + stampa comande e pre-conti)", "addon": 350 }
         ],
         "ecosistema": [
           { "id": "eco-base", "label": "Vetrina per Acquisire + Gestionale per Controllare (Base)", "addon": 0 },
           { "id": "eco-pro", "label": "Azienda Online + Lavoro di Squadra Sincronizzato", "addon": 400 },
-          { "id": "eco-max", "label": "Dominio Digitale Totale (Massima autorità web + Automazione aziendale)", "addon": 800 }
+          { "id": "eco-max", "label": "Dominio Digitale Totale (Massima autorità web + Automazione aziendale)", "addon": 600 }
         ]
       },
       "speed": {
         "sito-web": [
-          { "id": "std", "label": "Ritmo Standard (La qualità richiede il suo tempo: ~10 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 7 giorni)", "multiplier": 1.3 }
+          { "id": "std", "label": "Ritmo Standard (consegna in ~10 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~7 giorni)", "multiplier": 1.11 }
         ],
         "gestionale": [
-          { "id": "std", "label": "Ritmo Standard (Ingegneria di precisione: 15-20 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 10-14 giorni)", "multiplier": 1.35 }
+          { "id": "std", "label": "Ritmo Standard (consegna in ~25 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~17 giorni)", "multiplier": 1.11}
         ],
         "ecosistema": [
-          { "id": "std", "label": "Ritmo Standard (Sviluppo parallelo accurato: 20-30 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 15-20 giorni)", "multiplier": 1.35 }
+          { "id": "std", "label": "Ritmo Standard (Sviluppo parallelo, consegna in ~35 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (Sviluppo parallelo, consegna in ~27 giorni)", "multiplier": 1.11 }
         ]
       }
     },
@@ -115,7 +114,7 @@
       { "q": "Quanta assistenza ho?", "a": "Contatto diretto su WhatsApp Business. Niente ticket infiniti, parli con noi." }
     ]
   },
- "sections": [
+  "sections": [
     {
       "type": "hero",
       "id": "top",
@@ -155,7 +154,7 @@
         { "title": "Webora Vetrina — Lead Generation", "industry": "Sito Web Alta Conversione", "outcome": "Un'infrastruttura web progettata esclusivamente per raccogliere contatti qualificati. Tempi di caricamento azzerati, fiducia istantanea, funnel diretto verso WhatsApp e Mail.", "tags": ["Astro", "Cloudflare", "Ottimizzazione Psicologica"], "link": "https://webora-01a.pages.dev/", "video": "" }
       ]
     },
-   {
+    {
       "type": "faq",
       "id": "faq",
       "kicker": "Le Regole del Gioco",

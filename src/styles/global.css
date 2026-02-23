@@ -413,32 +413,35 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
    10. FIX PERFORMANCE ESTREME SU MOBILE E TABLET
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-  /* Disattiva le animazioni pesanti di scroll su smartphone per fluidità a 60fps */
-  .reveal { 
-    opacity: 1 !important; 
-    transform: none !important; 
-    transition: none !important; 
-    will-change: auto !important; 
-  }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; will-change: auto !important; }
+  .bg-watermark { filter: grayscale(100%) !important; opacity: 0.04 !important; animation: none !important; }
+  .section { background: transparent !important; border: none !important; margin-top: 0 !important; padding: 60px 0 !important; }
   
-  .bg-watermark { 
-    filter: grayscale(100%) !important; 
-    opacity: 0.04 !important; /* Leggermente ridotto su mobile per non disturbare la lettura */
-    animation: none !important; /* Disattiva respiro per risparmiare batteria */
+  /* LA MAGIA DELLA SCHIARITURA: +10% su tutti gli angoli scuri */
+  body {
+    /* Da nero pece (#050505) a grigio grafite puro (#141414) */
+    background-color: #141414 !important; 
+    /* Il rosso in background esplode un po' di più per non sembrare spento */
+    background-image: radial-gradient(circle at 50% 0%, rgba(179, 91, 91, 0.16), transparent 85%) !important;
   }
-  
-  .section { 
-    background: transparent !important; 
-    border: none !important; 
-    margin-top: 0 !important; 
-    padding: 60px 0 !important; 
-  }
-  
+
   .card {
-    border: 1px solid rgba(255,255,255,0.04) !important;
-    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0.2) 100%) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    /* Vetro più luminoso, si stacca meglio dal fondo */
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%) !important;
     backdrop-filter: blur(16px) !important; 
     -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .field {
+    /* Campi contatti più chiari e accoglienti su mobile */
+    background: rgba(255,255,255,0.06) !important;
+  }
+
+  .btn.secondary {
+    /* Bottoni secondari schiariti per compensare la luce esterna */
+    background: rgba(255,255,255,0.06) !important; 
+    border-color: rgba(255,255,255,0.15) !important;
   }
 }
 
@@ -451,3 +454,4 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
 .w-full { width: 100%; }
 .mt-0 { margin-top: 0; }
 .mb-0 { margin-bottom: 0; }
+

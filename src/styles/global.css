@@ -294,14 +294,6 @@ a:hover {
   align-items: center;
   gap: 12px;
 }
-.kicker::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--accent2);
-  opacity: 0.5;
-}
 
 h1 { font-size: var(--text-3xl); line-height: 1.05; margin: 0 0 24px; font-weight: 800; letter-spacing: -0.03em; }
 h2 { font-size: var(--text-2xl); line-height: 1.15; margin: 0 0 20px; font-weight: 700; letter-spacing: -0.02em; }

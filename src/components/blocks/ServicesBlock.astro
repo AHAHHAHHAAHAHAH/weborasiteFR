@@ -58,7 +58,7 @@ const packagesJson = JSON.stringify(packages);
             ))}
           </ul>
           
-          <a href="/preventivi" class="btn" style="width: 100%; position: relative; z-index: 30;">
+          <a href={`/preventivi-box?pkg=${pkg.id}#preventivi`} class="btn" style="width: 100%; position: relative; z-index: 30;">
             Richiedi Info
           </a>
         </div>

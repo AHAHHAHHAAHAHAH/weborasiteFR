@@ -1,0 +1,32 @@
+---
+import { loadSiteConfig } from "../lib/siteConfig";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+
+const cfg = await loadSiteConfig();
+
+const preventivi = (cfg.sections || []).find((s) => s.id === "preventivi");
+const contatti = (cfg.sections || []).find((s) => s.id === "contatti");
+---
+
+<BaseLayout cfg={cfg} title={`${cfg.brand.name} — Preventivi & Contatti`}>
+  <div style="padding-top: 80px; padding-bottom: 80px; display: flex; flex-direction: column; gap: 0;">
+    {preventivi && <SectionRenderer cfg={cfg} section={preventivi} />}
+    {contatti && <SectionRenderer cfg={cfg} section={contatti} />}
+    
+    <div class="tunnel-gateway reveal" style="padding-top: 40px;">
+      <a href="/" class="gateway-link" style="opacity: 0.6; transform: scale(0.9);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 8px;">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Torna all'inizio</span>
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tunnel-gateway { padding: 60px 24px 60px; text-align: center; position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+  .gateway-link { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text); transition: all 0.3s ease; }
+  .gateway-link:hover { color: var(--text); opacity: 1 !important; transform: scale(1) translateY(-4px) !important; }
+</style>

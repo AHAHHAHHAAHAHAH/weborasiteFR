@@ -30,13 +30,12 @@ export function getConfig(): SiteConfig {
   assert(Array.isArray(cfg.navigation?.items), "navigation.items missing");
   assert(Array.isArray(cfg.pricing?.packages) && cfg.pricing.packages.length > 0, "pricing.packages missing");
 
-  // coerenza: nav id devono esistere nelle sections
-  const sectionIds = new Set(cfg.sections.map(s => s.id));
-  for (const it of cfg.navigation.items) {
-    assert(sectionIds.has(it.id), `nav item '${it.id}' not found in sections`);
-  }
+  /* * HO RIMOSSO LA VECCHIA REGOLA:
+   * Prima controllavamo che ogni link del menu fosse una sezione.
+   * Ora non serve più, perché i link (es. 'prezzi-lavori') sono Pagine Fisiche di Astro.
+   */
 
-  // coerenza: package ids univoci (Aggiornato per supportare il nuovo sistema Base + Mensile)
+  // Coerenza: pacchetti prezzi univoci e corretti (Setup Base + Mensile)
   const ids = new Set<string>();
   for (const p of cfg.pricing.packages as any[]) {
     assert(p.id && p.title, "package id/title missing");
@@ -48,7 +47,7 @@ export function getConfig(): SiteConfig {
   return cfg;
 }
 
-// compat: usata dalle pagine/SSR (stessa config, stessa validazione)
+// Compatibilità usata dalle pagine SSR/Statiche
 export async function loadSiteConfig(): Promise<SiteConfig> {
   return getConfig();
 }

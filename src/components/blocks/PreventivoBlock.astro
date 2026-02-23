@@ -1,111 +1,187 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
-const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
+
+const data = cfg.preventivo;
+const preventivoJson = JSON.stringify(data.options);
 ---
 
-<section id="preventivi" class="section">
-  <div class="wrap grid cols-2">
-    <div>
-      <div class="kicker">Preventivi</div>
-      <h2>{cfg.preventivo.title}</h2>
-      <p>{cfg.preventivo.subtitle}</p>
+<section id={section.id} class="section">
+  <div class="wrap">
+    
+    <div class="reveal" style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
+      <span class="kicker">{section.kicker}</span>
+      <h2>{data.title}</h2>
+      <p style="font-size: 1.2rem; color: var(--muted); line-height: 1.6;">{data.subtitle}</p>
+    </div>
 
-      <div class="card" style="padding:18px; margin-top:16px;">
-        <label for="activity">Attività</label>
-        <select id="activity" class="field">
-          {cfg.preventivo.activities.map(a => <option value={a.id}>{a.label}</option>)}
-        </select>
-
-        <label for="place">Luogo</label>
-        <select id="place" class="field">
-          {cfg.preventivo.places.map(l => <option value={l.id} data-mult={l.multiplier}>{l.label}</option>)}
-        </select>
-
-        <label for="pack">Pacchetto</label>
-        <select id="pack" class="field">
-          {cfg.pricing.packages.map(p => <option value={p.id} data-price={p.price}>{p.title}</option>)}
-        </select>
-
-        <div class="divider"></div>
-
-        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-          <div>
-            <div class="small" style="color:var(--muted);">Totale</div>
-            <div id="price" style="font-size:1.8rem; font-weight:950;">€ —</div>
-            <div class="note">{cfg.preventivo.resultNote}</div>
+    <div class="grid cols-2" style="gap: 60px; align-items: start;">
+      
+      <div class="reveal card" style="padding: 40px;">
+        <form id="calcForm" style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <div class="input-group">
+            <label>1. Tipologia di Progetto</label>
+            <select id="calcType" class="premium-select">
+              {data.options.projectType.map((opt:any) => (
+                <option value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
           </div>
 
-          <button class="btn primary" id="sendPreventivo">Invia su WhatsApp Business</button>
+          <div class="input-group">
+            <label>2. Complessità / Dimensione</label>
+            <select id="calcSize" class="premium-select">
+              {data.options.size.map((opt:any) => (
+                <option value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>3. Urgenza di Consegna</label>
+            <select id="calcSpeed" class="premium-select">
+              {data.options.speed.map((opt:any) => (
+                <option value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="reveal delay-1" style="display: flex; flex-direction: column; justify-content: center;">
+        
+        <div style="background: linear-gradient(135deg, rgba(179, 91, 91, 0.1), transparent); border: 1px solid rgba(179, 91, 91, 0.2); border-radius: 24px; padding: 48px 40px; position: relative; overflow: hidden;">
+          
+          <div style="margin-bottom: 30px;">
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Stima Setup Iniziale (A partire da)</div>
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 2rem; color: var(--text); font-weight: 600;">€</span>
+              <span id="displaySetup" style="font-size: 4.5rem; font-weight: 800; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; transition: all 0.3s ease;">0</span>
+            </div>
+          </div>
+
+          <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.06); margin: 30px 0;"></div>
+
+          <div style="margin-bottom: 40px;">
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Mantenimento & Server (Fisso)</div>
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 1.2rem; color: var(--accent2); font-weight: 600;">€</span>
+              <span id="displayMonthly" style="font-size: 2.5rem; font-weight: 800; line-height: 1; color: var(--accent2);">0</span>
+              <span style="font-size: 1rem; color: var(--muted);">/mese</span>
+            </div>
+          </div>
+
+          <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 32px; font-style: italic;">
+            {data.disclaimer}
+          </p>
+
+          <button id="applyToFormBtn" class="btn primary" style="width: 100%;">
+            Prosegui con questa configurazione
+          </button>
+          
         </div>
       </div>
-    </div>
 
-    <div class="card" style="padding:18px;">
-      <div class="kicker">Metodo</div>
-      <h3 style="margin:10px 0;">Ascolto → Progettazione → Risultati</h3>
-      <p class="note">Ti mandiamo un riepilogo completo su WhatsApp Business.</p>
     </div>
   </div>
-
-  <script type="module" define:vars={{ CFG: cfg }}>
-  const pack = document.getElementById("pack");
-  const place = document.getElementById("place");
-  const activity = document.getElementById("activity");
-  const out = document.getElementById("price");
-  const btn = document.getElementById("sendPreventivo");
-
-  if (!pack || !place || !activity || !out || !btn) {
-    console.warn("Preventivo elements missing");
-  } else {
-    const waBase = "https://wa.me/" + CFG.contacts.phoneE164;
-
-    function eur(n) {
-      return "€ " + Number(n).toFixed(2).replace(".", ",");
-    }
-    function enc(s) {
-      return encodeURIComponent(s || "");
-    }
-
-    function calc() {
-      const popt = pack.selectedOptions[0];
-      const lopt = place.selectedOptions[0];
-
-      const base = Number(popt?.dataset?.price || 0);
-      const mult = Number(lopt?.dataset?.mult || 1);
-      const total = base * mult;
-
-      out.textContent = eur(total);
-      return { total };
-    }
-
-    function summary() {
-      const aText = activity.selectedOptions[0]?.textContent || "";
-      const lText = place.selectedOptions[0]?.textContent || "";
-      const pText = pack.selectedOptions[0]?.textContent || "";
-      const { total } = calc();
-
-      return (
-        `Ciao ${CFG.brand.name}! Preventivo:\n` +
-        `- Attività: ${aText}\n` +
-        `- Luogo: ${lText}\n` +
-        `- Pacchetto: ${pText}\n` +
-        `Totale: ${eur(total)}\n\n` +
-        `Contatti:\n${CFG.contacts.phoneDisplay}\n${CFG.contacts.email}\n` +
-        (CFG.contacts.instagram ? `IG: @${CFG.contacts.instagram}\n` : "")
-      );
-    }
-
-    ["change", "input"].forEach((ev) => {
-      pack.addEventListener(ev, calc);
-      place.addEventListener(ev, calc);
-      activity.addEventListener(ev, calc);
-    });
-
-    btn.addEventListener("click", () => {
-      window.open(waBase + "?text=" + enc(summary()), "_blank");
-    });
-
-    calc();
-  }
-</script>
 </section>
+
+<style>
+  .input-group label {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600; margin-bottom: 8px; display: block;
+  }
+  .premium-select {
+    width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; color: #fff; font-family: inherit; font-size: 1.05rem; cursor: pointer;
+    appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat; background-position: right 20px center; background-size: 16px; transition: all 0.3s ease;
+  }
+  .premium-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15); }
+  .premium-select option { background: var(--panel); color: #fff; }
+</style>
+
+<script define:vars={{ preventivoJson }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const opts = JSON.parse(preventivoJson);
+    
+    const typeEl = document.getElementById('calcType');
+    const sizeEl = document.getElementById('calcSize');
+    const speedEl = document.getElementById('calcSpeed');
+    
+    const displaySetup = document.getElementById('displaySetup');
+    const displayMonthly = document.getElementById('displayMonthly');
+    const applyBtn = document.getElementById('applyToFormBtn');
+
+    // 1. Lettura Parametro URL (L'Autoselezione)
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedPkg = urlParams.get('pkg');
+    if (preselectedPkg && Array.from(typeEl.options).some(opt => opt.value === preselectedPkg)) {
+      typeEl.value = preselectedPkg;
+    }
+
+    // 2. Funzione di Calcolo
+    function calculate() {
+      const typeData = opts.projectType.find(t => t.id === typeEl.value);
+      const sizeData = opts.size.find(s => s.id === sizeEl.value);
+      const speedData = opts.speed.find(s => s.id === speedEl.value);
+
+      if(!typeData || !sizeData || !speedData) return;
+
+      // Logica: (Prezzo Base + Addon Dimensione) * Moltiplicatore Urgenza
+      const rawSetup = (typeData.basePrice + sizeData.addon) * speedData.multiplier;
+      const finalSetup = Math.round(rawSetup); // Arrotonda cifra tonda
+      const finalMonthly = typeData.monthly;
+
+      // Animazione Numeri CSS
+      displaySetup.style.opacity = '0.5';
+      displaySetup.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        displaySetup.textContent = finalSetup.toLocaleString('it-IT');
+        displayMonthly.textContent = finalMonthly.toString().replace('.', ',');
+        displaySetup.style.opacity = '1';
+        displaySetup.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    // Ascolta i cambiamenti
+    typeEl.addEventListener('change', calculate);
+    sizeEl.addEventListener('change', calculate);
+    speedEl.addEventListener('change', calculate);
+
+    // Calcolo iniziale all'avvio
+    calculate();
+
+    // 3. Tasto Magico: Incolla nel modulo contatti
+    if(applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        const typeName = typeEl.options[typeEl.selectedIndex].text;
+        const sizeName = sizeEl.options[sizeEl.selectedIndex].text;
+        const speedName = speedEl.options[speedEl.selectedIndex].text;
+        const setupPrice = displaySetup.textContent;
+        const monthlyPrice = displayMonthly.textContent;
+
+        const messageText = `Ciao Webora Studio,\n\nHo utilizzato il vostro calcolatore e vorrei procedere con questa configurazione:\n\n- Progetto: ${typeName}\n- Dimensione: ${sizeName}\n- Urgenza: ${speedName}\n\nStima Setup: €${setupPrice} (a partire da)\nMantenimento: €${monthlyPrice}/mese\n\nVorrei fissare una chiamata esplorativa per definire i dettagli.`;
+
+        // Cerca il modulo contatti nella pagina
+        const messageBox = document.getElementById('message');
+        if(messageBox) {
+          messageBox.value = messageText;
+          // Evidenzia visivamente che è stato incollato
+          messageBox.style.borderColor = "#2ecc71";
+          messageBox.style.boxShadow = "0 0 0 4px rgba(46, 204, 113, 0.2)";
+          
+          // Scorri fluidamente fino al modulo
+          messageBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          setTimeout(() => {
+            messageBox.style.borderColor = "";
+            messageBox.style.boxShadow = "";
+          }, 2000);
+        }
+      });
+    }
+  });
+</script>

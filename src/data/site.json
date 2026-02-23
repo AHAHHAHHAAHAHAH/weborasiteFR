@@ -24,14 +24,12 @@
     "website": "https://webora.it"
   },
   "navigation": {
-    "cta": { "label": "Parlane con noi", "type": "link", "targetId": "contatti" },
-    "drawerTitle": "Esplora",
+    "cta": { "label": "Area Preventivi", "type": "link", "targetId": "preventivi-box" },
+    "drawerTitle": "Il Percorso",
     "items": [
-      { "id": "servizi", "label": "Servizi & Branding" },
-      { "id": "lavori", "label": "I Nostri Lavori" },
-      { "id": "preventivi", "label": "Calcola Preventivo" },
-      { "id": "assistenza", "label": "FAQ & Assistenza" },
-      { "id": "contatti", "label": "Inizia Ora" }
+      { "id": "prezzi-lavori", "label": "Prezzi & Lavori" },
+      { "id": "assistenza-faqulo", "label": "Assistenza & FAQulo" },
+      { "id": "preventivi-box", "label": "Preventivi & Box Contatti" }
     ]
   },
   "pricing": {
@@ -65,23 +63,25 @@
     ]
   },
   "preventivo": {
-    "title": "Prezzo chiaro, subito",
-    "subtitle": "Scegli attività, luogo e pacchetto. Nessun costo nascosto. Scopri l'investimento.",
-    "activities": [
-      { "id": "bar", "label": "Bar / Caffetteria" },
-      { "id": "ristorante", "label": "Ristorante / Pizzeria" },
-      { "id": "parrucchiere", "label": "Parrucchiere / Estetica" },
-      { "id": "macelleria", "label": "Macelleria / Alimentari" },
-      { "id": "studio", "label": "Studio / Professionista" },
-      { "id": "altro", "label": "Altro" }
-    ],
-    "places": [
-      { "id": "italia", "label": "Italia", "multiplier": 1.0 },
-      { "id": "sicilia", "label": "Sicilia", "multiplier": 1.0 },
-      { "id": "catania", "label": "Catania", "multiplier": 1.0 },
-      { "id": "acireale", "label": "Acireale", "multiplier": 1.0 }
-    ],
-    "resultNote": "Prezzo calcolato automaticamente."
+    "title": "Calcolatore d'Investimento",
+    "subtitle": "Trasparenza totale. Configura i parametri del tuo progetto e ottieni una stima istantanea del setup iniziale.",
+    "options": {
+      "projectType": [
+        { "id": "sito-web", "label": "Sito Web Premium", "basePrice": 250, "monthly": 24.99 },
+        { "id": "gestionale", "label": "App Gestionale B2B", "basePrice": 1200, "monthly": 49.99 },
+        { "id": "ecosistema", "label": "Ecosistema (Sito + App)", "basePrice": 1400, "monthly": 64.99 }
+      ],
+      "size": [
+        { "id": "base", "label": "Struttura Essenziale (Ideale per iniziare)", "addon": 0 },
+        { "id": "pro", "label": "Avanzata (Flussi complessi / Fino a 10 pagine)", "addon": 300 },
+        { "id": "max", "label": "Massima (E-commerce / Multi-ruolo)", "addon": 700 }
+      ],
+      "speed": [
+        { "id": "standard", "label": "Standard (30-60 giorni lavorativi)", "multiplier": 1 },
+        { "id": "fast", "label": "Priorità Assoluta (Consegna in 15-20 giorni)", "multiplier": 1.3 }
+      ]
+    },
+    "disclaimer": "* Il prezzo di setup è una stima di partenza (PARTONO DA) basata sui parametri selezionati. L'abbonamento mensile per il mantenimento invece rimane fisso."
   },
   "faq": {
     "items": [
@@ -99,8 +99,8 @@
       "kicker": "Webora Studio",
       "headline": "Smettila di\nessere invisibile.",
       "body": "Progettiamo ecosistemi digitali per chi non si accontenta.\nSiti web, branding e contenuti che convertono l'attenzione in clienti.",
-      "primaryCta": { "label": "Calcola Preventivo", "targetId": "preventivi" },
-      "secondaryCta": { "label": "Parlane con noi", "targetId": "contatti" }
+      "primaryCta": { "label": "Calcola Preventivo", "targetId": "preventivi-box" },
+      "secondaryCta": { "label": "Parlane con noi", "targetId": "preventivi-box" }
     },
     {
       "type": "features",
@@ -114,7 +114,7 @@
         { "title": "Scalabilità", "subtitle": "Cresce con te", "bullets": ["Infrastruttura solida", "Integrazioni future", "Performance estreme", "Zero limiti tecnici"] },
         { "title": "Professionalità", "subtitle": "Serietà Assoluta", "bullets": ["Prezzi base chiari", "Rispetto scadenze", "Sviluppo trasparente", "Supporto dedicato"] }
       ],
-      "cta": { "label": "Richiedi una consulenza", "targetId": "contatti" }
+      "cta": { "label": "Vai ai Preventivi", "targetId": "preventivi-box" }
     },
     {
       "type": "services",
@@ -123,29 +123,15 @@
       "title": "Investimenti chiari. Zero sorprese.",
       "body": "Non vendiamo fumo. Paghi il setup iniziale per costruire l'infrastruttura, e un piano per mantenerla sempre perfetta e aggiornata."
     },
-    { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza" },
-   {
+    {
       "type": "case_studies",
       "id": "lavori",
       "kicker": "Casi Studio",
       "title": "Meno parole, più ingegneria.",
-      "body": "Non ti mostriamo un catalogo di siti fotocopia. Ti mostriamo infrastrutture digitali complesse, costruite per risolvere problemi reali e automatizzare il business.",
+      "body": "Non ti mostriamo un catalogo di siti fotocopia. Ti mostriamo infrastrutture digitali complesse, costruite per risolvere problemi reali.",
       "items": [
-        { 
-          "title": "SrslyApp — Automazione Gestionale", 
-          "industry": "Settore Servizi / Lavanderie", 
-          "outcome": "Digitalizzazione totale dei flussi di lavoro fisico-digitali. Un'app nativa che azzera gli errori umani: dal tracciamento degli ordini in tempo reale alla gestione del database clienti.", 
-          "tags": ["Flutter", "Firebase", "Real-Time DB", "iOS/Android"], 
-          "link": "",
-          "video": ""
-        },
-        { 
-          "title": "Architettura Vetrina Premium", 
-          "industry": "Corporate / Local Business", 
-          "outcome": "Un ecosistema web inattaccabile. Zero tempi di caricamento, integrazione widget recensioni verificato e funnel di contatto blindato. Costruito per dominare i motori di ricerca.", 
-          "tags": ["Astro", "Cloudflare Edge", "JSON-Driven", "Trustindex"], 
-          "link": "https://webora-01a.pages.dev/" 
-        }
+        { "title": "SrslyApp — Automazione Gestionale", "industry": "Settore Servizi / Lavanderie", "outcome": "Digitalizzazione totale dei flussi di lavoro fisico-digitali. Un'app nativa che azzera gli errori umani.", "tags": ["Flutter", "Firebase", "Real-Time DB", "iOS/Android"], "link": "", "video": "" },
+        { "title": "Architettura Vetrina Premium", "industry": "Corporate / Local Business", "outcome": "Un ecosistema web inattaccabile. Zero tempi di caricamento e funnel di contatto blindato.", "tags": ["Astro", "Cloudflare Edge", "JSON-Driven", "Trustindex"], "link": "https://webora.it", "video": "" }
       ]
     },
     {
@@ -159,17 +145,18 @@
     {
       "type": "faq",
       "id": "faq",
-      "kicker": "FAQ",
-      "title": "Zero Zone D'Ombra",
+      "kicker": "FAQulo",
+      "title": "Le domande che ci fate sempre.",
       "freeQuestionTitle": "Hai altre domande?",
       "freeQuestionPlaceholder": "Scrivici qui e ti risponderemo in tempo reale..."
     },
+    { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza Assoluta" },
     {
       "type": "contacts",
       "id": "contatti",
       "kicker": "Il Momento È Adesso",
       "title": "Iniziamo a fare sul serio.",
-      "body": "Contattaci e fissiamo una chiamata esplorativa gratuita. Capiamo se siamo i partner giusti per te."
+      "body": "Usa i nostri canali diretti o compila il modulo. Fissiamo una chiamata esplorativa gratuita per capire se siamo i partner giusti per te."
     }
   ]
 }

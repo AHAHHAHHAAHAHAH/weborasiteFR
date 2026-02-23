@@ -1,0 +1,140 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import siteData from "../data/site.json"; // <-- Aggiunto per importare i dati del sito
+
+const cfg = siteData; // <-- Passiamo i dati al layout
+const siteUrl = "https://weborasitefr.pages.dev"; // <-- URL Corretto
+const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=512x512&data=${siteUrl}&margin=0`;
+---
+
+<BaseLayout cfg={cfg} title="QR Code | Webora Studio" description="Scansiona il QR Code per accedere a Webora Studio.">
+  <div class="qr-page-wrapper">
+    
+    <div class="card reveal qr-card">
+      <div class="qr-header">
+        <span class="kicker" style="justify-content: center;">Pass Digitale</span>
+        <h1 style="font-size: 2rem; margin-bottom: 8px;">Webora Studio</h1>
+        <p style="font-size: 0.95rem; margin-bottom: 0;">Inquadra per esplorare la nostra dimensione digitale.</p>
+      </div>
+
+      <div class="qr-image-container">
+        <div class="scanner-corner top-left"></div>
+        <div class="scanner-corner top-right"></div>
+        <div class="scanner-corner bottom-left"></div>
+        <div class="scanner-corner bottom-right"></div>
+        
+        <img src={qrUrl} alt="Webora QR Code" class="qr-code-img" />
+      </div>
+
+      <div class="qr-footer hide-on-print">
+        <div class="divider" style="margin: 30px 0;"></div>
+        <button class="btn primary w-full" onclick="window.print()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Stampa QR Code
+        </button>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* IMPAGINAZIONE A SCHERMO (Modalità Scura Premium) */
+  .qr-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image: radial-gradient(circle at 50% 50%, rgba(179, 91, 91, 0.05), transparent 70%);
+  }
+
+  .qr-card {
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    padding: 50px 40px;
+  }
+
+  .qr-image-container {
+    position: relative;
+    background: #fff; /* Il QR DEVE avere fondo bianco per essere scansionato dai telefoni più vecchi */
+    padding: 20px;
+    border-radius: 20px;
+    margin: 40px auto 0;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .qr-code-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply; /* Rende il nero del QR più profondo */
+  }
+
+  /* EFFETTO SCANNER LASER AGLI ANGOLI */
+  .scanner-corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: var(--accent);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .top-left { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-radius: 12px 0 0 0; }
+  .top-right { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-radius: 0 12px 0 0; }
+  .bottom-left { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-radius: 0 0 0 12px; }
+  .bottom-right { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-radius: 0 0 12px 0; }
+
+  /* ==========================================================================
+     MODALITÀ STAMPA (La magia che salva l'inchiostro)
+     ========================================================================== */
+  @media print {
+    /* Forziamo la pagina a diventare bianca */
+    body, html, .qr-page-wrapper {
+      background: #ffffff !important;
+      color: #000000 !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Rimuoviamo gli stili del vetro per una stampa pulita */
+    .qr-card {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      max-width: none !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin-top: 10vh !important; /* Centra verticalmente nel foglio */
+    }
+
+    /* Ingrandiamo il QR per il foglio A4 */
+    .qr-image-container {
+      width: 400px;
+      height: 400px;
+      box-shadow: none !important;
+      border: 4px solid #000 !important; /* Bordo netto invece di quello rosso brillante */
+    }
+
+    /* Nascondiamo i laser spaziali e tutto ciò che non serve in stampa */
+    .scanner-corner { display: none !important; }
+    .hide-on-print { display: none !important; }
+    
+    /* Disattiviamo header e footer globali se Astro li inietta */
+    header, footer, nav, .bg-watermark, .mouse-glow {
+      display: none !important;
+    }
+
+    h1 { color: #000 !important; font-size: 3rem !important; }
+    p { color: #333 !important; font-size: 1.5rem !important; }
+    .kicker { color: #555 !important; }
+  }
+</style>

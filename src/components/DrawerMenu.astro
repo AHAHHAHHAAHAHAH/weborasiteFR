@@ -213,12 +213,15 @@ const finalItems = hasHome ? navItems : [{ id: "", label: "La Base" }, ...navIte
     function open() {
       b.classList.add('is-open');
       p.classList.add('is-open');
-      // NESSUN BLOCCO OVERFLOW QUI! Scroll libero e senza bug su iOS.
+      // IL LUCCHETTO È TORNATO: Blocca brutalmente lo scroll della pagina dietro
+      document.body.style.overflow = 'hidden';
     }
 
     function close() {
       b.classList.remove('is-open');
       p.classList.remove('is-open');
+      // Sblocca lo scroll quando il menu si chiude
+      document.body.style.overflow = '';
     }
 
     window.addEventListener("webora:drawer:open", open);

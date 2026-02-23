@@ -409,39 +409,56 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
 .reveal.delay-3 { transition-delay: 0.3s; }
 .reveal.delay-4 { transition-delay: 0.4s; }
 
+
 /* --------------------------------------------------------------------------
-   10. FIX PERFORMANCE ESTREME SU MOBILE E TABLET
+   10. FIX PERFORMANCE ESTREME SU MOBILE (ANDROID SURVIVAL MODE) E +5% LUMINOSITÀ
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+  /* Disabilitiamo animazioni complesse che stressano la CPU */
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; will-change: auto !important; }
-  .bg-watermark { filter: grayscale(100%) !important; opacity: 0.04 !important; animation: none !important; }
+  
+  /* ANDROID SAVIOR #1: Via i filtri pesanti dal watermark */
+  .bg-watermark { 
+    filter: none !important; /* Rimuove blur e grayscale che distruggono il framerate */
+    opacity: 0.02 !important; /* Lo rendiamo solo molto trasparente, costo GPU: zero */
+    animation: none !important; 
+    will-change: auto !important;
+  }
+  
   .section { background: transparent !important; border: none !important; margin-top: 0 !important; padding: 60px 0 !important; }
   
-  /* LA MAGIA DELLA SCHIARITURA: +10% su tutti gli angoli scuri */
+  /* LUCE GLOBALE: +5% */
   body {
-    /* Da nero pece (#050505) a grigio grafite puro (#141414) */
-    background-color: #141414 !important; 
-    /* Il rosso in background esplode un po' di più per non sembrare spento */
-    background-image: radial-gradient(circle at 50% 0%, rgba(179, 91, 91, 0.16), transparent 85%) !important;
+    background-color: #0A0A0A !important; 
+    background-image: radial-gradient(circle at 50% 0%, rgba(179, 91, 91, 0.12), transparent 85%) !important;
   }
 
+  /* ANDROID SAVIOR #2: Ottimizzazione del Glassmorphism e Hardware Acceleration */
   .card {
-    border: 1px solid rgba(255,255,255,0.08) !important;
-    /* Vetro più luminoso, si stacca meglio dal fondo */
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%) !important;
-    backdrop-filter: blur(16px) !important; 
-    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    /* Aumentiamo la coprenza del fondo per simulare l'effetto vetro senza pesare sulla RAM */
+    background: linear-gradient(180deg, rgba(25,25,25,0.7) 0%, rgba(15,15,15,0.9) 100%) !important;
+    /* Abbassiamo il calcolo della sfocatura del 75% */
+    backdrop-filter: blur(4px) !important; 
+    -webkit-backdrop-filter: blur(4px) !important;
+    /* Semplifichiamo l'ombra */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+    /* TRUCCO HARDWARE: Forza il dispositivo a usare l'accelerazione GPU (Scheda Video) */
+    transform: translateZ(0) !important; 
+    backface-visibility: hidden !important;
+    perspective: 1000px !important;
   }
 
+  /* Acceleriamo anche bottoni e input per rendere lo scroll burro */
   .field {
-    /* Campi contatti più chiari e accoglienti su mobile */
-    background: rgba(255,255,255,0.06) !important;
+    background: rgba(255,255,255,0.04) !important;
+    transform: translateZ(0) !important;
   }
 
   .btn.secondary {
-    /* Bottoni secondari schiariti per compensare la luce esterna */
-    background: rgba(255,255,255,0.06) !important; 
-    border-color: rgba(255,255,255,0.15) !important;
+    background: rgba(255,255,255,0.04) !important; 
+    border-color: rgba(255,255,255,0.12) !important;
+    transform: translateZ(0) !important;
   }
 }
 

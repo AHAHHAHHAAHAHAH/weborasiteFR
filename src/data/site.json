@@ -64,24 +64,46 @@
   },
   "preventivo": {
     "title": "Calcolatore d'Investimento",
-    "subtitle": "Trasparenza totale. Configura i parametri del tuo progetto e ottieni una stima istantanea del setup iniziale.",
+    "subtitle": "Trasparenza totale. Configura il tuo strumento digitale e ottieni una stima immediata senza sorprese.",
     "options": {
       "projectType": [
-        { "id": "sito-web", "label": "Sito Web Premium", "basePrice": 250, "monthly": 24.99 },
-        { "id": "gestionale", "label": "App Gestionale B2B", "basePrice": 1200, "monthly": 49.99 },
-        { "id": "ecosistema", "label": "Ecosistema (Sito + App)", "basePrice": 1400, "monthly": 64.99 }
+        { "id": "sito-web", "label": "Sito Web Vetrina (Acquisizione Clienti)", "basePrice": 250, "monthlyPrices": { "1": 24.99, "6": 17.99, "12": 12.99 } },
+        { "id": "gestionale", "label": "App Gestionale (Ottimizzazione Lavoro Interno)", "basePrice": 1200, "monthlyPrices": { "1": 49.99, "6": 34.99, "12": 24.99 } },
+        { "id": "ecosistema", "label": "Ecosistema Completo (Sito + App Gestionale)", "basePrice": 1400, "monthlyPrices": { "1": 64.99, "6": 49.99, "12": 37.99 } }
       ],
-      "size": [
-        { "id": "base", "label": "Struttura Essenziale (Ideale per iniziare)", "addon": 0 },
-        { "id": "pro", "label": "Avanzata (Flussi complessi / Fino a 10 pagine)", "addon": 300 },
-        { "id": "max", "label": "Massima (E-commerce / Multi-ruolo)", "addon": 700 }
-      ],
-      "speed": [
-        { "id": "standard", "label": "Standard (30-60 giorni lavorativi)", "multiplier": 1 },
-        { "id": "fast", "label": "Priorità Assoluta (Consegna in 15-20 giorni)", "multiplier": 1.3 }
-      ]
+      "size": {
+        "sito-web": [
+          { "id": "landing", "label": "Pagina Singola ad Alta Conversione (Per vendere o raccogliere contatti)", "addon": 0 },
+          { "id": "corporate", "label": "Sito Aziendale Completo (Per presentare azienda e servizi in dettaglio)", "addon": 150 },
+          { "id": "authority", "label": "Ecosistema Web Dinamico (Con area blog, recensioni live e pagine espandibili)", "addon": 300 }
+        ],
+        "gestionale": [
+          { "id": "base", "label": "Punto di Controllo Centrale (Unico schermo per gestire l'attività)", "addon": 0 },
+          { "id": "team", "label": "Lavoro di Squadra Sincronizzato (Tutti i dipendenti collegati in tempo reale)", "addon": 250 },
+          { "id": "pro", "label": "Automazione Totale (Gestione ruoli separati + stampa comande e pre-conti)", "addon": 500 }
+        ],
+        "ecosistema": [
+          { "id": "eco-base", "label": "Vetrina per Acquisire + Gestionale per Controllare (Base)", "addon": 0 },
+          { "id": "eco-pro", "label": "Azienda Online + Lavoro di Squadra Sincronizzato", "addon": 400 },
+          { "id": "eco-max", "label": "Dominio Digitale Totale (Massima autorità web + Automazione aziendale)", "addon": 800 }
+        ]
+      },
+      "speed": {
+        "sito-web": [
+          { "id": "std", "label": "Ritmo Standard (La qualità richiede il suo tempo: ~10 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 7 giorni)", "multiplier": 1.3 }
+        ],
+        "gestionale": [
+          { "id": "std", "label": "Ritmo Standard (Ingegneria di precisione: 15-20 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 10-14 giorni)", "multiplier": 1.35 }
+        ],
+        "ecosistema": [
+          { "id": "std", "label": "Ritmo Standard (Sviluppo parallelo accurato: 20-30 giorni)", "multiplier": 1 },
+          { "id": "fast", "label": "Corsia Preferenziale (Team dedicato per consegna in 15-20 giorni)", "multiplier": 1.35 }
+        ]
+      }
     },
-    "disclaimer": "* Il prezzo di setup è una stima di partenza (PARTONO DA) basata sui parametri selezionati. L'abbonamento mensile per il mantenimento invece rimane fisso."
+    "disclaimer": "⚠️ TRASPARENZA ASSOLUTA: Il setup calcolato è una stima \"A PARTIRE DA\" per la costruzione dell'infrastruttura. L'abbonamento mensile garantisce l'hosting ad alte prestazioni, aggiornamenti continui e supporto diretto senza costi nascosti."
   },
   "faq": {
     "items": [

@@ -4,6 +4,10 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
 const data = cfg.preventivo;
 const preventivoJson = JSON.stringify(data.options);
+
+const defaultType = data.options.projectType[0].id;
+const defaultSizes = (data.options.size as any)[defaultType];
+const defaultSpeeds = (data.options.speed as any)[defaultType];
 ---
 
 <section id={section.id} class="section">
@@ -18,10 +22,10 @@ const preventivoJson = JSON.stringify(data.options);
     <div class="grid cols-2" style="gap: 60px; align-items: start;">
       
       <div class="reveal card" style="padding: 40px;">
-        <form id="calcForm" style="display: flex; flex-direction: column; gap: 24px;">
+        <form id="calcForm" style="display: flex; flex-direction: column; gap: 32px;">
           
           <div class="input-group">
-            <label>1. Tipologia di Progetto</label>
+            <label>1. Obiettivo del Progetto</label>
             <select id="calcType" class="premium-select">
               {data.options.projectType.map((opt:any) => (
                 <option value={opt.id}>{opt.label}</option>
@@ -30,18 +34,18 @@ const preventivoJson = JSON.stringify(data.options);
           </div>
 
           <div class="input-group">
-            <label>2. Complessità / Dimensione</label>
+            <label>2. Struttura e Dimensione</label>
             <select id="calcSize" class="premium-select">
-              {data.options.size.map((opt:any) => (
+              {defaultSizes.map((opt:any) => (
                 <option value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
 
           <div class="input-group">
-            <label>3. Urgenza di Consegna</label>
+            <label>3. Tempistiche di Consegna</label>
             <select id="calcSpeed" class="premium-select">
-              {data.options.speed.map((opt:any) => (
+              {defaultSpeeds.map((opt:any) => (
                 <option value={opt.id}>{opt.label}</option>
               ))}
             </select>
@@ -50,32 +54,41 @@ const preventivoJson = JSON.stringify(data.options);
         </form>
       </div>
 
-      <div class="reveal delay-1" style="display: flex; flex-direction: column; justify-content: center;">
+      <div class="reveal delay-1" style="display: flex; flex-direction: column; justify-content: flex-start; gap: 24px;">
         
-        <div style="background: linear-gradient(135deg, rgba(179, 91, 91, 0.1), transparent); border: 1px solid rgba(179, 91, 91, 0.2); border-radius: 24px; padding: 48px 40px; position: relative; overflow: hidden;">
+        <div style="background: rgba(179, 91, 91, 0.1); border: 1px solid rgba(179, 91, 91, 0.3); border-radius: 16px; padding: 20px 24px;">
+          <p style="font-size: 0.85rem; color: var(--accent2); line-height: 1.5; margin: 0; font-weight: 500;">
+            {data.disclaimer}
+          </p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 40px; position: relative; overflow: hidden;">
           
           <div style="margin-bottom: 30px;">
-            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Stima Setup Iniziale (A partire da)</div>
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Stima Setup (Costo Una Tantum)</div>
             <div style="display: flex; align-items: baseline; gap: 8px;">
               <span style="font-size: 2rem; color: var(--text); font-weight: 600;">€</span>
-              <span id="displaySetup" style="font-size: 4.5rem; font-weight: 800; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; transition: all 0.3s ease;">0</span>
+              <span id="displaySetup" style="font-size: 4rem; font-weight: 800; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; transition: all 0.3s ease;">0</span>
             </div>
           </div>
 
           <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.06); margin: 30px 0;"></div>
 
           <div style="margin-bottom: 40px;">
-            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px;">Mantenimento & Server (Fisso)</div>
-            <div style="display: flex; align-items: baseline; gap: 8px;">
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px;">Mantenimento & Supporto Continuo</div>
+            
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 24px;">
               <span style="font-size: 1.2rem; color: var(--accent2); font-weight: 600;">€</span>
-              <span id="displayMonthly" style="font-size: 2.5rem; font-weight: 800; line-height: 1; color: var(--accent2);">0</span>
+              <span id="displayMonthly" style="font-size: 2.8rem; font-weight: 800; line-height: 1; color: var(--accent2);">0</span>
               <span style="font-size: 1rem; color: var(--muted);">/mese</span>
             </div>
-          </div>
 
-          <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 32px; font-style: italic;">
-            {data.disclaimer}
-          </p>
+            <div class="billing-toggle-wrapper">
+              <button class="billing-btn" data-plan="1">1 Mese</button>
+              <button class="billing-btn" data-plan="6">6 Mesi <span class="badge">Salva</span></button>
+              <button class="billing-btn active" data-plan="12">12 Mesi <span class="badge premium">Pro</span></button>
+            </div>
+          </div>
 
           <button id="applyToFormBtn" class="btn primary" style="width: 100%;">
             Prosegui con questa configurazione
@@ -90,7 +103,7 @@ const preventivoJson = JSON.stringify(data.options);
 
 <style>
   .input-group label {
-    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600; margin-bottom: 8px; display: block;
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600; margin-bottom: 12px; display: block;
   }
   .premium-select {
     width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
@@ -100,6 +113,46 @@ const preventivoJson = JSON.stringify(data.options);
   }
   .premium-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15); }
   .premium-select option { background: var(--panel); color: #fff; }
+
+  /* STILI TOGGLE COMPATTO IDENTICO A PREZZI */
+  .billing-toggle-wrapper {
+    display: inline-flex;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 99px;
+    padding: 6px;
+    gap: 4px;
+  }
+  .billing-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .billing-btn.active {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .billing-btn:hover:not(.active) { color: #fff; }
+  
+  .badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
+  .badge.premium { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .billing-toggle-wrapper { display: flex; width: 100%; justify-content: space-between; }
+    .billing-btn { padding: 10px 12px; font-size: 0.85rem; flex: 1; }
+    .badge { display: none; }
+  }
 </style>
 
 <script define:vars={{ preventivoJson }}>
@@ -113,28 +166,40 @@ const preventivoJson = JSON.stringify(data.options);
     const displaySetup = document.getElementById('displaySetup');
     const displayMonthly = document.getElementById('displayMonthly');
     const applyBtn = document.getElementById('applyToFormBtn');
+    
+    const billingBtns = document.querySelectorAll('.billing-btn');
+    let currentPlan = "12"; // Default a 12 mesi
 
-    // 1. Lettura Parametro URL (L'Autoselezione)
-    const urlParams = new URLSearchParams(window.location.search);
-    const preselectedPkg = urlParams.get('pkg');
-    if (preselectedPkg && Array.from(typeEl.options).some(opt => opt.value === preselectedPkg)) {
-      typeEl.value = preselectedPkg;
+    billingBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        billingBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPlan = btn.getAttribute('data-plan');
+        calculate();
+      });
+    });
+
+    function updateDropdowns(selectedType) {
+      sizeEl.innerHTML = '';
+      speedEl.innerHTML = '';
+      opts.size[selectedType].forEach(opt => sizeEl.add(new Option(opt.label, opt.id)));
+      opts.speed[selectedType].forEach(opt => speedEl.add(new Option(opt.label, opt.id)));
     }
 
-    // 2. Funzione di Calcolo
     function calculate() {
-      const typeData = opts.projectType.find(t => t.id === typeEl.value);
-      const sizeData = opts.size.find(s => s.id === sizeEl.value);
-      const speedData = opts.speed.find(s => s.id === speedEl.value);
+      const currentType = typeEl.value;
+      const typeData = opts.projectType.find(t => t.id === currentType);
+      const sizeData = (opts.size[currentType] || []).find(s => s.id === sizeEl.value);
+      const speedData = (opts.speed[currentType] || []).find(s => s.id === speedEl.value);
 
       if(!typeData || !sizeData || !speedData) return;
 
-      // Logica: (Prezzo Base + Addon Dimensione) * Moltiplicatore Urgenza
       const rawSetup = (typeData.basePrice + sizeData.addon) * speedData.multiplier;
-      const finalSetup = Math.round(rawSetup); // Arrotonda cifra tonda
-      const finalMonthly = typeData.monthly;
+      const finalSetup = Math.round(rawSetup);
+      
+      const finalMonthly = typeData.monthlyPrices[currentPlan];
 
-      // Animazione Numeri CSS
       displaySetup.style.opacity = '0.5';
       displaySetup.style.transform = 'scale(0.95)';
       
@@ -146,15 +211,19 @@ const preventivoJson = JSON.stringify(data.options);
       }, 150);
     }
 
-    // Ascolta i cambiamenti
-    typeEl.addEventListener('change', calculate);
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedPkg = urlParams.get('pkg');
+    if (preselectedPkg && Array.from(typeEl.options).some(opt => opt.value === preselectedPkg)) {
+      typeEl.value = preselectedPkg;
+    }
+
+    updateDropdowns(typeEl.value);
+    calculate();
+
+    typeEl.addEventListener('change', (e) => { updateDropdowns(e.target.value); calculate(); });
     sizeEl.addEventListener('change', calculate);
     speedEl.addEventListener('change', calculate);
 
-    // Calcolo iniziale all'avvio
-    calculate();
-
-    // 3. Tasto Magico: Incolla nel modulo contatti
     if(applyBtn) {
       applyBtn.addEventListener('click', () => {
         const typeName = typeEl.options[typeEl.selectedIndex].text;
@@ -163,17 +232,13 @@ const preventivoJson = JSON.stringify(data.options);
         const setupPrice = displaySetup.textContent;
         const monthlyPrice = displayMonthly.textContent;
 
-        const messageText = `Ciao Webora Studio,\n\nHo utilizzato il vostro calcolatore e vorrei procedere con questa configurazione:\n\n- Progetto: ${typeName}\n- Dimensione: ${sizeName}\n- Urgenza: ${speedName}\n\nStima Setup: €${setupPrice} (a partire da)\nMantenimento: €${monthlyPrice}/mese\n\nVorrei fissare una chiamata esplorativa per definire i dettagli.`;
+        const messageText = `Ciao Webora Studio,\n\nHo utilizzato il vostro calcolatore e vorrei procedere con questa infrastruttura:\n\n- Natura: ${typeName}\n- Complessità: ${sizeName}\n- Timeline: ${speedName}\n- Piano Abbonamento: ${currentPlan} Mesi\n\nStima Setup (Una Tantum): €${setupPrice} (a partire da)\nMantenimento Fisso: €${monthlyPrice}/mese\n\nVorrei fissare una chiamata esplorativa gratuita.`;
 
-        // Cerca il modulo contatti nella pagina
         const messageBox = document.getElementById('message');
         if(messageBox) {
           messageBox.value = messageText;
-          // Evidenzia visivamente che è stato incollato
           messageBox.style.borderColor = "#2ecc71";
           messageBox.style.boxShadow = "0 0 0 4px rgba(46, 204, 113, 0.2)";
-          
-          // Scorri fluidamente fino al modulo
           messageBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
           setTimeout(() => {

@@ -4,7 +4,6 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 const packages = cfg.pricing?.packages || [];
 const disclaimer = cfg.pricing?.disclaimer || "";
 
-// Serializziamo i pacchetti per poterli usare nello script client-side
 const packagesJson = JSON.stringify(packages);
 ---
 
@@ -16,10 +15,10 @@ const packagesJson = JSON.stringify(packages);
       <h2>{section.title}</h2>
       <p style="font-size: 1.2rem; color: var(--muted); line-height: 1.6;">{section.body}</p>
       
-      <div class="billing-toggle-wrapper" style="margin-top: 30px; display: inline-flex; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06); border-radius: 99px; padding: 6px;">
-        <button class="billing-btn active" data-plan="1">1 Mese</button>
+      <div class="billing-toggle-wrapper">
+        <button class="billing-btn" data-plan="1">1 Mese</button>
         <button class="billing-btn" data-plan="6">6 Mesi <span class="badge">Salva</span></button>
-        <button class="billing-btn" data-plan="12">12 Mesi <span class="badge premium">Pro</span></button>
+        <button class="billing-btn active" data-plan="12">12 Mesi <span class="badge premium">Pro</span></button>
       </div>
     </div>
 
@@ -43,7 +42,7 @@ const packagesJson = JSON.stringify(packages);
             <div style="display: flex; align-items: baseline; gap: 6px;">
               <span style="font-size: 1.5rem; color: var(--text); font-weight: 600;">+ €</span>
               <span class="dynamic-price" data-pkg={pkg.id} style="font-size: 2.8rem; font-weight: 800; line-height: 1; color: var(--accent2);">
-                {pkg.monthlyPrices['1']}
+                {pkg.monthlyPrices['12']}
               </span>
               <span style="font-size: 1rem; color: var(--muted);">/mese</span>
             </div>
@@ -80,6 +79,18 @@ const packagesJson = JSON.stringify(packages);
 </section>
 
 <style>
+  .billing-toggle-wrapper {
+    display: inline-flex;
+    flex-direction: row; /* Forza l'orizzontale */
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 99px;
+    padding: 6px;
+    gap: 4px;
+    margin-top: 30px;
+    flex-wrap: nowrap; /* Vieta l'andata a capo */
+  }
   .billing-btn {
     background: transparent;
     border: none;
@@ -91,49 +102,26 @@ const packagesJson = JSON.stringify(packages);
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    white-space: nowrap; /* Impedisce al testo di spezzarsi */
   }
-  
   .billing-btn.active {
     background: rgba(255,255,255,0.1);
     color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
+  .billing-btn:hover:not(.active) { color: #fff; }
 
-  .billing-btn:hover:not(.active) {
-    color: #fff;
-  }
-
-  .badge {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-  }
-  
-  .badge.premium {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: var(--bg);
-    font-weight: 700;
-  }
+  .badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
+  .badge.premium { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); font-weight: 700; }
 
   @media (max-width: 768px) {
-    .billing-toggle-wrapper {
-      width: 100%;
-      display: flex !important;
-      justify-content: space-between;
-    }
-    .billing-btn {
-      padding: 10px 12px;
-      font-size: 0.85rem;
-      flex: 1;
-      justify-content: center;
-    }
-    .badge { display: none; } /* Nascondiamo le badge su mobile per spazio */
+    .billing-toggle-wrapper { display: flex; width: 100%; justify-content: space-between; }
+    .billing-btn { padding: 10px 12px; font-size: 0.85rem; flex: 1; }
+    .badge { display: none; }
   }
 </style>
 
@@ -145,14 +133,11 @@ const packagesJson = JSON.stringify(packages);
 
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Rimuove classe active da tutti
         btns.forEach(b => b.classList.remove('active'));
-        // Aggiunge classe active a quello cliccato
         btn.classList.add('active');
         
-        const plan = btn.getAttribute('data-plan'); // "1", "6" o "12"
+        const plan = btn.getAttribute('data-plan'); 
 
-        // Aggiorna i prezzi con animazione
         priceDisplays.forEach(display => {
           const pkgId = display.getAttribute('data-pkg');
           const pkgData = packages.find(p => p.id === pkgId);
@@ -160,13 +145,11 @@ const packagesJson = JSON.stringify(packages);
           if(pkgData && pkgData.monthlyPrices) {
             const newPrice = pkgData.monthlyPrices[plan];
             
-            // Effetto fade out veloce
             display.style.opacity = '0';
             display.style.transform = 'translateY(-5px)';
             
             setTimeout(() => {
               display.textContent = newPrice;
-              // Effetto fade in
               display.style.opacity = '1';
               display.style.transform = 'translateY(0)';
               display.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';

@@ -3,26 +3,30 @@ import type { SiteConfig } from "../lib/siteConfig";
 const { cfg } = Astro.props as { cfg: SiteConfig };
 
 const cta = cfg.navigation.cta;
-
-// Costruiamo il link assoluto salvando il cancelletto!
-// Rimuoviamo solo eventuali slash iniziali messi per errore nel JSON
+// Link assoluto corretto
 const ctaHref = cta.type === "whatsapp" 
   ? `https://wa.me/${cfg.contacts.phoneE164}` 
   : `/${cta.targetId.replace(/^\/+/, '')}`;
 ---
 
-<header class="site-header">
+<header class="site-header reveal delay-1">
   
-  <a href="/" class="header-logo">
-    <img src={cfg.brand.logoPath} alt={cfg.brand.name} class="logo-img" />
-    <div class="logo-text">
-      <strong>{cfg.brand.name}</strong>
-      <span>Studio</span>
+  <a href="/" class="brand-anchor">
+    
+    <div class="brand-static">
+      <span class="brand-name">Webora</span>
+      <span class="brand-suffix">Studio</span>
+      <span class="brand-code">code</span>
     </div>
+
+    <div class="brand-glow-text">
+      Build your future
+    </div>
+    
   </a>
 
   <div class="header-actions">
-    <a class="btn header-cta" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined}>
+    <a class="btn header-cta desktop-only" href={ctaHref} target={cta.type === "whatsapp" ? "_blank" : undefined}>
       {cta.label}
     </a>
     
@@ -38,171 +42,171 @@ const ctaHref = cta.type === "whatsapp"
 
 <style>
   /* ==========================================
-     MONDO DESKTOP (Il Lusso Fluttuante)
+     HEADER STRUTTURA GENERALE
      ========================================== */
   .site-header {
     position: fixed;
-    top: 24px;
-    left: 24px;
-    right: 24px;
+    top: 24px; left: 24px; right: 24px;
     z-index: 50;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    pointer-events: none; /* Fa passare i click attraverso lo spazio vuoto */
-  }
-
-  .header-logo {
-    pointer-events: auto;
-    display: flex;
     align-items: center;
-    gap: 16px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .header-logo:hover {
-    transform: scale(1.02);
-    opacity: 0.8;
+    pointer-events: none; /* I click passano attraverso lo spazio vuoto */
   }
 
-  .logo-img {
-    height: 36px;
-    width: auto;
-    display: block;
-  }
+  .header-actions, .brand-anchor { pointer-events: auto; }
 
-  .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
-  .logo-text strong {
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--text);
-  }
-  .logo-text span {
-    font-size: 0.75rem;
-    color: var(--accent2);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    pointer-events: auto;
-  }
-
-  .header-cta {
-    padding: 12px 28px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .header-menu-btn {
-    padding: 14px;
-    border-radius: 50%;
-    width: 54px;
-    height: 54px;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
+  /* ==========================================
+     IL NUOVO LOGO: "ROSSO PSICOLOGO" + ESPONENTE
+     ========================================== */
+  .brand-anchor {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    padding: 10px 22px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 99px; /* Effetto pillola */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    min-width: 175px; /* Spazio extra per l'esponente */
+    height: 48px;
+  }
+
+  /* Effetto Hover sul contenitore: la pillola si tinge di rosso scuro */
+  .brand-anchor:hover {
+    background: rgba(179, 91, 91, 0.08);
+    border-color: rgba(179, 91, 91, 0.3);
+    box-shadow: 0 0 25px rgba(179, 91, 91, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* --- STATO DI DEFAULT (Webora Studio^code) --- */
+  .brand-static {
+    display: flex;
+    align-items: baseline; /* Mantiene Webora e Studio sulla stessa linea */
+    gap: 4px;
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .brand-name { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
+  .brand-suffix { font-size: 1.15rem; font-weight: 400; color: var(--muted); }
+  
+  /* L'ESPONENTE ELEGANTE (code) */
+  .brand-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; /* Tocco da sviluppatori */
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent); /* Il tuo rosso/bordeaux */
+    letter-spacing: 0.05em;
+    align-self: flex-start; /* Lo spinge in alto rispetto al resto della scritta */
+    transform: translateY(2px); /* Aggiustamento ottico millimetrico */
+    margin-left: -2px; /* Lo avvicina intimamente alla "o" di Studio */
+    opacity: 10;
+  }
+
+  /* --- STATO HOVER (Build your future - Il Neon) --- */
+  .brand-glow-text {
+    position: absolute;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #ff4a4a;
+    white-space: nowrap;
+    
+    /* LA MAGIA DELLA LUCE (Text Shadow Multiplo) */
+    text-shadow: 
+      0 0 10px rgba(255, 74, 74, 0.8),
+      0 0 20px rgba(255, 74, 74, 0.5),
+      0 0 40px rgba(179, 91, 91, 0.4);
+      
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Parte nascosto, rimpicciolito e spostato in basso */
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    pointer-events: none;
+  }
+
+  /* --- L'ANIMAZIONE DI SCAMBIO --- */
+  .brand-anchor:hover .brand-static {
+    opacity: 0;
+    transform: scale(1.1) translateY(-10px);
+    filter: blur(4px);
+  }
+
+  .brand-anchor:hover .brand-glow-text {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  /* ==========================================
+     HEADER ACTIONS (Destra)
+     ========================================== */
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+
+  .header-cta {
+    padding: 12px 24px; font-size: 0.9rem; font-weight: 700;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 99px; color: var(--text);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .header-cta:hover {
+    background: rgba(255,255,255,0.1); transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.2);
+  }
+
+  .header-menu-btn {
+    padding: 12px; border-radius: 50%; width: 48px; height: 48px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;
+  }
+  .header-menu-btn:hover { 
+    background: rgba(255,255,255,0.1); transform: scale(1.05); border-color: rgba(255,255,255,0.2); 
   }
 
   .hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 22px;
-    align-items: flex-end;
+    display: flex; flex-direction: column; gap: 5px; width: 20px; align-items: flex-end;
   }
   .hamburger .line {
-    display: block;
-    height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: width 0.2s ease;
+    display: block; height: 2px; background: var(--text);
+    border-radius: 2px; transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .hamburger .line-1 { width: 100%; }
-  .hamburger .line-2 { width: 70%; }
-
-  .header-menu-btn:hover .line-2 {
-    width: 100%;
-  }
+  .hamburger .line-2 { width: 60%; }
+  .header-menu-btn:hover .line-2 { width: 100%; }
 
   /* ==========================================
-     MONDO MOBILE (Minimalismo e Focus)
+     RESPONSIVE
      ========================================== */
   @media (max-width: 768px) {
-    .site-header {
-      /* Absolute invece di Fixed: resta in alto ma scrolla via, liberando lo schermo! */
-      position: absolute; 
-      top: 16px;
-      left: 16px;
-      right: 16px;
-      align-items: center;
-    }
-
-    .header-logo {
-      gap: 10px;
-    }
-    
-    .logo-img {
-      height: 26px; /* Logo rimpicciolito */
-    }
-    
-    .logo-text strong {
-      font-size: 1rem;
-    }
-    
-    .logo-text span {
-      display: none; /* Nascondiamo la scritta "Studio" per fare pulizia visiva */
-    }
-
-    .header-actions {
-      gap: 10px;
-    }
-
-    .header-cta {
-      padding: 10px 16px;
-      font-size: 0.85rem;
-    }
-
-    .header-menu-btn {
-      width: 44px;
-      height: 44px;
-      padding: 10px;
-    }
-
-    .hamburger {
-      width: 18px;
-      gap: 4px;
-    }
+    .site-header { top: 16px; left: 16px; right: 16px; }
+    .brand-anchor { padding: 8px 16px; min-width: 140px; height: 42px; }
+    .brand-name, .brand-suffix { font-size: 1.05rem; }
+    .brand-code { font-size: 0.6rem; }
+    .brand-glow-text { font-size: 0.8rem; }
+    .header-cta { padding: 10px 18px; font-size: 0.85rem; }
+    .header-menu-btn { width: 42px; height: 42px; }
   }
 
-  /* ==========================================
-     MONDO SMARTPHONE PICCOLI (< 400px)
-     ========================================== */
-  @media (max-width: 400px) {
-    .header-cta {
-      display: none; /* Su schermi piccolissimi nascondiamo la CTA dell'header. C'è già la Hero. */
-    }
+  @media (max-width: 480px) {
+    .desktop-only { display: none; }
   }
 </style>
 
 <script>
-  // Logica apertura Drawer
   document.getElementById("openDrawer")?.addEventListener("click", () => {
     window.dispatchEvent(new CustomEvent("webora:drawer:open"));
   });

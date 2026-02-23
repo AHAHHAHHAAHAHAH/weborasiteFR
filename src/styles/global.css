@@ -413,52 +413,56 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
 /* --------------------------------------------------------------------------
    10. FIX PERFORMANCE ESTREME SU MOBILE (ANDROID SURVIVAL MODE) E +5% LUMINOSITÀ
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   10. PROTOCOLLO NUCLEARE: PERFORMANCE ASSOLUTE SU MOBILE (120 FPS)
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-  /* Disabilitiamo animazioni complesse che stressano la CPU */
+  /* Spegniamo tutte le animazioni complesse allo scroll */
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; will-change: auto !important; }
   
-  /* ANDROID SAVIOR #1: Via i filtri pesanti dal watermark */
-  .bg-watermark { 
-    filter: none !important; /* Rimuove blur e grayscale che distruggono il framerate */
-    opacity: 0.02 !important; /* Lo rendiamo solo molto trasparente, costo GPU: zero */
-    animation: none !important; 
-    will-change: auto !important;
-  }
+  /* KILLER #1: Via gli sfondi giganti e i bagliori che seguono il tocco */
+  .bg-watermark, .mouse-glow { display: none !important; }
   
   .section { background: transparent !important; border: none !important; margin-top: 0 !important; padding: 60px 0 !important; }
   
-  /* LUCE GLOBALE: +5% */
+  /* KILLER #2: Via i gradienti radiali giganti dal body */
   body {
     background-color: #0A0A0A !important; 
-    background-image: radial-gradient(circle at 50% 0%, rgba(179, 91, 91, 0.12), transparent 85%) !important;
+    background-image: none !important; /* Schermo pulito, zero repaints */
   }
 
-  /* ANDROID SAVIOR #2: Ottimizzazione del Glassmorphism e Hardware Acceleration */
+  /* KILLER #3: Addio Vetro, Benvenuto Solido Premium */
   .card {
+    backdrop-filter: none !important; 
+    -webkit-backdrop-filter: none !important;
+    
+    /* Colore scuro SOLIDO. È l'unica via per Android. */
+    background: #141414 !important; 
+    
     border: 1px solid rgba(255,255,255,0.06) !important;
-    /* Aumentiamo la coprenza del fondo per simulare l'effetto vetro senza pesare sulla RAM */
-    background: linear-gradient(180deg, rgba(25,25,25,0.7) 0%, rgba(15,15,15,0.9) 100%) !important;
-    /* Abbassiamo il calcolo della sfocatura del 75% */
-    backdrop-filter: blur(4px) !important; 
-    -webkit-backdrop-filter: blur(4px) !important;
-    /* Semplifichiamo l'ombra */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
-    /* TRUCCO HARDWARE: Forza il dispositivo a usare l'accelerazione GPU (Scheda Video) */
-    transform: translateZ(0) !important; 
-    backface-visibility: hidden !important;
-    perspective: 1000px !important;
+    box-shadow: none !important; /* Via le ombre pesanti */
+    
+    /* Disattiviamo i trucchi hardware che facevano impazzire la RAM */
+    transform: none !important; 
+    backface-visibility: visible !important;
+    perspective: none !important;
   }
 
-  /* Acceleriamo anche bottoni e input per rendere lo scroll burro */
+  /* Form e bottoni solidi, niente trasparenze matematiche */
   .field {
-    background: rgba(255,255,255,0.04) !important;
-    transform: translateZ(0) !important;
+    background: #1A1A1A !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
   }
 
   .btn.secondary {
-    background: rgba(255,255,255,0.04) !important; 
-    border-color: rgba(255,255,255,0.12) !important;
-    transform: translateZ(0) !important;
+    background: #1A1A1A !important; 
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    box-shadow: none !important;
+    transform: none !important;
   }
 }
 

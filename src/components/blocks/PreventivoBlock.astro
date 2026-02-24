@@ -82,6 +82,10 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
               <span style="font-size: 2rem; color: var(--text); font-weight: 600; margin-left: 4px;">€</span>
               <span id="displaySetup" style="font-size: 4rem; font-weight: 800; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; transition: all 0.3s ease;">0</span>
             </div>
+            
+            <div id="preventivoSupportBadge" class="support-badge" style="margin-top: 16px;">
+              🛡️ 30 Giorni di supporto gratuito
+            </div>
           </div>
 
           <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.06); margin: 30px 0;"></div>
@@ -93,10 +97,6 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
               <span style="font-size: 1.2rem; color: var(--accent2); font-weight: 600;">€</span>
               <span id="displayMonthly" style="font-size: 2.8rem; font-weight: 800; line-height: 1; color: var(--accent2);">0</span>
               <span style="font-size: 1rem; color: var(--muted);">/mese</span>
-            </div>
-
-            <div id="preventivoSupportBadge" class="support-badge" style="margin-bottom: 16px;">
-              🛡️ 30 Giorni di Collaudo e Garanzia Inclusi
             </div>
 
             <div class="billing-toggle-wrapper">
@@ -207,11 +207,40 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
       });
     });
 
+    // Funzione aggiunta: calcola i giorni aggiuntivi basandosi sulla dimensione e modifica le label della speed
+    function updateSpeedDropdown(selectedType) {
+      const extraDaysMap = {
+        "landing": 0, "corporate": 4, "authority": 8,
+        "base": 0, "pro": 10,
+        "eco-base": 0, "eco-pro": 8, "eco-max": 17
+      };
+      
+      const currentSize = sizeEl.value;
+      const extraDays = extraDaysMap[currentSize] || 0;
+      const prevSpeed = speedEl.value;
+      
+      speedEl.innerHTML = '';
+      
+      opts.speed[selectedType].forEach(opt => {
+        let labelText = opt.label;
+        const match = labelText.match(/~(\d+)/);
+        if (match) {
+          const baseDays = parseInt(match[1], 10);
+          const finalDays = baseDays + extraDays;
+          labelText = labelText.replace(/~\d+/, "~" + finalDays);
+        }
+        speedEl.add(new Option(labelText, opt.id));
+      });
+
+      if (prevSpeed && Array.from(speedEl.options).some(o => o.value === prevSpeed)) {
+        speedEl.value = prevSpeed;
+      }
+    }
+
     function updateDropdowns(selectedType) {
       sizeEl.innerHTML = '';
-      speedEl.innerHTML = '';
       opts.size[selectedType].forEach(opt => sizeEl.add(new Option(opt.label, opt.id)));
-      opts.speed[selectedType].forEach(opt => speedEl.add(new Option(opt.label, opt.id)));
+      updateSpeedDropdown(selectedType);
     }
 
     function calculate() {
@@ -249,7 +278,7 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
           badgeEl.innerHTML = '⚠️ Zero supporto e aggiornamenti dopo i 30gg';
         } else {
           badgeEl.classList.remove('warning');
-          badgeEl.innerHTML = '🛡️ 30 Giorni di Collaudo e Garanzia Inclusi';
+          badgeEl.innerHTML = '🛡️ 30 Giorni di supporto gratuito';
         }
         
         displaySetup.style.opacity = '1';
@@ -273,7 +302,8 @@ const defaultSpeeds = (data.options.speed as any)[defaultType];
     calculate();
 
     typeEl.addEventListener('change', (e) => { updateDropdowns(e.target.value); calculate(); });
-    sizeEl.addEventListener('change', calculate);
+    // Modificato evento change su size per aggiornare i giorni prima di calcolare
+    sizeEl.addEventListener('change', () => { updateSpeedDropdown(typeEl.value); calculate(); });
     speedEl.addEventListener('change', calculate);
     refToggle.addEventListener('change', calculate);
 

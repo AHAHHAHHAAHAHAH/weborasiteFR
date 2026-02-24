@@ -74,8 +74,8 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
       <div class="video-backdrop" id="closeVideoBg"></div>
       <div class="video-container">
         <button id="closeVideoBtn" class="video-close" aria-label="Chiudi video">✕</button>
-        <video id="modalVideoPlayer" controls playsinline preload="none" class="video-player">
-          Il tuo browser non supporta i video HTML5.
+<video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="metadata" class="video-player">        
+    Il tuo browser non supporta i video HTML5.
         </video>
       </div>
     </div>
@@ -146,7 +146,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     -webkit-backdrop-filter: blur(16px);
   }
 
-  .video-container {
+.video-container {
     position: relative;
     z-index: 1001;
     width: 90%;
@@ -157,8 +157,12 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     transform: translateY(20px) scale(0.98);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: #000;
+    
+    /* FIX PER IL FREEZE MOBILE: */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
-
   .video-modal.is-open .video-container {
     transform: translateY(0) scale(1);
   }
@@ -212,7 +216,11 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
         if (videoSrc) {
           player.src = videoSrc;
           modal.classList.add('is-open');
-          player.play().catch(e => console.log("Autoplay bloccato dal browser"));
+          
+          // FIX: Aspetta la fine dell'animazione (400ms) prima di fare Play!
+          setTimeout(() => {
+            player.play().catch(e => console.log("Autoplay bloccato dal browser su mobile"));
+          }, 400); 
         }
       });
     });

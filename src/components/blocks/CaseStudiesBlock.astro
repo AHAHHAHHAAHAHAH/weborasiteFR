@@ -146,33 +146,29 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     -webkit-backdrop-filter: blur(16px);
   }
 
-.video-container {
-    position: relative;
-    z-index: 1001;
-    width: 90%;
-    max-width: 1000px;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
-    transform: translateY(20px) scale(0.98);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: #000;
-    
-    /* PRESTAZIONI MASSIME PER MOBILE */
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform, opacity; /* ← AGGIUNTA FONDAMENTALE */
-  }
-  .video-modal.is-open .video-container {
-    transform: translateY(0) scale(1);
-  }
+/* ... tue regole precedenti ... */
 
-  .video-player {
-    width: 100%;
-    height: auto;
-    display: block;
-    max-height: 80vh;
+  /* FIX ESTREMO MOBILE PER IL VIDEO */
+  @media (max-width: 768px) {
+    .video-backdrop {
+      background: #000000 !important; /* Nero totale e solido */
+      backdrop-filter: none !important; /* SPEGNE IL CALCOLO DELLA SCHEDA VIDEO */
+      -webkit-backdrop-filter: none !important;
+    }
+    .video-container {
+      width: 100% !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important; /* Zero calcoli per arrotondare i bordi */
+      transform: none !important;
+      display: flex;
+      align-items: center;
+      background: #000;
+    }
+    .video-player {
+      border-radius: 0 !important;
+      max-height: 100vh;
+    }
   }
 
   .video-close {
@@ -221,7 +217,6 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
     if (!modal || !player) return;
 
-    // Apri modale e carica video IMMEDIATAMENTE
     openBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const videoSrc = btn.getAttribute('data-video');
@@ -229,28 +224,34 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
           player.src = videoSrc;
           modal.classList.add('is-open');
           
-          // NESSUN SETTIMEOUT: Il play deve essere immediato e collegato al click!
+          // LA MAGIA PER MOBILE: Forza il Fullscreen Nativo del Telefono
+          if (window.innerWidth <= 768) {
+            if (player.requestFullscreen) {
+              player.requestFullscreen();
+            } else if ((player as any).webkitEnterFullscreen) {
+              (player as any).webkitEnterFullscreen(); // iOS nativo
+            }
+          }
+          
           player.play().catch(e => console.log("Autoplay bloccato:", e));
         }
       });
     });
 
-    // Chiudi modale e stoppa video
     const closeModal = () => {
+      // Se siamo in fullscreen nativo, proviamo a uscirne
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(e => console.log(e));
+      }
       modal.classList.remove('is-open');
-      player.pause(); // Mettiamo in pausa subito
-      setTimeout(() => {
-        player.src = ''; 
-      }, 400); 
+      player.pause();
+      setTimeout(() => { player.src = ''; }, 300);
     };
 
     closeBtn?.addEventListener('click', closeModal);
     closeBg?.addEventListener('click', closeModal);
-    
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-        closeModal();
-      }
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
   });
 </script>

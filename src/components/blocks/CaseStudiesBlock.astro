@@ -74,8 +74,8 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
       <div class="video-backdrop" id="closeVideoBg"></div>
       <div class="video-container">
         <button id="closeVideoBtn" class="video-close" aria-label="Chiudi video">✕</button>
-<video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="metadata" class="video-player">        
-    Il tuo browser non supporta i video HTML5.
+<video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="auto" class="video-player">
+      Il tuo browser non supporta i video HTML5.
         </video>
       </div>
     </div>
@@ -158,10 +158,11 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: #000;
     
-    /* FIX PER IL FREEZE MOBILE: */
+    /* PRESTAZIONI MASSIME PER MOBILE */
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: translateZ(0);
+    will-change: transform, opacity; /* ← AGGIUNTA FONDAMENTALE */
   }
   .video-modal.is-open .video-container {
     transform: translateY(0) scale(1);
@@ -209,7 +210,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
     if (!modal || !player) return;
 
-    // Apri modale e carica video
+    // Apri modale e carica video IMMEDIATAMENTE
     openBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const videoSrc = btn.getAttribute('data-video');
@@ -217,10 +218,8 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
           player.src = videoSrc;
           modal.classList.add('is-open');
           
-          // FIX: Aspetta la fine dell'animazione (400ms) prima di fare Play!
-          setTimeout(() => {
-            player.play().catch(e => console.log("Autoplay bloccato dal browser su mobile"));
-          }, 400); 
+          // NESSUN SETTIMEOUT: Il play deve essere immediato e collegato al click!
+          player.play().catch(e => console.log("Autoplay bloccato:", e));
         }
       });
     });
@@ -228,16 +227,15 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     // Chiudi modale e stoppa video
     const closeModal = () => {
       modal.classList.remove('is-open');
+      player.pause(); // Mettiamo in pausa subito
       setTimeout(() => {
-        player.pause();
-        player.src = ''; // Svuota la sorgente per non consumare banda nascosta
-      }, 400); // Aspetta la fine dell'animazione CSS
+        player.src = ''; 
+      }, 400); 
     };
 
     closeBtn?.addEventListener('click', closeModal);
     closeBg?.addEventListener('click', closeModal);
     
-    // Chiudi con tasto ESC
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
         closeModal();

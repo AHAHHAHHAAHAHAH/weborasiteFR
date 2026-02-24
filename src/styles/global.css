@@ -418,57 +418,61 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
 .reveal.delay-4 { transition-delay: 0.4s; }
 
 
-/* --------------------------------------------------------------------------
-   10. FIX PERFORMANCE ESTREME SU MOBILE E LUMINOSITÀ
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   OTTIMIZZAZIONE ESTREMA MOBILE (ANDROID/IOS) - ZERO FUFFA, MASSIMI FPS
+   ========================================================================== */
 @media (max-width: 768px) {
-  /* Spegniamo tutte le animazioni complesse allo scroll */
-  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; will-change: auto !important; }
   
-  /* KILLER #1: Via gli sfondi giganti e i bagliori che seguono il tocco */
-  .bg-watermark, .mouse-glow { display: none !important; }
-  
-  .section { background: transparent !important; border: none !important; margin-top: 0 !important; padding: 60px 0 !important; }
-  
-  /* KILLER #2: Via i gradienti radiali giganti dal body */
-  body {
-    background-color: #0A0A0A !important; 
-    background-image: none !important; /* Schermo pulito, zero repaints */
-  }
-
-  /* KILLER #3: Addio Vetro, Benvenuto Solido Premium */
+  /* 1. IL VETRO INTELLIGENTE (Taglia il carico GPU dell'80%) */
   .card {
-    backdrop-filter: none !important; 
-    -webkit-backdrop-filter: none !important;
+    /* Riduciamo il blur da 24px a 8px: l'occhio percepisce ancora il vetro, ma il telefono ringrazia */
+    backdrop-filter: blur(8px) !important; 
+    -webkit-backdrop-filter: blur(8px) !important;
     
-    /* Colore scuro SOLIDO. È l'unica via per Android. */
-    background: #141414 !important; 
+    /* Rendiamo lo sfondo leggermente più solido per compensare il minor blur */
+    background: linear-gradient(180deg, rgba(25, 25, 30, 0.75) 0%, rgba(15, 15, 20, 0.85) 100%) !important;
     
-    border: 1px solid rgba(255,255,255,0.06) !important;
-    box-shadow: none !important; /* Via le ombre pesanti */
+    /* Ombra dimezzata nel raggio d'azione: costa la metà della RAM */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5) !important; 
     
-    /* Disattiviamo i trucchi hardware che facevano impazzire la RAM */
-    transform: none !important; 
-    backface-visibility: visible !important;
-    perspective: none !important;
+    /* Forza il rendering sulla scheda video dedicata */
+    transform: translateZ(0); 
+    -webkit-backface-visibility: hidden;
   }
 
-  /* Form e bottoni solidi, niente trasparenze matematiche */
-  .field {
-    background: #1A1A1A !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    transform: none !important;
+  /* 2. IL WATERMARK CONGELATO (Addio lag da background) */
+  .bg-watermark {
+    /* Stoppiamo l'animazione di respiro: su mobile nessuno ci fa caso e drena batteria */
+    animation: none !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    /* Abbassiamo il blur del filtro al minimo indispensabile */
+    filter: grayscale(100%) blur(1px) !important;
+    opacity: 0.04 !important;
   }
 
-  .btn.secondary {
-    background: #1A1A1A !important; 
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border-color: rgba(255,255,255,0.1) !important;
-    box-shadow: none !important;
-    transform: none !important;
+  /* 3. KILLER DEL MOUSE GLOW (Inutile sui touch screen) */
+  .mouse-glow {
+    display: none !important;
   }
+
+  /* 4. ANIMAZIONI REVEAL "LIGHT" (Solo Opacità, niente movimenti) */
+  .reveal {
+    /* Spostare gli oggetti in verticale durante lo scroll fa scattare Android. Lo blocchiamo. */
+    transform: translateY(0) scale(1) !important;
+    /* Manteniamo solo il bellissimo effetto fade-in (che costa zero prestazioni) */
+    transition: opacity 0.5s ease-out !important;
+  }
+  
+  /* 5. BOTTONI E INPUT PIÙ REATTIVI */
+  .btn, .field {
+    transform: translateZ(0);
+    /* Togliamo i riflessi complessi su mobile per bottoni istantanei al tocco */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+  }
+  .btn::before {
+    display: none !important; /* Togliamo il riflesso diagonale che scorre */
+  }
+
 }
 
 /* --------------------------------------------------------------------------

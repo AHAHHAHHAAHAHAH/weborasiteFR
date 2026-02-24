@@ -217,6 +217,20 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
     if (!modal || !player) return;
 
+    // Funzione centralizzata per chiudere e spegnere tutto
+    const closeModal = () => {
+      // Se stiamo chiudendo tramite la "X" del sito, forziamo l'uscita dal fullscreen
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(e => console.log(e));
+      } else if ((document as any).webkitFullscreenElement) {
+        (document as any).webkitExitFullscreen().catch((e: any) => console.log(e));
+      }
+      
+      modal.classList.remove('is-open');
+      player.pause();
+      setTimeout(() => { player.src = ''; }, 300);
+    };
+
     openBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const videoSrc = btn.getAttribute('data-video');
@@ -224,7 +238,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
           player.src = videoSrc;
           modal.classList.add('is-open');
           
-          // LA MAGIA PER MOBILE: Forza il Fullscreen Nativo del Telefono
+          // Forza il Fullscreen Nativo del Telefono
           if (window.innerWidth <= 768) {
             if (player.requestFullscreen) {
               player.requestFullscreen();
@@ -238,15 +252,23 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
       });
     });
 
-    const closeModal = () => {
-      // Se siamo in fullscreen nativo, proviamo a uscirne
-      if (document.fullscreenElement) {
-        document.exitFullscreen().catch(e => console.log(e));
+    /* ==============================================================
+       IL FIX CHE HAI CHIESTO: Sensore di uscita dal Fullscreen
+       ============================================================== */
+    const handleFullscreenChange = () => {
+      // Se il sistema operativo dice che NON siamo più in fullscreen...
+      if (!document.fullscreenElement && !(document as any).webkitFullscreenElement) {
+        // ...e il modale del sito è ancora aperto, lo chiudiamo in automatico!
+        if (modal.classList.contains('is-open')) {
+          closeModal();
+        }
       }
-      modal.classList.remove('is-open');
-      player.pause();
-      setTimeout(() => { player.src = ''; }, 300);
     };
+
+    // Agganciamo i sensori per Android e iOS
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    /* ============================================================== */
 
     closeBtn?.addEventListener('click', closeModal);
     closeBg?.addEventListener('click', closeModal);

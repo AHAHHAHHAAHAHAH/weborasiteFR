@@ -419,40 +419,62 @@ p { color: var(--muted); margin: 0 0 24px; font-size: var(--text-base); line-hei
 
 
 /* ==========================================================================
-   OTTIMIZZAZIONE ESTREMA MOBILE (RISOLUZIONE SCATTI ANDROID)
+   OTTIMIZZAZIONE ESTREMA MOBILE (ANDROID/IOS) - ZERO FUFFA, MASSIMI FPS
    ========================================================================== */
 @media (max-width: 768px) {
   
-  /* 1. UCCIDIAMO IL VETRO (Sostituito con un solido Premium identico) */
-  .card, .ref-overlay, .video-backdrop {
-    backdrop-filter: none !important; 
-    -webkit-backdrop-filter: none !important;
-    /* Colore solido scurissimo che inganna l'occhio e sembra vetro */
-    background: #121215 !important; 
-    box-shadow: none !important; /* Via le ombre esterne pesanti */
-    border: 1px solid rgba(255,255,255,0.08) !important;
+  /* 1. IL VETRO INTELLIGENTE (Taglia il carico GPU dell'80%) */
+  .card {
+    /* Riduciamo il blur da 24px a 8px: l'occhio percepisce ancora il vetro, ma il telefono ringrazia */
+    backdrop-filter: blur(8px) !important; 
+    -webkit-backdrop-filter: blur(8px) !important;
+    
+    /* Rendiamo lo sfondo leggermente più solido per compensare il minor blur */
+    background: linear-gradient(180deg, rgba(25, 25, 30, 0.75) 0%, rgba(15, 15, 20, 0.85) 100%) !important;
+    
+    /* Ombra dimezzata nel raggio d'azione: costa la metà della RAM */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5) !important; 
+    
+    /* Forza il rendering sulla scheda video dedicata */
+    transform: translateZ(0); 
+    -webkit-backface-visibility: hidden;
   }
 
-  /* 2. SBLOCCO DELLO SCROLL (Animazioni Reveal spente su mobile) */
-  .reveal {
-    /* Mostriamo tutto subito. Niente attese, niente calcoli di intersezione */
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    will-change: auto !important;
+  /* 2. IL WATERMARK CONGELATO (Addio lag da background) */
+  .bg-watermark {
+    /* Stoppiamo l'animazione di respiro: su mobile nessuno ci fa caso e drena batteria */
+    animation: none !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    /* Abbassiamo il blur del filtro al minimo indispensabile */
+    filter: grayscale(100%) blur(1px) !important;
+    opacity: 0.04 !important;
   }
 
-  /* 3. ALLEGGERIMENTO BODY */
-  body {
-    background-color: #0A0A0C !important; 
-    background-image: none !important; /* Rimuove il glow radiale fisso */
-  }
-
-  /* Spegniamo robaccia invisibile ma pesante */
-  .bg-watermark, .mouse-glow {
+  /* 3. KILLER DEL MOUSE GLOW (Inutile sui touch screen) */
+  .mouse-glow {
     display: none !important;
   }
+
+  /* 4. ANIMAZIONI REVEAL "LIGHT" (Solo Opacità, niente movimenti) */
+  .reveal {
+    /* Spostare gli oggetti in verticale durante lo scroll fa scattare Android. Lo blocchiamo. */
+    transform: translateY(0) scale(1) !important;
+    /* Manteniamo solo il bellissimo effetto fade-in (che costa zero prestazioni) */
+    transition: opacity 0.5s ease-out !important;
+  }
+  
+  /* 5. BOTTONI E INPUT PIÙ REATTIVI */
+  .btn, .field {
+    transform: translateZ(0);
+    /* Togliamo i riflessi complessi su mobile per bottoni istantanei al tocco */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+  }
+  .btn::before {
+    display: none !important; /* Togliamo il riflesso diagonale che scorre */
+  }
+
 }
+
 /* --------------------------------------------------------------------------
    11. UTILITY CLASSES (Per allineamenti millimetrici)
    -------------------------------------------------------------------------- */

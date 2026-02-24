@@ -150,7 +150,7 @@
       "title": "Meno chiacchiere,\npiù fatti.",
       "body": "Non ti mostriamo grafiche finte fatte per farci belli. Ti mostriamo ecosistemi digitali che lavorano sul campo tutti i giorni per aziende vere.",
       "items": [
-        { "title": "SrslyApp — Automazione Lavanderia", "industry": "App Gestionale B2B", "outcome": "Abbiamo digitalizzato l'intera lavanderia. Zero carta, gestione dei capi istantanea su tablet, staff sincronizzato in tempo reale. Il caos è diventato ordine.", "tags": ["Flutter", "Real-Time DB","Firebase", "iOS/Android"], "link": "", "video": "" },
+        { "title": "SrslyApp — Automazione Lavanderia", "industry": "App Gestionale B2B", "outcome": "Abbiamo digitalizzato l'intera lavanderia. Zero carta, gestione dei capi istantanea su tablet, staff sincronizzato in tempo reale. Il caos è diventato ordine.", "tags": ["Flutter", "Real-Time DB","Firebase", "iOS/Android"], "link": "", "video": "demoSrsly.mp4" },
         { "title": "Webora Vetrina — Lead Generation", "industry": "Sito Web Alta Conversione", "outcome": "Un'infrastruttura web progettata esclusivamente per raccogliere contatti qualificati. Tempi di caricamento azzerati, fiducia istantanea, funnel diretto verso WhatsApp e Mail.", "tags": ["Astro", "Cloudflare", "Json-Driven"], "link": "https://webora-01a.pages.dev/", "video": "" }
       ]
     },

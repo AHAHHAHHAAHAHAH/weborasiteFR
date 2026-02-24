@@ -198,6 +198,17 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     background: rgba(255,255,255,0.1);
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    .video-container {
+      transform: none !important;
+      transition: none !important;
+      box-shadow: none !important;
+    }
+    .video-modal {
+      transition: opacity 0.2s ease !important; /* Solo una leggerissima sfumatura, niente movimenti */
+    }
+  }
 </style>
 
 <script>

@@ -76,7 +76,7 @@
         "sito-web": [
           { "id": "landing", "label": "Pagina Singola ad Alta Conversione (Per vendere o raccogliere contatti)", "addon": 0 },
           { "id": "corporate", "label": "Sito Aziendale Completo (Per presentare azienda e servizi in dettaglio)", "addon": 100 },
-          { "id": "authority", "label": "Ecosistema Web Dinamico (Con area blog, recensioni live e pagine espandibili)", "addon": 160 }
+          { "id": "authority", "label": "Ecosistema Web Dinamico (Con area blog, recensioni live,shopping online)", "addon": 1000 }
         ],
         "gestionale": [
           { "id": "base", "label": "Punto di Controllo Centrale (Unico schermo per gestire l'attività)", "addon": 0 },
@@ -85,21 +85,21 @@
         "ecosistema": [
           { "id": "eco-base", "label": "Vetrina per Acquisire + Gestionale per Controllare (Base)", "addon": 0 },
           { "id": "eco-pro", "label": "Azienda Online + Lavoro di Squadra Sincronizzato", "addon": 400 },
-          { "id": "eco-max", "label": "Dominio Digitale Totale (Massima autorità web + Automazione aziendale)", "addon": 600 }
+          { "id": "eco-max", "label": "Dominio Digitale Totale (Massima autorità web + Automazione aziendale)", "addon": 1000 }
         ]
       },
       "speed": {
         "sito-web": [
           { "id": "std", "label": "Ritmo Standard (consegna in ~10 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~7 giorni)", "multiplier": 1.11 }
+          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~7 giorni)", "multiplier": 1.15 }
         ],
         "gestionale": [
           { "id": "std", "label": "Ritmo Standard (consegna in ~25 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~17 giorni)", "multiplier": 1.11}
+          { "id": "fast", "label": "Corsia Preferenziale (consegna in ~17 giorni)", "multiplier": 1.15}
         ],
         "ecosistema": [
           { "id": "std", "label": "Ritmo Standard (Sviluppo parallelo, consegna in ~35 giorni)", "multiplier": 1 },
-          { "id": "fast", "label": "Corsia Preferenziale (Sviluppo parallelo, consegna in ~27 giorni)", "multiplier": 1.11 }
+          { "id": "fast", "label": "Corsia Preferenziale (Sviluppo parallelo, consegna in ~27 giorni)", "multiplier": 1.15 }
         ]
       }
     },

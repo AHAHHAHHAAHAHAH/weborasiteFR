@@ -15,7 +15,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     <div class="grid cols-2" style="gap: 40px;">
       {section.items.map((item: any, index: number) => (
         <div class={`card reveal delay-${index % 2}`} style="padding: 40px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
-          
+        
           <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--accent); filter: blur(80px); opacity: 0.15; z-index: 0; pointer-events: none;"></div>
           
           <div style="position: relative; z-index: 1; flex-grow: 1;">
@@ -74,8 +74,8 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
       <div class="video-backdrop" id="closeVideoBg"></div>
       <div class="video-container">
         <button id="closeVideoBtn" class="video-close" aria-label="Chiudi video">✕</button>
-<video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="auto" class="video-player">
-      Il tuo browser non supporta i video HTML5.
+        <video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="auto" class="video-player">
+          Il tuo browser non supporta i video HTML5.
         </video>
       </div>
     </div>
@@ -86,7 +86,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 <style>
   /* Pulsanti e Badge (Visita Progetto / Guarda Demo) */
   .case-action-btn {
-    display: flex; 
+    display: flex;
     align-items: center; 
     gap: 8px; 
     font-size: 0.85rem; 
@@ -111,12 +111,12 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     gap: 8px; 
     font-size: 0.8rem; 
     color: var(--accent); 
-    text-transform: uppercase; 
+    text-transform: uppercase;
     letter-spacing: 0.1em; 
     font-weight: 700; 
     background: rgba(179, 91, 91, 0.1); 
     padding: 6px 12px; 
-    border-radius: 6px; 
+    border-radius: 6px;
     border: 1px solid rgba(179, 91, 91, 0.2);
   }
 
@@ -146,29 +146,29 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     -webkit-backdrop-filter: blur(16px);
   }
 
-/* ... tue regole precedenti ... */
+  .video-container {
+    position: relative;
+    z-index: 1001;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #000;
+    /* Rimosse tutte le forzature 3D per non offuscare il video su Desktop! */
+  }
 
-  /* FIX ESTREMO MOBILE PER IL VIDEO */
-  @media (max-width: 768px) {
-    .video-backdrop {
-      background: #000000 !important; /* Nero totale e solido */
-      backdrop-filter: none !important; /* SPEGNE IL CALCOLO DELLA SCHEDA VIDEO */
-      -webkit-backdrop-filter: none !important;
-    }
-    .video-container {
-      width: 100% !important;
-      height: 100vh !important;
-      max-width: none !important;
-      border-radius: 0 !important; /* Zero calcoli per arrotondare i bordi */
-      transform: none !important;
-      display: flex;
-      align-items: center;
-      background: #000;
-    }
-    .video-player {
-      border-radius: 0 !important;
-      max-height: 100vh;
-    }
+  .video-modal.is-open .video-container {
+    transform: none; /* Nitidezza massima su PC al termine dell'animazione */
+  }
+
+  .video-player {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 80vh;
   }
 
   .video-close {
@@ -195,14 +195,26 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     transform: scale(1.05);
   }
 
+  /* FIX ESTREMO MOBILE: Schermo nero totale e zero bordi rotondi per performance massime */
   @media (max-width: 768px) {
-    .video-container {
-      transform: none !important;
-      transition: none !important;
-      box-shadow: none !important;
+    .video-backdrop {
+      background: #000000 !important;
+      backdrop-filter: none !important; 
+      -webkit-backdrop-filter: none !important;
     }
-    .video-modal {
-      transition: opacity 0.2s ease !important; /* Solo una leggerissima sfumatura, niente movimenti */
+    .video-container {
+      width: 100% !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+      transform: none !important;
+      display: flex;
+      align-items: center;
+      background: #000;
+    }
+    .video-player {
+      border-radius: 0 !important;
+      max-height: 100vh;
     }
   }
 </style>
@@ -217,15 +229,11 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
     if (!modal || !player) return;
 
-    // Funzione centralizzata per chiudere e spegnere tutto
     const closeModal = () => {
-      // Se stiamo chiudendo tramite la "X" del sito, forziamo l'uscita dal fullscreen
+      // Esce dal fullscreen se è attivo
       if (document.fullscreenElement) {
-        document.exitFullscreen().catch(e => console.log(e));
-      } else if ((document as any).webkitFullscreenElement) {
-        (document as any).webkitExitFullscreen().catch((e: any) => console.log(e));
+        document.exitFullscreen().catch(() => {});
       }
-      
       modal.classList.remove('is-open');
       player.pause();
       setTimeout(() => { player.src = ''; }, 300);
@@ -238,37 +246,47 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
           player.src = videoSrc;
           modal.classList.add('is-open');
           
-          // Forza il Fullscreen Nativo del Telefono
-          if (window.innerWidth <= 768) {
+          // Rilevamento chirurgico del dispositivo
+          const isMobile = window.innerWidth <= 768;
+          const isAndroid = /Android/i.test(navigator.userAgent);
+          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+          
+          if (isMobile && isAndroid) {
+            /* ===================================================
+               SCENARIO 1: ANDROID MOBILE
+               =================================================== */
             if (player.requestFullscreen) {
-              player.requestFullscreen();
-            } else if ((player as any).webkitEnterFullscreen) {
-              (player as any).webkitEnterFullscreen(); // iOS nativo
+              player.requestFullscreen().then(() => {
+                if (screen.orientation && screen.orientation.lock) {
+                  screen.orientation.lock('landscape').catch(() => {});
+                }
+              }).catch(() => {});
             }
+
+          } else if (isMobile && isIOS) {
+            /* ===================================================
+               SCENARIO 2: APPLE iOS (iPhone)
+               =================================================== */
+            // Nessuna forzatura via codice per evitare bug.
+          } else {
+            /* ===================================================
+               SCENARIO 3: DESKTOP (PC / Mac)
+               =================================================== */
+            // Niente forzature.
           }
           
-          player.play().catch(e => console.log("Autoplay bloccato:", e));
+          // Fai partire il video per tutti i dispositivi
+          player.play().catch(e => console.log("Play fallito:", e));
         }
       });
     });
 
-    /* ==============================================================
-       IL FIX CHE HAI CHIESTO: Sensore di uscita dal Fullscreen
-       ============================================================== */
-    const handleFullscreenChange = () => {
-      // Se il sistema operativo dice che NON siamo più in fullscreen...
-      if (!document.fullscreenElement && !(document as any).webkitFullscreenElement) {
-        // ...e il modale del sito è ancora aperto, lo chiudiamo in automatico!
-        if (modal.classList.contains('is-open')) {
-          closeModal();
-        }
+    // Sensore di chiusura automatica
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && modal.classList.contains('is-open')) {
+        closeModal();
       }
-    };
-
-    // Agganciamo i sensori per Android e iOS
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    /* ============================================================== */
+    });
 
     closeBtn?.addEventListener('click', closeModal);
     closeBg?.addEventListener('click', closeModal);

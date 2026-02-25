@@ -3,6 +3,7 @@ import type { SiteConfig } from "../lib/siteConfig";
 import Header from "../components/Header.astro";
 import DrawerMenu from "../components/DrawerMenu.astro";
 import "../styles/global.css";
+import FooterBlock from "../components/blocks/FooterBlock.astro";
 
 const { cfg, title } = Astro.props as { cfg: SiteConfig; title?: string };
 const t = cfg.theme;
@@ -47,7 +48,9 @@ const pageTitle = title || cfg.seo.title;
     
     <main style="position: relative; z-index: 10;">
       <slot />
+      
     </main>
+    <FooterBlock cfg={cfg} />
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {

@@ -161,12 +161,27 @@
       "title": "Costruire su misura richiede sintonia.",
       "body": "Non vendiamo pacchetti chiusi a scatola, ma costruiamo soluzioni attorno alle tue esigenze. Ecco come lavoriamo e cosa aspettarti dal nostro team.",
       "items": [
-        { "q": "Perché affidarsi a voi invece che a soluzioni pronte?", "a": "Le soluzioni pronte vanno bene per iniziare, ma prima o poi limitano la crescita. Noi costruiamo infrastrutture (Siti e App) su misura, pensate esclusivamente per far acquisire clienti alla tua azienda o per far lavorare meglio il tuo team." },
-        { "q": "Quanto tempo ci vuole per avere il progetto finito?", "a": "Ogni progetto ha tempistiche chiare, che variano dai 10 ai 30 giorni lavorativi a seconda della complessità. Rispettiamo rigorosamente le scadenze, e ti chiederemo la stessa precisione nel fornirci i materiali necessari (foto, testi, loghi)." },
-        { "q": "Perché c'è un mantenimento mensile?", "a": "Perché il mondo digitale evolve ogni giorno. Un sito abbandonato diventa lento e vulnerabile. Il mantenimento copre i costi dei server ad alte prestazioni, la sicurezza, gli aggiornamenti costanti e, soprattutto, la nostra assistenza diretta per qualsiasi necessità." },
-        { "q": "Fate sconti sui preventivi?", "a": "Il nostro preventivo non è 'gonfiato' per poi farti lo sconto. Calcoliamo matematicamente il prezzo in base alle ore di ingegneria reali necessarie per consegnare un lavoro eccellente. Ti diamo da subito il prezzo giusto e definitivo." },
-        { "q": "E se non ho le idee chiare su cosa mi serve?", "a": "È perfettamente normale ed è qui che entriamo in gioco. Fissiamo una chiacchierata esplorativa senza limiti di tempo. Ci prendiamo lo spazio necessario per ascoltarti, capire i tuoi obiettivi e trovare l'armonia giusta per lavorare insieme." }
-      ]
+      { 
+        "q": "In quanto tempo il mio sito o la mia app saranno pronti?", 
+        "a": "Lavoriamo con timeline certe e matematiche. Per un sito aziendale impieghiamo dai 7 ai 10 giorni. Per un'app gestionale su misura dai 17 ai 25 giorni. L'ecosistema completo richiede circa un mese. Zero ritardi, zero scuse." 
+      },
+      { 
+        "q": "Se decido di disdire l'abbonamento mensile, perdo il sito?", 
+        "a": "Assolutamente no. Il prodotto finito è tuo per sempre, non prendiamo ostaggi. L'abbonamento serve a coprire i costi dei server ad alte prestazioni, gli aggiornamenti di sicurezza e il nostro supporto. Se disdici mantieni il software, ma perdi la manutenzione e l'assistenza." 
+      },
+      { 
+        "q": "Cosa succede appena il progetto va online? Mi lasciate da solo?", 
+        "a": "Ogni progetto include 30 giorni di collaudo e garanzia totale gratuiti. In questo periodo sistemiamo qualsiasi dettaglio per assicurarci che tutto giri in modo impeccabile. Successivamente, puoi scegliere se gestire tutto in autonomia o mantenere attivo uno dei nostri piani di supporto continuo." 
+      },
+      { 
+        "q": "Come calcolate i vostri prezzi? Ci sono costi nascosti?", 
+        "a": "Nessun preventivo gonfiato e nessuna fuffa. I nostri prezzi sono calcolati matematicamente in base al tipo di infrastruttura (Vetrina o Gestionale), alla dimensione e all'urgenza della consegna. Ti diamo da subito un prezzo esatto e definitivo, totalmente trasparente." 
+      },
+      { 
+        "q": "Non ho ancora le idee chiare su quale strumento mi serva. Come procediamo?", 
+        "a": "Nessuna pressione. Fissiamo una chiamata esplorativa gratuita per analizzare a fondo la tua attività. Valuteremo insieme se hai più urgenza di acquisire nuovi clienti (Sito Web Vetrina) o di organizzare e automatizzare il lavoro del tuo staff (App Gestionale)." 
+      }
+    ]
     },
     { "type": "preventivo", "id": "preventivi", "kicker": "Trasparenza Assoluta" },
     {

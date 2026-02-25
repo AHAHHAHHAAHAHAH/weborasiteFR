@@ -3,12 +3,196 @@ import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
 ---
 
-<footer id="footer" style="border-top:1px solid var(--line); padding:26px 0; background: rgba(255,255,255,.02);">
-  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <img src={cfg.brand.logoPath} alt={cfg.brand.name} style="height:22px; width:auto;" />
-      <span class="small" style="color:var(--muted);">© {new Date().getFullYear()} {cfg.brand.name}</span>
+<footer id="footer" class="webora-footer">
+  <div class="wrap footer-grid">
+
+    <div class="footer-brand">
+      <img src={cfg.brand.logoPath} alt={cfg.brand.name} class="footer-logo" />
+      <div class="footer-legal">
+        <span class="copyright">© 2026 {cfg.brand.name}™ — Tutti i diritti riservati.</span>
+        <span class="manifesto">Trasparenza totale. Zero Fuffa. Niente scuse.</span>
+      </div>
     </div>
-    <div class="small" style="color:var(--muted);">Astro • Cloudflare Pages • Stripe • Trustindex</div>
+
+    <div class="footer-signature">
+      <div class="tech-stack">Astro • Cloudflare Pages • Stripe • Trustindex</div>
+      <div class="signature-badge">
+        <div class="pulse-dot"></div>
+        <div class="signature-content">
+          <span class="engineered">Engineered & Designed by</span>
+          <strong class="webora-code">Webora_Code</strong>
+        </div>
+      </div>
+    </div>
+
   </div>
 </footer>
+
+<style>
+  .webora-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 10, 12, 0.8);
+    padding: 40px 0 50px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Bagliore di fondo leggerissimo (Stile Premium) */
+  .webora-footer::before {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 100px;
+    background: radial-gradient(ellipse at bottom, rgba(179, 91, 91, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .footer-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* PARTE SINISTRA: Ufficialità */
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .footer-logo {
+    height: 28px;
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.05));
+  }
+  .footer-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-left: 16px;
+  }
+  .copyright {
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .manifesto {
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* PARTE DESTRA: Firma (Webora Code) */
+  .footer-signature {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+  .tech-stack {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  /* IL BADGE UNICO (La vostra vera firma) */
+  .signature-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 18px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  .signature-badge:hover {
+    border-color: var(--accent);
+    background: rgba(179, 91, 91, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Pallino Verde/Rosso Pulsante (Sensazione di Server Live) */
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent2);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent2);
+    animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(227, 163, 163, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(227, 163, 163, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(227, 163, 163, 0); }
+  }
+
+  .signature-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .engineered {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .webora-code {
+    font-family: ui-monospace, monospace; /* Font da programmatori per dare il tocco "Code" */
+    font-size: 0.95rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+
+  /* MOBILE RESPONSIVE OTTIMIZZATO */
+  @media (max-width: 768px) {
+    .webora-footer {
+      padding: 40px 0;
+    }
+    .footer-grid {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .footer-brand {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .footer-legal {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 16px;
+    }
+    .footer-signature {
+      width: 100%;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .signature-badge {
+      width: 100%;
+      justify-content: center;
+      background: rgba(20, 20, 22, 1); /* Sfondo solido per prestazioni Android massime */
+      border-color: rgba(255,255,255,0.05);
+    }
+    .tech-stack {
+      align-self: center;
+      text-align: center;
+      margin-top: 10px;
+    }
+  }
+</style>

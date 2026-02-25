@@ -3,25 +3,16 @@ import type { SiteConfig } from "../../lib/siteConfig";
 const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
 ---
 
-<footer id="footer" class="webora-footer">
-  <div class="wrap footer-grid">
-
-    <div class="footer-brand">
-      <img src={cfg.brand.logoPath} alt={cfg.brand.name} class="footer-logo" />
-      <div class="footer-legal">
-        <span class="copyright">© 2026 {cfg.brand.name}™ — Tutti i diritti riservati.</span>
-        <span class="manifesto">Trasparenza totale. Zero Fuffa. Niente scuse.</span>
+<footer id="footer" class="led-footer">
+  <div class="wrap footer-wrap">
+    
+    <div class="signature-block">
+      <div class="creator-line">
+        Engineered & Designed by <span class="brand">Webora studio<sup class="blink-code">code</sup></span>
       </div>
-    </div>
-
-    <div class="footer-signature">
-      <div class="tech-stack">Astro • Cloudflare Pages • Stripe • Trustindex</div>
-      <div class="signature-badge">
-        <div class="pulse-dot"></div>
-        <div class="signature-content">
-          <span class="engineered">Engineered & Designed by</span>
-          <strong class="webora-code">Webora_Code</strong>
-        </div>
+      
+      <div class="legal-line">
+        © 2026 • Tutti i diritti riservati.
       </div>
     </div>
 
@@ -29,175 +20,101 @@ const { cfg } = Astro.props as { cfg: SiteConfig; section: any };
 </footer>
 
 <style is:global>
-  /* Aggiunto is:global per impedire ad Astro di bloccare il CSS */
-  
-  .webora-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    background: #0a0a0c !important; /* Colore solido e scurissimo */
-    padding: 50px 0 !important;
-    position: relative !important;
-    overflow: hidden !important;
+  /* Base del footer: Piatto e in basso */
+  .led-footer {
+    padding: 0 0 30px 0 !important;
+    background: transparent !important;
+    border: none !important;
     width: 100% !important;
-    display: block !important;
   }
 
-  .webora-footer::before {
-    content: '';
-    position: absolute;
-    bottom: -50px; left: 50%; transform: translateX(-50%);
-    width: 60%; height: 100px;
-    background: radial-gradient(ellipse at bottom, rgba(179, 91, 91, 0.15), transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+  /* FORZATURA ASSOLUTA: SPINGE TUTTO IN BASSO A DESTRA */
+  .footer-wrap {
+    display: flex !important;
+    justify-content: flex-end !important; /* Questo è il comando che lo inchioda a destra */
+    width: 100% !important;
   }
 
-  .webora-footer .footer-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-  }
-
-  .webora-footer .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .webora-footer .footer-logo {
-    height: 28px;
-    width: auto;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
-  }
-  
-  .webora-footer .footer-legal {
+  /* IL BLOCCO FIRMA */
+  .signature-block {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    border-left: 1px solid rgba(255,255,255,0.15);
-    padding-left: 16px;
+    align-items: flex-end; /* Allinea il testo internamente a destra */
+    text-align: right;
+    opacity: 0.4; /* Mezzo spento di base */
+    transition: opacity 0.3s ease;
+    cursor: default;
   }
-  
-  .webora-footer .copyright {
-    color: #fdfdfd; /* Colore bianco assoluto forzato */
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-  
-  .webora-footer .manifesto {
-    color: #9ca3af; /* Grigio chiaro forzato */
-    font-size: 0.75rem;
+
+  /* RIGA 1: Stile premium per il nome */
+  .creator-line {
+    font-size: 0.7rem;
+    color: #9ca3af;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    transition: color 0.3s ease;
   }
 
-  .webora-footer .footer-signature {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-  }
-  
-  .webora-footer .tech-stack {
-    font-size: 0.65rem;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-  }
-
-  .webora-footer .signature-badge {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px 18px;
-    border-radius: 12px;
+  .brand {
+    color: #ffffff;
+    font-weight: 700;
+    margin-left: 4px;
     transition: all 0.3s ease;
   }
-  
-  .webora-footer .signature-badge:hover {
-    border-color: #b35b5b;
-    background: rgba(179, 91, 91, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-  }
 
-  .webora-footer .pulse-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #e3a3a3;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #e3a3a3;
-    animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(227, 163, 163, 0.5); }
-    70% { box-shadow: 0 0 0 6px rgba(227, 163, 163, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(227, 163, 163, 0); }
-  }
-
-  .webora-footer .signature-content {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-  }
-  
-  .webora-footer .engineered {
-    font-size: 0.65rem;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  .webora-footer .webora-code {
+  /* Il "code" in apice (ELEVATO) */
+  .blink-code {
     font-family: ui-monospace, monospace;
-    font-size: 0.95rem;
-    color: #fdfdfd;
-    letter-spacing: 0.05em;
+    font-size: 0.6rem;
+    color: #b35b5b; /* Rosso scuro/spento all'inizio */
+    font-weight: 600;
+    margin-left: 1px;
+    text-transform: lowercase;
   }
 
+  /* RIGA 2: Font classicissimo per le robe legali reali */
+  .legal-line {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.65rem;
+    color: #6b7280;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  /* =======================================================
+     IL LED AL PASSAGGIO DEL MOUSE (Animazione)
+     ======================================================= */
+  
+  /* 1. Il blocco torna completamente nitido */
+  .signature-block:hover {
+    opacity: 1; 
+  }
+
+  /* 2. "Webora studio" si accende di rosso leggero e luminoso */
+  .signature-block:hover .brand {
+    color: #ff4d4d; /* Rosso acceso tipo LED */
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
+  }
+
+  /* 3. "code" fa DUE FLASH e poi si stabilizza sul rosso fisso */
+  .signature-block:hover .blink-code {
+    animation: neonBlink 0.8s ease-in-out forwards;
+  }
+
+  /* La sequenza di intermittenza del LED */
+  @keyframes neonBlink {
+    0%   { opacity: 1;   color: #ff4d4d; text-shadow: 0 0 12px rgba(255, 77, 77, 0.8); }
+    25%  { opacity: 0.3; color: #b35b5b; text-shadow: none; } /* Si spegne */
+    50%  { opacity: 1;   color: #ff4d4d; text-shadow: 0 0 12px rgba(255, 77, 77, 0.8); } /* Si riaccende */
+    75%  { opacity: 0.3; color: #b35b5b; text-shadow: none; } /* Si rispegne */
+    100% { opacity: 1;   color: #ff4d4d; text-shadow: 0 0 12px rgba(255, 77, 77, 0.8); } /* RESTA FISSO */
+  }
+
+  /* Mantenimento rigoroso a destra anche su mobile (evitando che sbatta contro il margine) */
   @media (max-width: 768px) {
-    .webora-footer {
-      padding: 50px 24px !important;
-    }
-    .webora-footer .footer-grid {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 32px;
-    }
-    .webora-footer .footer-brand {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-    }
-    .webora-footer .footer-legal {
-      border-left: none;
-      padding-left: 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 16px;
-    }
-    .webora-footer .footer-signature {
-      width: 100%;
-      align-items: flex-start;
-      gap: 16px;
-    }
-    .webora-footer .signature-badge {
-      width: 100%;
-      justify-content: center;
-      background: #141416;
-      border-color: rgba(255,255,255,0.08);
-    }
-    .webora-footer .tech-stack {
-      align-self: center;
-      text-align: center;
-      margin-top: 10px;
+    .footer-wrap {
+      padding-right: 24px !important;
     }
   }
 </style>

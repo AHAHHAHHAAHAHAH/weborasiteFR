@@ -5,19 +5,18 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
 <section id={section.id} class="section hero-section">
   <div class="wrap reveal">
-    
+
     <span class="kicker">{section.kicker}</span>
-    
+
     <h1 class="headline">
       {section.headline}
     </h1>
-    
+
     <p class="body-text">
       {section.body}
     </p>
 
     <div class="actions">
-      {/* 1. BOTTONE PRIMARIO CON FRECCIA VERSO IL BASSO */}
       {section.primaryCta && (
         <a href={`#${section.primaryCta.targetId}`} class="btn primary hero-btn">
           {section.primaryCta.label}
@@ -27,11 +26,16 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
           </svg>
         </a>
       )}
-      
-      {/* 2. BOTTONE SECONDARIO (Ora è "sicuro": se non c'è nel JSON, Astro lo ignora senza crashare) */}
-      {section.secondaryCta && (
+
+      {/* CTA secondaria: usa quella del JSON se presente, altrimenti link diretto al preventivatore.
+          Chi arriva già convinto non deve scrollare tutta la pagina. */}
+      {section.secondaryCta ? (
         <a href={`#${section.secondaryCta.targetId}`} class="btn secondary hero-btn">
           {section.secondaryCta.label}
+        </a>
+      ) : (
+        <a href="/preventivi-box#preventivi" class="btn secondary hero-btn">
+          Calcola il tuo preventivo
         </a>
       )}
     </div>
@@ -48,7 +52,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     text-align: center;
     padding-top: 120px;
   }
-  
+
   .headline {
     font-size: clamp(3rem, 8vw, 5.5rem);
     line-height: 1.05;
@@ -57,7 +61,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     white-space: pre-line;
     color: var(--text);
   }
-  
+
   .body-text {
     font-size: clamp(1.1rem, 2vw, 1.35rem);
     color: var(--muted);
@@ -65,14 +69,14 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     margin: 0 auto 48px;
     line-height: 1.6;
   }
-  
+
   .actions {
     display: flex;
     gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
   }
-  
+
   .hero-btn {
     display: inline-flex;
     align-items: center;
@@ -92,7 +96,6 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
     background: rgba(255,255,255,0.08);
   }
 
-  /* Animazione psicologica per invitare allo scroll */
   .scroll-arrow {
     transition: transform 0.3s ease;
   }

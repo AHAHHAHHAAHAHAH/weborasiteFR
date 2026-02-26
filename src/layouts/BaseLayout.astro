@@ -5,31 +5,37 @@ import DrawerMenu from "../components/DrawerMenu.astro";
 import "../styles/global.css";
 import FooterBlock from "../components/blocks/FooterBlock.astro";
 
-const { cfg, title } = Astro.props as { cfg: SiteConfig; title?: string };
+const { cfg, title, description, ogImageOverride } = Astro.props as {
+  cfg: SiteConfig;
+  title?: string;
+  description?: string;
+  ogImageOverride?: string;
+};
+
 const t = cfg.theme;
 const pageTitle = title || cfg.seo.title;
-const pageDescription = cfg.seo.description;
+const pageDescription = description || cfg.seo.description;
 const siteUrl = cfg.contacts?.website || "https://webora.it";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const ogImage = `${siteUrl}/logoWebora.png`;
+const ogImage = ogImageOverride || `${siteUrl}/og-cover.png`;
 
-// Schema.org JSON-LD per LocalBusiness / ProfessionalService
 const schemaOrg = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": cfg.brand.name,
   "description": cfg.seo.description,
   "url": siteUrl,
-  "logo": ogImage,
+  "logo": `${siteUrl}/logoWebora.png`,
   "telephone": `+${cfg.contacts?.phoneE164 || ""}`,
   "email": cfg.contacts?.email || "",
   "sameAs": [
-    cfg.contacts?.instagram ? `https://instagram.com/${cfg.contacts.instagram}` : null
+    cfg.contacts?.instagram ? `https://instagram.com/${cfg.contacts.instagram}` : null,
+    siteUrl
   ].filter(Boolean),
   "priceRange": "€€",
   "areaServed": "IT",
   "availableLanguage": "Italian",
-  "serviceType": ["Web Design", "Web Development", "App Development", "Gestionale Software"]
+  "serviceType": ["Web Design", "Web Development", "App Gestionale", "Digital Strategy"]
 };
 ---
 
@@ -39,37 +45,40 @@ const schemaOrg = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <!-- SEO Base -->
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <meta name="author" content={cfg.brand.name} />
+    <meta name="keywords" content="siti web, app gestionali, web design, sviluppo web, agenzia digitale, Italia" />
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Telegram) -->
+    <meta name="theme-color" content={cfg.theme?.bg || "#0a0a0c"} />
+    <meta name="msapplication-TileColor" content={cfg.theme?.bg || "#0a0a0c"} />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${cfg.brand.name} — ${cfg.brand.tagline}`} />
     <meta property="og:site_name" content={cfg.brand.name} />
     <meta property="og:locale" content="it_IT" />
 
-    <!-- Twitter / X Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={`${cfg.brand.name} — ${cfg.brand.tagline}`} />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logoWebora.png" />
+    <link rel="apple-touch-icon" href="/logoWebora.png" />
 
-    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
-    
+
     <style define:vars={{
-      bg: "#101014",     
-      panel: "#16161b",  
+      bg: "#101014",
+      panel: "#16161b",
       text: t.text,
       muted: t.muted,
       accent: t.accent,
@@ -94,11 +103,11 @@ const schemaOrg = {
 
     <Header cfg={cfg} />
     <DrawerMenu cfg={cfg} />
-    
+
     <main style="position: relative; z-index: 10;">
       <slot />
-      
     </main>
+
     <FooterBlock cfg={cfg} />
 
     <script>
@@ -107,28 +116,18 @@ const schemaOrg = {
         const glow = document.getElementById('mouseGlow') as HTMLElement;
         const isMobile = window.innerWidth <= 768;
 
-        if (glow && isMobile) {
-          glow.style.display = 'none';
-        }
-        
+        if (glow && isMobile) glow.style.display = 'none';
+
         window.addEventListener('mousemove', (e) => {
-          if(glow && !isMobile) {
+          if (glow && !isMobile) {
             glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
           }
-          if(bg && !isMobile) {
+          if (bg && !isMobile) {
             const x = (e.clientX / window.innerWidth - 0.5) * 25;
             const y = (e.clientY / window.innerHeight - 0.5) * 25;
             bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
           }
         });
-
-        // Motore Intersection Observer potenziato per Mobile
-        const observerOptions = {
-          threshold: 0.1,
-          // Su mobile carichiamo gli elementi 150px PRIMA che entrino nella visuale, annullando il ritardo.
-          // Su desktop manteniamo l'effetto teatrale a -50px.
-          rootMargin: isMobile ? "0px 0px 150px 0px" : "0px 0px -50px 0px"
-        };
 
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -137,7 +136,10 @@ const schemaOrg = {
               observer.unobserve(entry.target);
             }
           });
-        }, observerOptions);
+        }, {
+          threshold: 0.1,
+          rootMargin: isMobile ? "0px 0px 150px 0px" : "0px 0px -50px 0px"
+        });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       });

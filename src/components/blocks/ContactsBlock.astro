@@ -10,7 +10,7 @@ const igLink = `https://instagram.com/${cont.instagram}`;
 
 <section id={section.id} class="section">
   <div class="wrap grid cols-2" style="gap: 80px; align-items: center;">
-    
+
     <div class="reveal">
       <span class="kicker">{section.kicker}</span>
       <h2 style="font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; letter-spacing: -0.02em;">
@@ -46,14 +46,14 @@ const igLink = `https://instagram.com/${cont.instagram}`;
     <div class="reveal delay-1">
       <div id="support-glow-box" class="card" style="padding: 48px 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.5s ease;">
         <h3 style="margin-bottom: 32px; font-size: 1.6rem; color: var(--text);">...Oppure raccontaci la tua idea via mail</h3>
-        
+
         <form id="boutiqueForm" data-email={cont.email} class="contact-form">
           <input type="hidden" name="_subject" value="🚀 Nuovo Lead dal sito Webora Studio!">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
-          <!-- Honeypot anti-spam: nascosto agli utenti reali, rilevato dai bot -->
+          <!-- Honeypot anti-spam: invisibile agli utenti reali, compilato dai bot -->
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-          
+
           <div class="input-group">
             <label for="name">Nome o Azienda</label>
             <input type="text" id="name" name="name" required class="premium-input" placeholder="Nome..." />
@@ -72,6 +72,11 @@ const igLink = `https://instagram.com/${cont.instagram}`;
           <button type="submit" id="submitBtn" class="btn primary" style="width: 100%; margin-top: 16px; padding: 20px; font-size: 1.1rem; border-radius: 16px;">
             Invia Richiesta
           </button>
+
+          <!-- Microcopy di fiducia: riduce abbandono del form -->
+          <p class="trust-copy">
+            🔒 I tuoi dati non vengono condivisi con terzi. Risposta entro 24h lavorative.
+          </p>
         </form>
       </div>
     </div>
@@ -89,7 +94,7 @@ const igLink = `https://instagram.com/${cont.instagram}`;
     background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15);
     transform: translateX(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   }
-  
+
   .icon-box {
     width: 54px; height: 54px; flex-shrink: 0; border-radius: 14px;
     background: rgba(179, 91, 91, 0.1); color: var(--accent2);
@@ -104,21 +109,29 @@ const igLink = `https://instagram.com/${cont.instagram}`;
   .contact-form { display: flex; flex-direction: column; gap: 24px; }
   .input-group { display: flex; flex-direction: column; gap: 10px; }
   .input-group label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; margin-left: 4px; }
-  
+
   .premium-input {
     width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
     border-radius: 16px; color: #fff; font-family: inherit; font-size: 1.05rem; transition: all 0.3s ease; resize: none;
   }
   .premium-input::placeholder { color: rgba(255,255,255,0.15); }
   .premium-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(179, 91, 91, 0.15); background: rgba(0,0,0,0.5); }
-  
+
+  .trust-copy {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin: 0;
+    line-height: 1.5;
+    opacity: 0.7;
+  }
+
   @keyframes spin { 100% { transform: rotate(360deg); } }
   .loader {
     border: 2px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%;
     width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block;
   }
 
-  /* LA MAGIA DELL'ASSISTENZA: Pulsazione Azzurra di "Fiducia" */
   .assist-glow-active {
     animation: trustPulse 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
@@ -136,37 +149,29 @@ const igLink = `https://instagram.com/${cont.instagram}`;
 </style>
 
 <script>
-  // Logica FormSubmit + Rilevamento Click "Ti serve una mano?"
   document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. RILEVAMENTO "TI SERVE UNA MANO?" ---
+
     const checkHashAndGlow = () => {
-      // Se l'URL finisce con #contatti, attiviamo la luce
       if (window.location.hash === '#contatti') {
         const box = document.getElementById('support-glow-box');
         if (box) {
-          // Rimuove e rimette la classe per farla ripartire se ci clicca più volte
           box.classList.remove('assist-glow-active');
-          void box.offsetWidth; // Forza il browser a ricalcolare
+          void box.offsetWidth;
           box.classList.add('assist-glow-active');
         }
       }
     };
 
-    // Controlla all'apertura della pagina
     checkHashAndGlow();
-    // Controlla se cambia l'URL mentre è già sulla pagina
     window.addEventListener('hashchange', checkHashAndGlow);
 
-
-    // --- 2. LOGICA FORMSUBMIT ---
     const form = document.getElementById('boutiqueForm') as HTMLFormElement;
     const submitBtn = document.getElementById('submitBtn');
 
     if (form && submitBtn) {
       form.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
-        
+        e.preventDefault();
+
         const targetEmail = form.getAttribute('data-email');
         const url = `https://formsubmit.co/ajax/${targetEmail}`;
         const formData = new FormData(form);
@@ -180,17 +185,21 @@ const igLink = `https://instagram.com/${cont.instagram}`;
             method: "POST", body: formData, headers: { 'Accept': 'application/json' }
           });
           if (response.ok) {
-            submitBtn.innerHTML = "Richiesta Inviata!";
-            submitBtn.style.background = "#2ecc71"; submitBtn.style.color = "#000";
+            submitBtn.innerHTML = "✓ Richiesta Inviata!";
+            submitBtn.style.background = "#2ecc71";
+            submitBtn.style.color = "#000";
             form.reset();
           } else { throw new Error("Errore API"); }
         } catch (error) {
-          submitBtn.innerHTML = "Errore di invio"; submitBtn.style.background = "#e74c3c";
+          submitBtn.innerHTML = "Errore di invio";
+          submitBtn.style.background = "#e74c3c";
         }
 
         setTimeout(() => {
-          submitBtn.innerHTML = originalText; submitBtn.style.background = "";
-          submitBtn.style.color = ""; submitBtn.style.pointerEvents = "auto";
+          submitBtn.innerHTML = originalText;
+          submitBtn.style.background = "";
+          submitBtn.style.color = "";
+          submitBtn.style.pointerEvents = "auto";
         }, 4000);
       });
     }

@@ -74,7 +74,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
       <div class="video-backdrop" id="closeVideoBg"></div>
       <div class="video-container">
         <button id="closeVideoBtn" class="video-close" aria-label="Chiudi video">✕</button>
-        <video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="auto" class="video-player">
+        <video id="modalVideoPlayer" controls playsinline webkit-playsinline preload="none" loading="lazy" class="video-player">
           Il tuo browser non supporta i video HTML5.
         </video>
       </div>

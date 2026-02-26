@@ -39,7 +39,7 @@
     "packages": [
       {
         "id": "sito-web",
-        "title": "Sito Web Premium",
+        "title": "Sito Web",
         "subtitle": "La tua vetrina ad alta conversione.",
         "basePrice": 240,
         "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 },

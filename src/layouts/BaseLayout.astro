@@ -8,6 +8,29 @@ import FooterBlock from "../components/blocks/FooterBlock.astro";
 const { cfg, title } = Astro.props as { cfg: SiteConfig; title?: string };
 const t = cfg.theme;
 const pageTitle = title || cfg.seo.title;
+const pageDescription = cfg.seo.description;
+const siteUrl = cfg.contacts?.website || "https://webora.it";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = `${siteUrl}/logoWebora.png`;
+
+// Schema.org JSON-LD per LocalBusiness / ProfessionalService
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": cfg.brand.name,
+  "description": cfg.seo.description,
+  "url": siteUrl,
+  "logo": ogImage,
+  "telephone": `+${cfg.contacts?.phoneE164 || ""}`,
+  "email": cfg.contacts?.email || "",
+  "sameAs": [
+    cfg.contacts?.instagram ? `https://instagram.com/${cfg.contacts.instagram}` : null
+  ].filter(Boolean),
+  "priceRange": "€€",
+  "areaServed": "IT",
+  "availableLanguage": "Italian",
+  "serviceType": ["Web Design", "Web Development", "App Development", "Gestionale Software"]
+};
 ---
 
 <!doctype html>
@@ -15,9 +38,34 @@ const pageTitle = title || cfg.seo.title;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content={cfg.seo.description} />
+
+    <!-- SEO Base -->
     <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Telegram) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:site_name" content={cfg.brand.name} />
+    <meta property="og:locale" content="it_IT" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logoWebora.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
     
     <style define:vars={{
       bg: "#101014",     

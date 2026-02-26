@@ -1,8 +1,9 @@
 ---
 import type { SiteConfig } from "../../lib/siteConfig";
-const { section } = Astro.props as { cfg: SiteConfig; section: any };
+const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
 const trustEmbed = import.meta.env.PUBLIC_TRUSTINDEX_EMBED || "";
+const fallbackReviews: any[] = (cfg as any).reviews_fallback || [];
 ---
 
 <section id={section.id} class="section">
@@ -14,6 +15,21 @@ const trustEmbed = import.meta.env.PUBLIC_TRUSTINDEX_EMBED || "";
     <div class="card" style="padding:18px; margin-top:16px;">
       {trustEmbed ? (
         <div set:html={trustEmbed}></div>
+      ) : fallbackReviews.length > 0 ? (
+        <div class="reviews-fallback-grid">
+          {fallbackReviews.map((r: any) => (
+            <div class="review-card">
+              <div class="review-stars">
+                {"★".repeat(r.stars || 5)}
+              </div>
+              <p class="review-text">"{r.text}"</p>
+              <div class="review-author">
+                <strong class="review-name">{r.author}</strong>
+                {r.role && <span class="review-role">{r.role}</span>}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div class="note">
           Inserisci <code>PUBLIC_TRUSTINDEX_EMBED</code> nel file <code>.env</code> per mostrare il widget Trustindex.
@@ -22,3 +38,64 @@ const trustEmbed = import.meta.env.PUBLIC_TRUSTINDEX_EMBED || "";
     </div>
   </div>
 </section>
+
+<style>
+  .reviews-fallback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 8px 0;
+  }
+
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius);
+    transition: border-color 0.3s ease;
+  }
+
+  .review-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .review-stars {
+    color: var(--accent);
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .review-text {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .review-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .review-name {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .review-role {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+</style>

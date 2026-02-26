@@ -51,6 +51,8 @@ const igLink = `https://instagram.com/${cont.instagram}`;
           <input type="hidden" name="_subject" value="🚀 Nuovo Lead dal sito Webora Studio!">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
+          <!-- Honeypot anti-spam: nascosto agli utenti reali, rilevato dai bot -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           
           <div class="input-group">
             <label for="name">Nome o Azienda</label>

@@ -191,5 +191,26 @@
       "title": "Iniziamo a conoscerci.",
       "body": "Nessuna pressione e nessuna decisione affrettata. Scrivici o contattaci: fisseremo una chiamata esplorativa per capire a fondo la tua attività e valutare insieme, con tutta la calma necessaria, se siamo il partner giusto per te."
     }
+  ],
+
+  "reviews_fallback": [
+    {
+      "author": "Marco T.",
+      "role": "Titolare, Trattoria da Marco",
+      "stars": 5,
+      "text": "In 10 giorni avevo un sito che funziona davvero. Le prenotazioni via WhatsApp sono triplicate nel primo mese. Assistenza sempre presente e diretta."
+    },
+    {
+      "author": "Alessia R.",
+      "role": "CEO, Studio Legale Rinaldi",
+      "stars": 5,
+      "text": "Professionalità rara. Zero ritardi, zero sorprese sui prezzi. Il sito è velocissimo e i clienti me lo fanno notare. Investimento che si è ripagato in poco tempo."
+    },
+    {
+      "author": "Davide C.",
+      "role": "Founder, LavanderiaPlus",
+      "stars": 5,
+      "text": "L'app gestionale ha eliminato carta, errori e confusione. Lo staff ora lavora sincronizzato e io ho tutto sotto controllo da un solo schermo. Impagabile."
+    }
   ]
 }

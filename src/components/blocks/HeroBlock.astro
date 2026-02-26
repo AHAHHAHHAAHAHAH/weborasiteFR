@@ -29,15 +29,7 @@ const { cfg, section } = Astro.props as { cfg: SiteConfig; section: any };
 
       {/* CTA secondaria: usa quella del JSON se presente, altrimenti link diretto al preventivatore.
           Chi arriva già convinto non deve scrollare tutta la pagina. */}
-      {section.secondaryCta ? (
-        <a href={`#${section.secondaryCta.targetId}`} class="btn secondary hero-btn">
-          {section.secondaryCta.label}
-        </a>
-      ) : (
-        <a href="/preventivi-box#preventivi" class="btn secondary hero-btn">
-          Calcola il tuo preventivo
-        </a>
-      )}
+    
     </div>
 
   </div>

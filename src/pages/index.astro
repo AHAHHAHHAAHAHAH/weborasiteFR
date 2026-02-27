@@ -9,7 +9,7 @@ const hero = (cfg.sections || []).find((s) => s.type === "hero");
 const branding = (cfg.sections || []).find((s) => s.id === "branding");
 ---
 
-<BaseLayout cfg={cfg} title={`${cfg.brand.name} — Inizio`}>
+<BaseLayout cfg={cfg}>
   <div style="display: flex; flex-direction: column; gap: 0;">
     {hero && <SectionRenderer cfg={cfg} section={hero} />}
     {branding && <SectionRenderer cfg={cfg} section={branding} />}

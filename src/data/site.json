@@ -21,7 +21,7 @@
     "phoneDisplay": "+39 3792900060",
     "email": "weboracode@gmail.com",
     "instagram": "webora_code",
-    "website": "https://webora.it"
+    "website": "https://weboracode.com"
   },
   "navigation": {
     "cta": { "label": "Ti serve una mano?", "type": "link", "targetId": "preventivi-box#contatti" },
@@ -29,7 +29,7 @@
     "items": [
       { "id": "", "label": "La Base" },
       { "id": "prezzi-lavori", "label": "Risultati & Investimento" },
-      { "id": "assistenza-faqulo", "label": "FAQ" },
+      { "id": "assistenza-faq", "label": "FAQ" },
       { "id": "preventivi-box", "label": "Inizia il Progetto" }
     ]
   },

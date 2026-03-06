@@ -15,7 +15,7 @@ const { cfg, title, description, ogImageOverride } = Astro.props as {
 const t = cfg.theme;
 const pageTitle = title || cfg.seo.title;
 const pageDescription = description || cfg.seo.description;
-const siteUrl = cfg.contacts?.website || "https://webora.it";
+const siteUrl = cfg.contacts?.website || "https://weboracode.com";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = ogImageOverride || `${siteUrl}/og-cover.png`;
 

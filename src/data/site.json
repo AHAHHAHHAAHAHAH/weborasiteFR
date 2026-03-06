@@ -41,7 +41,7 @@
         "id": "sito-web",
         "title": "Sito Web",
         "subtitle": "La tua vetrina ad alta conversione.",
-        "basePrice": 240,
+        "basePrice": 99,
         "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 },
         "highlights": ["Design su misura", "Ottimizzazione SEO", "Server ad alte prestazioni", "Assistenza e modifiche"]
       },
@@ -57,7 +57,7 @@
         "id": "ecosistema",
         "title": "Sito + Gestionale",
         "subtitle": "Il dominio digitale totale.",
-        "basePrice": 990,
+        "basePrice": 950,
         "monthlyPrices": { "0": 0, "1": 59.90, "6": 49.90, "12": 39.90 },
         "highlights": ["Tutto incluso", "Integrazione perfetta", "Priorità di assistenza", "Risparmio massimizzato"]
       }
@@ -68,9 +68,9 @@
     "subtitle": "Trasparenza totale. Configura il tuo strumento digitale e ottieni una stima immediata senza sorprese.",
     "options": {
       "projectType": [
-        { "id": "sito-web", "label": "Sito Web Vetrina (Acquisizione Clienti)", "basePrice": 240, "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 } },
+        { "id": "sito-web", "label": "Sito Web Vetrina (Acquisizione Clienti)", "basePrice": 99, "monthlyPrices": { "0": 0, "1": 29.90, "6": 24.90, "12": 19.90 } },
         { "id": "gestionale", "label": "App Gestionale (Ottimizzazione Lavoro Interno)", "basePrice": 890, "monthlyPrices": { "0": 0, "1": 49.90, "6": 39.90, "12": 29.90 } },
-        { "id": "ecosistema", "label": "Ecosistema Completo (Sito + App Gestionale)", "basePrice": 990, "monthlyPrices": { "0": 0, "1": 59.90, "6": 49.90, "12": 39.90 } }
+        { "id": "ecosistema", "label": "Ecosistema Completo (Sito + App Gestionale)", "basePrice": 950, "monthlyPrices": { "0": 0, "1": 59.90, "6": 49.90, "12": 39.90 } }
       ],
       "size": {
         "sito-web": [
